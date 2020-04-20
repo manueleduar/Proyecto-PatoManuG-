@@ -19,7 +19,9 @@ reserved = {
 	'print': 'PRINT', 
 	'for' : 'FOR',
 	'from' : 'FROM',
+	'while': 'WHILE',
 	'to': 'TO'
+
 }
 
 #tokens
@@ -162,22 +164,26 @@ def p_var1(p):
 	'''
 		var1 : ID
 		| ID COMMA var1
-		| ID arr var1
-		| ID mat var1
-		| ID especial
+		| ID arr 
+		| ID arr COMMA var1
+		| ID mat COMMA var1
+		| ID mat
+		| ID mat especial
 		| empty
 	'''	
 def p_var2(p):
 	'''
 		var2 : tipo var1 SEMICOLON
+			| tipo arr SEMICOLON
+			| tipo mat SEMICOLON
 			| empty
 			 
 	'''	
 def p_especial(p):
 	'''
 	especial : TRANSPUESTA
-			| INVERSA
-			| DETERMINANTE
+			 | INVERSA
+			 | DETERMINANTE
 	'''	
 	
 def p_arr(p):
@@ -269,13 +275,13 @@ def p_llamada(p):
 
 def p_if(p):
     '''
-	if : IF LPAREN exp RPAREN LBRACKET statement RBRACKET
-		| IF LPAREN exp RPAREN LBRACKET statement RBRACKET else
+	if : IF LPAREN exp RPAREN LCURLY statement RCURLY
+		| IF LPAREN exp RPAREN LCURLY statement RCURLY else
 	''' 
 
 def p_else(p):
     '''
-	else : ELSE LBRACKET statement LBRACKET
+	else : ELSE LCURLY statement RCURLY
 		| empty
 	''' 
 def p_for(p):
@@ -288,7 +294,7 @@ def p_for1(p):
 	'''
 def p_while(p):
  	'''
-	while : LPAREN exp RPAREN LCURLY statement RCURLY
+	while : WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 	''' 
 
 def p_escritura(p):
@@ -354,7 +360,7 @@ def p_pexp(p):
 		| CTEF
 		| CTEC
 		| llamada
-		| LPAREN exp  RPAREN
+		| LPAREN exp RPAREN
 	'''
 
 

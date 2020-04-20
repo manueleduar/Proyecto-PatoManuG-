@@ -3,13 +3,14 @@ var
     int i, j, p, x;
     float cal, cu;
 
-fun int Hello();
+fun int Hello(int g);
 {
     var
     int p, q;
     q = 10;
     p = 11;
-    return p;    
+    g = p + q;
+    return g;    
 }
 
 fun void Bye();
@@ -40,22 +41,40 @@ fun int Hello2();
 
 main () {
   var 
-    int uno;
+    int uno, iMat[5][5], iArr[10];
+    int mat2[5][4];
     i = 1;
     j = 2;
     p = 3;
     cal = 3;
     cu = 5;
+   
 
+while (p<10){
+    p = p + 2;
+    iMat[i][j] = p - cal;
+    mat2[i][j] = iMat[1][2]$;
+    i = i + 1;
+    j = j + 1;
+}
     for (from uno=0 to uno<8){
         print (uno);
          uno = uno + 1;
 
     }
+
+    if (uno < 10) {
+        print("SI");
+    }
+    else {
+        print("NO");
+    }
     
     print (i + j);
     print (cal * cu);
     print (cal / cu);
+    imprimeVar();
+    print(Hello(10));
 }
 
 end
