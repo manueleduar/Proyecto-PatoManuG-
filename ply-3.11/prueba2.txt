@@ -1,0 +1,55 @@
+program heinz;
+var 
+    int i, j, p, x;
+    float cal, cu;
+
+fun int Hello();
+{
+    var
+    int p, q;
+    q = 10;
+    p = 11;
+    return p;    
+}
+
+fun void Bye();
+{
+    var
+    int p, q;
+    q = 10;
+    p = 11;
+    print(q+p);    
+}
+
+fun void imprimeVar();
+{
+    var
+    int q;
+    print(q);    
+}
+
+fun int Hello2();
+{
+    var
+    int p, q;
+    q = 10;
+    p = 11;
+    return q;    
+}
+
+main () {
+  var 
+    int uno;
+    uno = 1;
+    i = 1;
+    j = 2;
+    p = 3;
+    cal = 3;
+    cu = 5;
+    
+    print (i + j);
+    print (cal * cu);
+    print (cal / cu);
+}
+
+end

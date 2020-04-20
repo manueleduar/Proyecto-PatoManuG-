@@ -78,7 +78,7 @@ t_OR = r'\|'
 t_TRANSPUESTA = r'\¡'
 t_DETERMINANTE = r'\$'
 t_INVERSA = r'\?'
-t_ignore = r' '
+t_ignore = ' \t\n'
 
 #Para identificar ids
 def t_ID(t):
@@ -134,8 +134,12 @@ def p_programa1(p):
 
 def p_programa2(p):
     '''
-	programa2 : vars MAIN statement END
-	'''  
+	programa2 :  main
+	''' 
+def p_main(p):
+    '''
+	main : MAIN LPAREN param RPAREN  LCURLY vars statement RCURLY END
+	'''  	
 
 def p_tipo(p):
     '''
@@ -145,12 +149,13 @@ def p_tipo(p):
 	'''    
 def p_vars(p):
 	'''
-	vars : var
+	vars : var 
+		 | empty
 	'''
 
 def p_var(p):
 	'''
-	var : VAR tipo var1 SEMICOLON
+	var : VAR var2 var2
 	'''	
 
 def p_var1(p):
@@ -162,13 +167,19 @@ def p_var1(p):
 		| ID especial
 		| empty
 	'''	
+def p_var2(p):
+	'''
+		var2 : tipo var1 SEMICOLON
+			| empty
+			 
+	'''	
 def p_especial(p):
 	'''
 	especial : TRANSPUESTA
 			| INVERSA
 			| DETERMINANTE
 	'''	
-
+	
 def p_arr(p):
 	'''
 	arr : LBRACKET CTEI RBRACKET
@@ -188,11 +199,11 @@ def p_mat(p):
     
 def p_modules(p):
     '''
-	modules : function 
-	    | empty
+	modules : function modules
+	    	| empty
     
 	'''     
-    
+
     
 def p_function(p):
     '''
@@ -201,23 +212,18 @@ def p_function(p):
 	'''  
 def p_function1(p):
     '''
-	function1 : ID LPAREN param RPAREN SEMICOLON LCURLY statement RCURLY
+	function1 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
 	'''  
 def p_function2(p):
     '''
-	function2 : ID LPAREN param RPAREN SEMICOLON LCURLY statement RETURN exp RCURLY	 
+	function2 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY	 
 	'''  
-def p_params(p):
-    '''
-	tipo : ID 
-		 | ID COMMA
-		 | ID SEMICOLON 
-	'''  
+
 
 def p_statement(p):
     '''
 	statement :  statement1 statement
-                | empty
+              | empty
 	''' 
 
 
@@ -243,7 +249,8 @@ def p_asignacion(p):
 
 def p_param(p):
     '''
-	param : tipo param1 SEMICOLON 
+	param : tipo param1  
+			| empty
 	
 	''' 
 
@@ -308,12 +315,12 @@ def p_lectura(p):
 def p_exp(p):
 	'''
 	exp : nexp  
-		| OR
+		| nexp OR nexp
 	''' 
 def p_nexp(p):
 	'''
 	nexp : compexp
-		| AND
+		| compexp AND compexp
 	''' 
 def p_compexp(p):
 	'''
@@ -322,23 +329,23 @@ def p_compexp(p):
 	''' 
 def p_compexp1(p):
 	'''
-	compexp1 : GT
-			| LT
-			| GTE
-			| LTE
-			| NE
+	compexp1 : sumexp GT sumexp
+			| sumexp LT sumexp
+			| sumexp GTE sumexp
+			| sumexp LTE sumexp
+			| sumexp NE sumexp 
 	''' 
 def p_sumexp(p):
 	'''
 	sumexp : mulexp  
-		| PLUS
-		| MINUS
+		| mulexp PLUS mulexp
+		| mulexp MINUS mulexp
 	''' 
 def p_mulexp(p):
 	'''
 	mulexp : pexp  
-		| MUL
-		| DIV
+		| pexp MUL pexp
+		| pexp DIV pexp
 	'''
 def p_pexp(p):
 	'''
@@ -365,7 +372,8 @@ parser = yacc.yacc()
 
 def main():
 	try:
-		nombreArchivo = 'test1.txt'
+		#nombreArchivo = 'test1.txt'
+		nombreArchivo = 'prueba2.txt'
 		arch = open(nombreArchivo, 'r')
 		print("El archivo a leer es: " + nombreArchivo)
 		informacion = arch.read()
