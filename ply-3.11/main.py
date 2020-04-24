@@ -358,6 +358,10 @@ def p_exp(p):
     exp : nexp  
         | nexp OR nexp
     ''' 
+    # if p[2]=='||':
+    #     p[0] = p[1] | p[3]
+    # else:
+    #     p[0] = p[1]
 def p_nexp(p):
     '''
     nexp : compexp
@@ -369,34 +373,78 @@ def p_compexp(p):
     compexp : sumexp 
             | compexp1 sumexp
     ''' 
+    # if p[2]=='&&':
+    #     p[0] = p[1] | p[3]
+    # else:
+    #     p[0] = p[1]
 def p_compexp1(p):
     '''
     compexp1 : sumexp GT sumexp
+<<<<<<< HEAD
+            | sumexp LT sumexp
+            | sumexp GTE sumexp
+            | sumexp LTE sumexp
+            | sumexp NE sumexp 
+    '''
+   
+    # def switch (option):
+    #     options ={
+    #         1: p[0] = p[1] > p[3]
+    #         2: p[0] = p[1] < p[3]
+    #         3: p[0] = p[1] >= p[3]
+    #         4: p[0] = p[1] <= p[3]
+    #         3: p[0] = p[1] != p[3]
+    #     }
+    #     print options.get(option, "Invalid comparison")
+=======
              | sumexp LT sumexp
              | sumexp GTE sumexp
              | sumexp LTE sumexp
              | sumexp NE sumexp 
     ''' 
+>>>>>>> a1eec09299f644af8c808eee14472a188f6a52d3
 def p_sumexp(p):
     '''
     sumexp : mulexp  
            | mulexp PLUS mulexp
            | mulexp MINUS mulexp
     ''' 
+    # if p[2] == '+':
+    #     p[0] = p[1] + p[2]
+    # elif p[2] == '-':
+    #     p[0] = p[1] - p[2]
+    # else:
+    #     p[0] = p[1]
+        
 def p_mulexp(p):
     '''
     mulexp : pexp  
            | pexp MUL pexp
            | pexp DIV pexp
     '''
+    # if p[2] == '*':
+    #     p[0] = p[1] * p[3]
+    # elif p[2] == '/':
+    #     p[0] = p[1] / p[3]
+    # else:
+    #     p[0] = p[1]
 def p_pexp(p):
     '''
     pexp : var1  
+<<<<<<< HEAD
+        | CTEI
+        | CTEF
+        | CTEC
+        | llamada
+        | LPAREN exp RPAREN
+    
+=======
          | CTEI
          | CTEF
          | CTEC
          | llamada
          | LPAREN exp RPAREN
+>>>>>>> a1eec09299f644af8c808eee14472a188f6a52d3
     '''
 
 
