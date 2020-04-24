@@ -134,7 +134,7 @@ def p_programa(p):
 	'''
 	programa : PROGRAM ID SEMICOLON programa1
 	'''
-	p[0] = 'PROGRAMA COMPILADO'
+	#p[0] = 'PROGRAMA COMPILADO'
 	iden = p[1]
 	tipo = 'programa'
 	tup = zip(iden, tipo)
