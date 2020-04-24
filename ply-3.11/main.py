@@ -402,12 +402,28 @@ def p_sumexp(p):
            | mulexp PLUS mulexp
            | mulexp MINUS mulexp
     ''' 
+
+    # if p[2] == '+':
+    #     p[0] = p[1] + p[2]
+    # elif p[2] == '-':
+    #     p[0] = p[1] - p[2]
+    # else:
+    #     p[0] = p[1]
+
 def p_mulexp(p):
     '''
     mulexp : pexp  
            | pexp MUL pexp
            | pexp DIV pexp
     '''
+
+    # if p[2] == '*':
+    #     p[0] = p[1] * p[3]
+    # elif p[2] == '/':
+    #     p[0] = p[1] / p[3]
+    # else:
+    #     p[0] = p[1]
+
 def p_pexp(p):
     '''
     pexp : var1  
