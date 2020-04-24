@@ -1,5 +1,8 @@
 import ply.lex as lex
 import ply.yacc as yacc
+from tablaFuncionesVariables import tabFun
+from tablaFuncionesVariables import tabVar
+
 
 #reserved
 reserved = {
@@ -123,10 +126,11 @@ lexer = lex.lex()
 
 ########################### DICCIONARIOS ##############################
 #DIR DE FUNCIONES
-dir_fun = {}
+tableFun = tabFun()
+
+
 #TABLAS DE VARIABLES
-tab_global_var = {}
-tab_local_var = {}
+tablvar = tabVar()
 
 #Reglas gramaticales 
 
@@ -135,11 +139,12 @@ def p_programa(p):
 	programa : PROGRAM ID SEMICOLON programa1
 	'''
 	p[0] = 'PROGRAMA COMPILADO'
-	iden = p[1]
-	tipo = 'programa'
-	tup = zip(iden, tipo)
-	dir_fun.update(tup)
-	print(dir_fun)
+	# iden = ('iden', p[2])
+	# tipo = ('tipo','programa')
+	# scope = ('scope','global')
+    
+    
+
 	
 def p_programa1(p):
     '''
@@ -239,7 +244,7 @@ def p_modules(p):
 def p_function(p):
     '''
     function : FUN VOID function1 
-            | FUN tipo function2 
+             | FUN tipo function2 
     '''  
 def p_function1(p):
     '''
@@ -274,22 +279,23 @@ def p_statement1(p):
 def p_asignacion(p):
      '''
     asignacion : ID EQUALS exp
-                | ID arr EQUALS exp
-                | ID mat EQUALS exp
+               | ID arr EQUALS exp
+               | ID mat EQUALS exp
     ''' 
+    
 
 def p_param(p):
     '''
     param : tipo param1  
-            | empty
+          | empty
     
     ''' 
 
 def p_param1(p):
     '''
     param1 : ID
-            | ID COMMA param1
-            | empty 
+           | ID COMMA param1
+           | empty 
     ''' 
     
 
@@ -353,7 +359,7 @@ def p_exp(p):
 def p_nexp(p):
     '''
     nexp : compexp
-        | compexp AND compexp
+         | compexp AND compexp
     ''' 
 def p_compexp(p):
     '''
@@ -363,31 +369,31 @@ def p_compexp(p):
 def p_compexp1(p):
     '''
     compexp1 : sumexp GT sumexp
-            | sumexp LT sumexp
-            | sumexp GTE sumexp
-            | sumexp LTE sumexp
-            | sumexp NE sumexp 
+             | sumexp LT sumexp
+             | sumexp GTE sumexp
+             | sumexp LTE sumexp
+             | sumexp NE sumexp 
     ''' 
 def p_sumexp(p):
     '''
     sumexp : mulexp  
-        | mulexp PLUS mulexp
-        | mulexp MINUS mulexp
+           | mulexp PLUS mulexp
+           | mulexp MINUS mulexp
     ''' 
 def p_mulexp(p):
     '''
     mulexp : pexp  
-        | pexp MUL pexp
-        | pexp DIV pexp
+           | pexp MUL pexp
+           | pexp DIV pexp
     '''
 def p_pexp(p):
     '''
     pexp : var1  
-        | CTEI
-        | CTEF
-        | CTEC
-        | llamada
-        | LPAREN exp RPAREN
+         | CTEI
+         | CTEF
+         | CTEC
+         | llamada
+         | LPAREN exp RPAREN
     '''
 
 
