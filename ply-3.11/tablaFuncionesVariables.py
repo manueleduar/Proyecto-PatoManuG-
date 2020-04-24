@@ -7,7 +7,7 @@ class tabFun:
 class tabVar:
     def __init__(self):
         self.tab_variables = {}
-    def add(self, element:tuple):
+    def add(self, element: tuple):
         self.tab_variables.update(element)
 
 # class element: 
