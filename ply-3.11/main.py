@@ -113,7 +113,7 @@ def t_CTEI(t):
 def t_CTESTRING(t):
     #r'[a-zA-Z_0-9]+'
     #t.value = string(t.value)
-    r'\'[\w\d\s\,. ]*\'|\"[\w\d\s\,. ]*\"'
+    r'\'[\w\d\s\,. ]\'|\"[\w\d\s\,. ]\"'
     return t
 
 
@@ -307,7 +307,7 @@ def p_llamada(p):
 def p_if(p):
     '''
     if : IF LPAREN exp RPAREN LCURLY statement RCURLY
-       | IF LPAREN exp RPAREN LCURLY statement RCURLY else
+        | IF LPAREN exp RPAREN LCURLY statement RCURLY else
     ''' 
 
 def p_else(p):
@@ -332,13 +332,11 @@ def p_escritura(p):
      '''
     escritura : PRINT LPAREN escritura1 RPAREN
     ''' 
-
 def p_escritura1(p):
      '''
     escritura1 : escritura2 COMMA escritura2
                | escritura2
     ''' 
-
 def p_escritura2(p):
      '''
     escritura2 : CTESTRING  
@@ -367,7 +365,6 @@ def p_nexp(p):
     nexp : compexp
          | compexp AND compexp
     ''' 
-
 def p_compexp(p):
     '''
     compexp : sumexp 
@@ -380,7 +377,6 @@ def p_compexp(p):
 def p_compexp1(p):
     '''
     compexp1 : sumexp GT sumexp
-<<<<<<< HEAD
             | sumexp LT sumexp
             | sumexp GTE sumexp
             | sumexp LTE sumexp
@@ -396,13 +392,8 @@ def p_compexp1(p):
     #         3: p[0] = p[1] != p[3]
     #     }
     #     print options.get(option, "Invalid comparison")
-=======
-             | sumexp LT sumexp
-             | sumexp GTE sumexp
-             | sumexp LTE sumexp
-             | sumexp NE sumexp 
-    ''' 
->>>>>>> a1eec09299f644af8c808eee14472a188f6a52d3
+
+
 def p_sumexp(p):
     '''
     sumexp : mulexp  
@@ -428,23 +419,16 @@ def p_mulexp(p):
     #     p[0] = p[1] / p[3]
     # else:
     #     p[0] = p[1]
+
+    
 def p_pexp(p):
     '''
     pexp : var1  
-<<<<<<< HEAD
-        | CTEI
-        | CTEF
-        | CTEC
-        | llamada
-        | LPAREN exp RPAREN
-    
-=======
          | CTEI
          | CTEF
          | CTEC
          | llamada
          | LPAREN exp RPAREN
->>>>>>> a1eec09299f644af8c808eee14472a188f6a52d3
     '''
 
 
