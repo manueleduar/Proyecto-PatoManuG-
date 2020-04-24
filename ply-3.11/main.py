@@ -307,7 +307,7 @@ def p_llamada(p):
 def p_if(p):
     '''
     if : IF LPAREN exp RPAREN LCURLY statement RCURLY
-        | IF LPAREN exp RPAREN LCURLY statement RCURLY else
+       | IF LPAREN exp RPAREN LCURLY statement RCURLY else
     ''' 
 
 def p_else(p):
@@ -332,11 +332,13 @@ def p_escritura(p):
      '''
     escritura : PRINT LPAREN escritura1 RPAREN
     ''' 
+
 def p_escritura1(p):
      '''
     escritura1 : escritura2 COMMA escritura2
                | escritura2
     ''' 
+
 def p_escritura2(p):
      '''
     escritura2 : CTESTRING  
@@ -361,6 +363,7 @@ def p_nexp(p):
     nexp : compexp
          | compexp AND compexp
     ''' 
+
 def p_compexp(p):
     '''
     compexp : sumexp 
