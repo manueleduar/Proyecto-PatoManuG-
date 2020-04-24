@@ -143,8 +143,6 @@ def p_programa(p):
 	# tipo = ('tipo','programa')
 	# scope = ('scope','global')
     
-    
-
 	
 def p_programa1(p):
     '''
@@ -208,6 +206,7 @@ def p_var2(p):
     #     else:
     #         tup = (tipo, iden) 
 	# 		tab_local_var.update(tab)
+
     
 def p_especial(p):
     '''
@@ -361,11 +360,22 @@ def p_nexp(p):
     nexp : compexp
          | compexp AND compexp
     ''' 
+    # if p[2]=='||':
+    #     p[0] = p[1] | p[3]
+    # else:
+    #     p[0] = p[1]
+
 def p_compexp(p):
     '''
     compexp : sumexp 
             | compexp1 sumexp
     ''' 
+
+    # if p[2]=='&&':
+    #     p[0] = p[1] | p[3]
+    # else:
+    #     p[0] = p[1]
+
 def p_compexp1(p):
     '''
     compexp1 : sumexp GT sumexp
@@ -374,6 +384,18 @@ def p_compexp1(p):
              | sumexp LTE sumexp
              | sumexp NE sumexp 
     ''' 
+
+
+    # def switch (option):
+    #     options ={
+    #         1: p[0] = p[1] > p[3]
+    #         2: p[0] = p[1] < p[3]
+    #         3: p[0] = p[1] >= p[3]
+    #         4: p[0] = p[1] <= p[3]
+    #         3: p[0] = p[1] != p[3]
+    #     }
+    #     print options.get(option, "Invalid comparison")
+
 def p_sumexp(p):
     '''
     sumexp : mulexp  
