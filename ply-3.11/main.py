@@ -1,8 +1,9 @@
 import ply.lex as lex
 import ply.yacc as yacc
-from tablaFuncionesVariables import tabFun
-from tablaFuncionesVariables import tabVar
-
+from tablaFuncionesVariables import TablaGlobal
+from tablaFuncionesVariables import TablaFun
+from tablaFuncionesVariables import TablaVar
+from tablaFuncionesVariables import Objeto
 
 #reserved
 reserved = {
@@ -125,25 +126,22 @@ def t_error(t):
 lexer = lex.lex()
 
 ########################### DICCIONARIOS ##############################
+#Tabla Global 
+tableG = TablaGlobal()
 #DIR DE FUNCIONES
-tableFun = tabFun()
-
-
+tableFun = TablaFun()
 #TABLAS DE VARIABLES
-tablvar = tabVar()
-
-#Reglas gramaticales 
+tablvar = TablaVar()
 
 def p_programa(p):
-	'''
-	programa : PROGRAM ID SEMICOLON programa1
-	'''
-	p[0] = 'PROGRAMA COMPILADO'
-	# iden = ('iden', p[2])
-	# tipo = ('tipo','programa')
-	# scope = ('scope','global')
+        '''
+        programa : PROGRAM ID SEMICOLON programa1
+        '''
+        p[0] = 'PROGRAMA COMPILADO'
+        myvariable = Objeto(p[1],p[2])
+        tableG.add(myvariable)
+        tablaG.print_elements()
     
-	
 def p_programa1(p):
     '''
 	programa1 : vars modules programa2
@@ -166,6 +164,7 @@ def p_tipo(p):
          | FLOAT
          | CHAR
     '''    
+
 def p_vars(p):
     '''
     vars : var 
@@ -404,9 +403,9 @@ def p_sumexp(p):
     ''' 
 
     # if p[2] == '+':
-    #     p[0] = p[1] + p[2]
+    #     p[0] = p[1] + p[3]
     # elif p[2] == '-':
-    #     p[0] = p[1] - p[2]
+    #     p[0] = p[1] - p[3]
     # else:
     #     p[0] = p[1]
 
