@@ -126,8 +126,7 @@ def t_error(t):
 lexer = lex.lex()
 
 ########################### DICCIONARIOS ##############################
-#Tabla Global 
-tableG = TablaGlobal()
+
 #DIR DE FUNCIONES
 tableFun = TablaFun()
 #TABLAS DE VARIABLES
@@ -137,10 +136,12 @@ def p_programa(p):
         '''
         programa : PROGRAM ID SEMICOLON programa1
         '''
+        #Tabla Global 
+        tableG = TablaGlobal()
         p[0] = 'PROGRAMA COMPILADO'
         myvariable = Objeto(p[1],p[2])
         tableG.add(myvariable)
-        tablaG.print_elements()
+        tableG.print_elements()
     
 def p_programa1(p):
     '''
