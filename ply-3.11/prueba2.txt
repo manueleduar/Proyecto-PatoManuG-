@@ -2,6 +2,10 @@ program heinz;
 var 
     int i, j, p, x;
     float cal, cu;
+    char a;
+    char b[3];
+    int imat3[1][1];
+    
 
 fun int Hello(int g);
 {

@@ -125,23 +125,18 @@ def t_error(t):
 
 lexer = lex.lex()
 
-########################### DICCIONARIOS ##############################
 
-#DIR DE FUNCIONES
-tableFun = TablaFun()
-#TABLAS DE VARIABLES
-tablvar = TablaVar()
 
 def p_programa(p):
         '''
         programa : PROGRAM ID SEMICOLON programa1
         '''
-        #Tabla Global 
-        tableG = TablaGlobal()
         p[0] = 'PROGRAMA COMPILADO'
-        myvariable = Objeto(p[1],p[2])
-        tableG.add(myvariable)
-        tableG.print_elements()
+
+        #TABLA GLOBAL
+        tableG = TablaGlobal()
+        myprogram = Objeto(p[1],p[2])
+        tableG.add(myprogram)
     
 def p_programa1(p):
     '''
@@ -174,9 +169,12 @@ def p_vars(p):
 
 def p_var(p):
     '''
-    var : VAR var2 var2
+    var : VAR var2
     ''' 
-	
+   
+    #TABLA VARS GLOBALES
+    tablaV = TablaVar()
+    
 
 def p_var1(p):
     '''
@@ -190,22 +188,13 @@ def p_var1(p):
         | empty
     ''' 
 def p_var2(p):
+    # Recursividad para tener varios tipos de variables
     '''
-        var2 : tipo var1 SEMICOLON
-            | tipo arr SEMICOLON
-            | tipo mat SEMICOLON
-            | empty
+        var2 : var2 tipo var1 SEMICOLON
+             | var2 tipo arr SEMICOLON
+             | var2 tipo mat SEMICOLON
+             | empty
     ''' 
-    
-    # tipo = p[0]
-    # iden = p[1]
-    # variables = tab_local_var.items
-    # for i in variables:
-    #     if i[1] == iden:
-    #     	print("item already exists")
-    #     else:
-    #         tup = (tipo, iden) 
-	# 		tab_local_var.update(tab)
 
     
 def p_especial(p):
