@@ -13,7 +13,7 @@ class FunGeneral:
         
 class TabVarG():
     def __init__(self):
-        self.tabVG = [VarGeneral]
+        self.tabVG = []
 
     def add(self, VarGeneral):
         if not self.searchVarG(VarGeneral.id):
@@ -26,7 +26,7 @@ class TabVarG():
 
     def printVars(self):
         for i in self.tabVG:
-            print (self.tabVG)
+            print (i.tipo)
 
 
 class TabFun():
@@ -42,7 +42,7 @@ class TabFun():
             return True
         return False
     
-x= VarGeneral('int', 'a', 'global')
+x = VarGeneral('int', 'a', 'global')
 y = VarGeneral('char', 'v', 'local')
 
 a = FunGeneral('void', 'MarcaBien')
@@ -55,4 +55,3 @@ x1 = TabFun()
 x1.add(a)
 
 tablaGen.printVars()
-

@@ -169,11 +169,7 @@ def p_vars(p):
 def p_var(p):
     '''
     var : VAR var2
-    ''' 
-   
-    #TABLA VARS 
-    
-    
+    '''     
 
 def p_var1(p):
     '''
@@ -187,13 +183,12 @@ def p_var1(p):
         | empty
     '''
     # inicializador de tabla general de variables
+    scope = 'global'
     current_tipo = p[-1]
     iden = p[1]
-    scope = 'global'
     tabVar = TabVarG()
     var = VarGeneral(current_tipo, iden, scope)
     tabVar.add(var)
-    tabVar.printVars
 
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
@@ -204,9 +199,6 @@ def p_var2(p):
              | empty
     ''' 
   
-    
-     
-    
     
 def p_especial(p):
     '''
