@@ -1,56 +1,58 @@
-class TablaGlobal:
-    def __init_(self):
-        self.tab_global = {}
-
-    def add(self, objeto):
-        if not self.search(objeto.id):
-            self.tab_global.update(objeto.tipo, objeto.id)
+class VarGeneral: 
+    def __init__(self, tipo, id, scope):
+        self.tipo = tipo
+        self.id = id
+        self.scope = scope
         
-    def search(self, id):
-        if (id in self.tab_global.keys()):
+        
+class FunGeneral: 
+    def __init__(self, tipo, id):
+        self.tipo = tipo
+        self.id = id
+    
+        
+class TabVarG():
+    def __init__(self):
+        self.tabVG = [VarGeneral]
+
+    def add(self, VarGeneral):
+        if not self.searchVarG(VarGeneral.id):
+            self.tabVG.append(VarGeneral)
+    
+    def searchVarG(self, id): 
+        if id in self.tabVG:
             return True
         return False
-                
 
-    def print_elements(self):
-        print(*self.tab_global)
-                
-        
-        
-        
-class TablaFun:
-    def __init_(self):
-        self.tab_funciones = {}
+    def printVars(self):
+        for i in self.tabVG:
+            print (self.tabVG)
 
 
-
-class TablaVar:
+class TabFun():
     def __init__(self):
-        self.tab_variables = {}
-
+        self.tab_fun = []
         
-class Objeto ():
-    def __init__(self, tipo, id):
-        self.id = id
-        self.tipo = tipo
-        
-    # setters
-    def set_ID(self, id): 
-        self.id = id
-        
-    def set_Tipo(self, tipo):
-        self.tipo = tipo
+    def add(self, FunGeneral):
+        if not self.searchVarG(FunGeneral.id):
+            self.tab_fun.append(FunGeneral)
     
-    # getters
-    def get_ID(self):
-        return self.id
+    def searchVarG(self, id): 
+        if id in self.tab_fun:
+            return True
+        return False
+    
+x= VarGeneral('int', 'a', 'global')
+y = VarGeneral('char', 'v', 'local')
 
-    def get_Tipo(self):
-        return self.tipo
-        
-        
-        
-        
+a = FunGeneral('void', 'MarcaBien')
 
+tablaGen = TabVarG()
+tablaGen.add(x)
+tablaGen.add(y)
 
+x1 = TabFun()
+x1.add(a)
+
+tablaGen.printVars()
 

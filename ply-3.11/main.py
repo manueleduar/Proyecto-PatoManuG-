@@ -1,9 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
-from tablaFuncionesVariables import TablaGlobal
-from tablaFuncionesVariables import TablaFun
-from tablaFuncionesVariables import TablaVar
-from tablaFuncionesVariables import Objeto
+from tablaFuncionesVariables import TabFun, TabVarG, FunGeneral, VarGeneral
 
 #reserved
 reserved = {
@@ -125,7 +122,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-
+global scope, current_tipo
 
 def p_programa(p):
         '''
@@ -133,9 +130,11 @@ def p_programa(p):
         '''
         p[0] = 'PROGRAMA COMPILADO'
 
-        #TABLA GLOBAL
-        tableG = TablaGlobal()
-        myprogram = Objeto(p[1],p[2])
+        #TABLA GLOBAL 
+        # agrega funcion programa
+        tableG = TabFun()
+        current_tipo = p[1]
+        myprogram = FunGeneral(current_tipo, p[2])
         tableG.add(myprogram)
     
 def p_programa1(p):
@@ -172,8 +171,8 @@ def p_var(p):
     var : VAR var2
     ''' 
    
-    #TABLA VARS GLOBALES
-    tablaV = TablaVar()
+    #TABLA VARS 
+    
     
 
 def p_var1(p):
@@ -186,7 +185,16 @@ def p_var1(p):
         | ID mat
         | ID mat especial
         | empty
-    ''' 
+    '''
+    # inicializador de tabla general de variables
+    current_tipo = p[-1]
+    iden = p[1]
+    scope = 'global'
+    tabVar = TabVarG()
+    var = VarGeneral(current_tipo, iden, scope)
+    tabVar.add(var)
+    tabVar.printVars
+
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
     '''
@@ -195,7 +203,10 @@ def p_var2(p):
              | var2 tipo mat SEMICOLON
              | empty
     ''' 
-
+  
+    
+     
+    
     
 def p_especial(p):
     '''
