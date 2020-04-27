@@ -189,17 +189,15 @@ def p_var1(p):
     tabVar = TabVarG()
     if not is_Function:
         scope = 'global'
-
     current_tipo = p[-1]
-
     iden = p[1]
-    var = VarGeneral(current_tipo, iden, scope)
-    if (tabVar.searchVarG(var.id)):
-        print("la variable de nombre: ",  var .id, "ya existe")
-
+    print(iden)
+    if not tabVar.searchVarG(iden):
+        print("variable ", iden, "already in the list")
     else:
+        var = VarGeneral(current_tipo, iden, scope)
         tabVar.add(var)
-    tabVar.printVars()
+    #tabVar.printVars()
 
 
 def p_var2(p):
@@ -264,11 +262,12 @@ def p_function2(p):
     function2 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY   
     ''' 
     tipo = p[-1]
+    print(tipo)
     name = p[1]
     scope = name
     func = FunGeneral(tipo, name)
     tableG.add(func)
-    tableG.printFuns()
+    #tableG.printFuns()
 
 def p_statement(p):
     '''
