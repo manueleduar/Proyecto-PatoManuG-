@@ -29,7 +29,8 @@ class TabVarG():
             print("Tipo =", i.tipo)
             print ("ID =", i.id)
             
-
+    # def __del__(self):
+    #    print('Destructor called, Var table  dead.')
 
 
 class TabFun():
@@ -49,7 +50,8 @@ class TabFun():
             print("Tipo =", i.tipo)
             print ("ID =", i.id)
 
-
+    # def __del__(self):
+    #     print('Destructor called, function table dead.')
 
     
 # x = VarGeneral('int', 'a', 'global')
