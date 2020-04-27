@@ -255,14 +255,20 @@ def p_function1(p):
     '''
     tipo = p[-1]
     name = p[1]  
+    scope = name
     func = FunGeneral(tipo, name)
     tableG.add(func)
 
 def p_function2(p):
     '''
     function2 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY   
-    '''  
-
+    ''' 
+    tipo = p[-1]
+    name = p[1]
+    scope = name
+    func = FunGeneral(tipo, name)
+    tableG.add(func)
+    tableG.printFuns()
 
 def p_statement(p):
     '''

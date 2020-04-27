@@ -45,6 +45,10 @@ class TabFun():
         if id in self.tab_fun:
             return True
         return False
+    def printFuns(self):
+        for i in self.tab_fun:
+            print("Tipo =", i.tipo)
+            print ("ID =", i.id)
 
     def __del__(self):
         print('Destructor called, function table dead.')
