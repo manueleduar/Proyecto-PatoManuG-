@@ -26,7 +26,11 @@ class TabVarG():
 
     def printVars(self):
         for i in self.tabVG:
-            print (i.tipo)
+            print("Tipo =", i.tipo)
+            print ("ID =", i.id)
+            
+    def __del__(self):
+       print('Destructor called, Var table  dead.')
 
 
 class TabFun():
@@ -34,24 +38,28 @@ class TabFun():
         self.tab_fun = []
         
     def add(self, FunGeneral):
-        if not self.searchVarG(FunGeneral.id):
+        if not self.searchFun(FunGeneral.id):
             self.tab_fun.append(FunGeneral)
     
-    def searchVarG(self, id): 
+    def searchFun(self, id): 
         if id in self.tab_fun:
             return True
         return False
+
+    def __del__(self):
+        print('Destructor called, function table dead.')
+
     
-x = VarGeneral('int', 'a', 'global')
-y = VarGeneral('char', 'v', 'local')
+# x = VarGeneral('int', 'a', 'global')
+# y = VarGeneral('char', 'v', 'local')
 
-a = FunGeneral('void', 'MarcaBien')
+# a = FunGeneral('void', 'MarcaBien')
 
-tablaGen = TabVarG()
-tablaGen.add(x)
-tablaGen.add(y)
+# tablaGen = TabVarG()
+# tablaGen.add(x)
+# tablaGen.add(y)
 
-x1 = TabFun()
-x1.add(a)
+# x1 = TabFun()
+# x1.add(a)
 
-tablaGen.printVars()
+# tablaGen.printVars()

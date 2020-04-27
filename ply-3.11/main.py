@@ -122,7 +122,10 @@ def t_error(t):
 
 lexer = lex.lex()
 
-global scope, current_tipo
+global scope, current_tipo, is_Function
+is_Function = False
+tableG = TabFun()
+
 
 def p_programa(p):
         '''
@@ -131,8 +134,8 @@ def p_programa(p):
         p[0] = 'PROGRAMA COMPILADO'
 
         #TABLA GLOBAL 
+
         # agrega funcion programa
-        tableG = TabFun()
         current_tipo = p[1]
         myprogram = FunGeneral(current_tipo, p[2])
         tableG.add(myprogram)
@@ -183,12 +186,21 @@ def p_var1(p):
         | empty
     '''
     # inicializador de tabla general de variables
-    scope = 'global'
-    current_tipo = p[-1]
-    iden = p[1]
     tabVar = TabVarG()
+    if not is_Function:
+        scope = 'global'
+
+    current_tipo = p[-1]
+
+    iden = p[1]
     var = VarGeneral(current_tipo, iden, scope)
-    tabVar.add(var)
+    if (tabVar.searchVarG(var.id)):
+        print("la variable de nombre: ",  var .id, "ya existe")
+
+    else:
+        tabVar.add(var)
+    tabVar.printVars()
+
 
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
@@ -222,8 +234,7 @@ def p_mat(p):
         | LBRACKET CTEI RBRACKET LBRACKET exp RBRACKET
     ''' 
     
-    
-    
+        
 def p_modules(p):
     '''
     modules : function modules
@@ -236,11 +247,17 @@ def p_function(p):
     '''
     function : FUN VOID function1 
              | FUN tipo function2 
-    '''  
+    ''' 
+   
 def p_function1(p):
     '''
     function1 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
-    '''  
+    '''
+    tipo = p[-1]
+    name = p[1]  
+    func = FunGeneral(tipo, name)
+    tableG.add(func)
+
 def p_function2(p):
     '''
     function2 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY   
@@ -356,6 +373,7 @@ def p_nexp(p):
     #     p[0] = p[1] | p[3]
     # else:
     #     p[0] = p[1]
+    
 
 def p_compexp(p):
     '''
@@ -367,6 +385,7 @@ def p_compexp(p):
     #     p[0] = p[1] | p[3]
     # else:
     #     p[0] = p[1]
+
 
 def p_compexp1(p):
     '''
@@ -387,6 +406,7 @@ def p_compexp1(p):
     #         3: p[0] = p[1] != p[3]
     #     }
     #     print options.get(option, "Invalid comparison")
+
 
 def p_sumexp(p):
     '''
