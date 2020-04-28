@@ -28,7 +28,7 @@ class tabFun():
                 'vars' : tabVar(),
                 'nvars' : nvars # numero de variables
             }
-            print('Funcion añadida:', id)
+            print('\nFuncion añadida:', id)
         else:
             print('La funcion' , id , 'ya existe')
 
@@ -45,20 +45,3 @@ class tabFun():
     def print_fun_vars(self, fid):
         if id in self.funciones:
             self.funciones[fid]['vars'].print_vars()
-        
-
-# # tabla de funciones
-# z = tabFun()
-
-# z.add_Fun('void', 'ImprimeParametros', 3,
-#  ['int', 'float', 'char'],['uno','dos', 'tres'], 0)
-
-
-# z.addVar('ImprimeParametros','int', 'i')
-# z.addVar('ImprimeParametros', 'float', 'o')
-# z.addVar('ImprimeParametros', 'char', 'p')
-
-# print(z.search_tabFun('ImprimeParametros'))
-# print(z.search_tabFun('hgrughurhgu'))
-
-# z.print_fun_vars('hola')

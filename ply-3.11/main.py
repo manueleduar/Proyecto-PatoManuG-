@@ -1,3 +1,4 @@
+
 import ply.lex as lex
 import ply.yacc as yacc
 from tablaFuncionesVariables import tabFun, tabVar
@@ -122,8 +123,10 @@ def t_error(t):
 
 lexer = lex.lex()
 
-global tablaFun
+
 tablaFun = tabFun()
+actualFunType = ''
+fid = ''
 
 def p_programa(p):
         '''
@@ -131,15 +134,23 @@ def p_programa(p):
         '''
         p[0] = 'PROGRAMA COMPILADO'
 
+
 def p_addP(p):
     'addP :'
+    #tipo de programa
+    global actual_funTipo
+    actual_p_tipo = 'programa'
+    actual_funTipo = actual_p_tipo
+    # asigna nombre del programa
     global fid
-    global ytipo
-    ytipo = 'program'
     fid = p[-1]
-    tablaFun.add_Fun(ytipo, fid, 0, [], [], 0)
-        
     
+    global tablaFun
+    tablaFun = tabFun()
+    tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+
+
 def p_programa1(p):
     '''
 	programa1 : vars modules programa2
@@ -151,23 +162,29 @@ def p_programa2(p):
     '''
 	programa2 :  main
 	''' 
+    
 def p_main(p):
     '''
 	main : MAIN LPAREN param RPAREN LCURLY vars statement RCURLY END
 	'''
-    ytipo = 'main'
+    global actual_funTipo
+    actual_funTipo = p[1]
+    # asigna nombre del programa
+    global fid
     fid = p[1]
-    tablaFun.add_Fun(ytipo, fid, 0, [], [], 0)   
+    global tablaFun
+    tablaFun = tabFun()
+    tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+
 	
+
 def p_tipo(p):
     '''
     tipo : INT 
          | FLOAT 
          | CHAR 
-    '''    
-    global ytipo
-    ytipo = p[0]
-
+    ''' 
     
 def p_vars(p):
     '''
@@ -201,7 +218,6 @@ def p_var2(p):
              | var2 tipo mat SEMICOLON
              | empty
     ''' 
-  
     
 def p_especial(p):
     '''
@@ -237,26 +253,36 @@ def p_modules(p):
 def p_function(p):
     '''
     function : FUN VOID function1 
-             | FUN tipo function2 
+             | FUN INT function2 
+             | FUN CHAR function2 
+             | FUN FLOAT function2  
     ''' 
    
+
+
+def p_save_fun(p):
+    
+    'save_fun : '
+    global actual_funTipo
+    actual_funTipo = p[-2]
+    global fid
+    fid = p[-1]
+    global tablaFun
+    tablaFun = tabFun()
+    tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+
+
 def p_function1(p):
     '''
-    function1 : ID  LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
+    function1 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
     '''
-    ytipo = p[-1]
-    fid = p[1]
-    tablaFun.add_Fun(ytipo, fid, 0, [],[],0)
+    
 
 def p_function2(p):
     '''
     function2 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY   
     ''' 
-
-def p_save_fun(p):
-    '''save_fun:''' 
-    fid = p[-1]
-    tablaFun.add_Fun(ytipo, fid,0, [], [],0)
     
 def p_statement(p):
     '''
@@ -268,12 +294,12 @@ def p_statement(p):
 def p_statement1(p):
     '''
     statement1 : asignacion SEMICOLON
-                | llamada SEMICOLON
-                | lectura SEMICOLON
-                | escritura SEMICOLON
-                | for
-                | if
-                | while
+               | llamada SEMICOLON
+               | lectura SEMICOLON
+               | escritura SEMICOLON
+               | for
+               | if
+               | while
     ''' 
 
 
@@ -310,13 +336,13 @@ def p_llamada(p):
 def p_if(p):
     '''
     if : IF LPAREN exp RPAREN LCURLY statement RCURLY
-        | IF LPAREN exp RPAREN LCURLY statement RCURLY else
+       | IF LPAREN exp RPAREN LCURLY statement RCURLY else
     ''' 
 
 def p_else(p):
     '''
     else : ELSE LCURLY statement RCURLY
-        | empty
+         | empty
     ''' 
 def p_for(p):
     '''
