@@ -1,6 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
-from tablaFuncionesVariables import TabFun, TabVarG, FunGeneral, VarGeneral
+from tablaFuncionesVariables import tabFun, tabVar
 
 #reserved
 reserved = {
@@ -122,29 +122,29 @@ def t_error(t):
 
 lexer = lex.lex()
 
-global scope, current_tipo, is_Function
-is_Function = False
-tableG = TabFun()
-
+global tablaFun
+tablaFun = tabFun()
 
 def p_programa(p):
         '''
-        programa : PROGRAM ID SEMICOLON programa1
+        programa : addP PROGRAM ID SEMICOLON programa1
         '''
         p[0] = 'PROGRAMA COMPILADO'
 
-        #TABLA GLOBAL 
-
-        # agrega funcion programa
-        current_tipo = p[1]
-        myprogram = FunGeneral(current_tipo, p[2])
-        tableG.add(myprogram)
+def p_addP(p):
+    'addP :'
+    global fid
+    global ftipo
+    ftipo = 'program'
+    fid = 'program'
+    tablaFun.add_Fun(ftipo, fid, 0, [], [], 0)
+        
     
 def p_programa1(p):
     '''
 	programa1 : vars modules programa2
 	programa1 : vars modules
-	| programa2
+	          | programa2
 	'''
 
 def p_programa2(p):
@@ -158,11 +158,16 @@ def p_main(p):
 	
 def p_tipo(p):
     '''
-    tipo : INT 
-         | FLOAT
-         | CHAR
+    tipo : INT actual_type
+         | FLOAT actual_type
+         | CHAR actual_type
     '''    
+def p_actual_type(p):
+    'actual_type :'
+    global actual_type 
+    actual_type = p[-1]
 
+    
 def p_vars(p):
     '''
     vars : var 
@@ -177,27 +182,14 @@ def p_var(p):
 def p_var1(p):
     '''
         var1 : ID
-        | ID COMMA var1
-        | ID arr 
-        | ID arr COMMA var1
-        | ID mat COMMA var1
-        | ID mat
-        | ID mat especial
-        | empty
+            | ID COMMA var1
+            | ID arr 
+            | ID arr COMMA var1
+            | ID mat COMMA var1
+            | ID mat
+            | ID mat especial
+            | empty
     '''
-    # inicializador de tabla general de variables
-    tabVar = TabVarG()
-    if not is_Function:
-        scope = 'global'
-    current_tipo = p[-1]
-    iden = p[1]
-    print(iden)
-    if not tabVar.searchVarG(iden):
-        print("variable ", iden, "already in the list")
-    else:
-        var = VarGeneral(current_tipo, iden, scope)
-        tabVar.add(var)
-    #tabVar.printVars()
 
 
 def p_var2(p):
@@ -251,23 +243,12 @@ def p_function1(p):
     '''
     function1 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
     '''
-    tipo = p[-1]
-    name = p[1]  
-    scope = name
-    func = FunGeneral(tipo, name)
-    tableG.add(func)
+
 
 def p_function2(p):
     '''
     function2 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY   
     ''' 
-    tipo = p[-1]
-    print(tipo)
-    name = p[1]
-    scope = name
-    func = FunGeneral(tipo, name)
-    tableG.add(func)
-    #tableG.printFuns()
 
 def p_statement(p):
     '''
@@ -310,6 +291,7 @@ def p_param1(p):
            | ID COMMA param1
            | empty 
     ''' 
+
     
 
 def p_llamada(p): 
@@ -441,6 +423,7 @@ def p_mulexp(p):
     # else:
     #     p[0] = p[1]
 
+
 def p_pexp(p):
     '''
     pexp : var1  
@@ -457,12 +440,15 @@ def p_empty(p):
     empty :
     '''
     p[0] = None
+    
 
 def p_error(p):
     #print("Syntax error at '%s'" % p.value)
     print("Syntax Error in input!", p)
+
     
 parser = yacc.yacc()
+
 
 def main():
     try:
@@ -483,6 +469,7 @@ def main():
         else: 
             print("Syntax error")
     except EOFError:
-        print("ERROREOF")
+        # print("ERROREOF")
+        print(EOFError)
 
 main()

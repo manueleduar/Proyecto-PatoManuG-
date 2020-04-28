@@ -1,69 +1,64 @@
-class VarGeneral: 
-    def __init__(self, tipo, id, scope):
-        self.tipo = tipo
-        self.id = id
-        self.scope = scope
-        
-        
-class FunGeneral: 
-    def __init__(self, tipo, id):
-        self.tipo = tipo
-        self.id = id
-    
-        
-class TabVarG():
+class tabVar:
     def __init__(self):
-        self.tabVG = []
-
-    def add(self, VarGeneral):
-        if not self.searchVarG(VarGeneral.id):
-            self.tabVG.append(VarGeneral)
+        self.var_list ={}
+        
+    def add(self, tipo, id):
+        self.var_list[id] ={
+            'tipo': tipo
+        }
+    def search_vars(self, id):
+        return id in self.var_list
     
-    def searchVarG(self, id): 
-        if id in self.tabVG:
-            return True
-        return False
+    def print_vars(self):
+        for i in self.var_list:
+            print('Variable', i, 'se encuentra en la tabla de variables')
+        
 
-    def printVars(self):
-        for i in self.tabVG:
-            print("Tipo =", i.tipo)
-            print ("ID =", i.id)
+class tabFun():
+    def __init__(self):
+        self.funciones = {}
+
+    def add_Fun(self, tipo, id, nParams, tParams, idParams, nvars):
+        if id not in self.funciones.keys():
+            self.funciones[id] = {
+                'tipo' : tipo, # tipo de funcion
+                'nParams' : nParams, # numero de parametros
+                'tParams' : tParams, # tipo de parametros
+                'idParams' : idParams, # nombre de parametros
+                'vars' : tabVar(),
+                'nvars' : nvars # numero de variables
+            }
+            print('Funcion añadida:', id)
+        else:
+            print('La funcion' , id , 'ya existe')
+
+    def search_tabFun(self, id):
+        return id in self.funciones 
+        
+    def addVar(self, fid, tipo, id):
+        if (self.funciones[fid]['vars'].search_vars(id)):
+            print('La variable', id, 'ya existe')
+        else:
+            self.funciones[fid]['vars'].add(tipo, id)
+            print('Variable', id, 'fue añadida exitosamente')
             
-    # def __del__(self):
-    #    print('Destructor called, Var table  dead.')
-
-
-class TabFun():
-    def __init__(self):
-        self.tab_fun = []
+    def print_fun_vars(self, fid):
+        if id in self.funciones:
+            self.funciones[fid]['vars'].print_vars()
         
-    def add(self, FunGeneral):
-        if not self.searchFun(FunGeneral.id):
-            self.tab_fun.append(FunGeneral)
-    
-    def searchFun(self, id): 
-        if id in self.tab_fun:
-            return True
-        return False
-    def printFuns(self):
-        for i in self.tab_fun:
-            print("Tipo =", i.tipo)
-            print ("ID =", i.id)
 
-    # def __del__(self):
-    #     print('Destructor called, function table dead.')
+# # tabla de funciones
+# z = tabFun()
 
-    
-# x = VarGeneral('int', 'a', 'global')
-# y = VarGeneral('char', 'v', 'local')
+# z.add_Fun('void', 'ImprimeParametros', 3,
+#  ['int', 'float', 'char'],['uno','dos', 'tres'], 0)
 
-# a = FunGeneral('void', 'MarcaBien')
 
-# tablaGen = TabVarG()
-# tablaGen.add(x)
-# tablaGen.add(y)
+# z.addVar('ImprimeParametros','int', 'i')
+# z.addVar('ImprimeParametros', 'float', 'o')
+# z.addVar('ImprimeParametros', 'char', 'p')
 
-# x1 = TabFun()
-# x1.add(a)
+# print(z.search_tabFun('ImprimeParametros'))
+# print(z.search_tabFun('hgrughurhgu'))
 
-# tablaGen.printVars()
+# z.print_fun_vars('hola')
