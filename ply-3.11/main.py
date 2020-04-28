@@ -127,17 +127,17 @@ tablaFun = tabFun()
 
 def p_programa(p):
         '''
-        programa : addP PROGRAM ID SEMICOLON programa1
+        programa :  PROGRAM ID addP SEMICOLON programa1
         '''
         p[0] = 'PROGRAMA COMPILADO'
 
 def p_addP(p):
     'addP :'
     global fid
-    global ftipo
-    ftipo = 'program'
-    fid = 'program'
-    tablaFun.add_Fun(ftipo, fid, 0, [], [], 0)
+    global ytipo
+    ytipo = 'program'
+    fid = p[-1]
+    tablaFun.add_Fun(ytipo, fid, 0, [], [], 0)
         
     
 def p_programa1(p):
@@ -154,18 +154,19 @@ def p_programa2(p):
 def p_main(p):
     '''
 	main : MAIN LPAREN param RPAREN LCURLY vars statement RCURLY END
-	'''   
+	'''
+    ytipo = 'main'
+    fid = p[1]
+    tablaFun.add_Fun(ytipo, fid, 0, [], [], 0)   
 	
 def p_tipo(p):
     '''
-    tipo : INT actual_type
-         | FLOAT actual_type
-         | CHAR actual_type
+    tipo : INT 
+         | FLOAT 
+         | CHAR 
     '''    
-def p_actual_type(p):
-    'actual_type :'
-    global actual_type 
-    actual_type = p[-1]
+    global ytipo
+    ytipo = p[0]
 
     
 def p_vars(p):
@@ -241,15 +242,22 @@ def p_function(p):
    
 def p_function1(p):
     '''
-    function1 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
+    function1 : ID  LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
     '''
-
+    ytipo = p[-1]
+    fid = p[1]
+    tablaFun.add_Fun(ytipo, fid, 0, [],[],0)
 
 def p_function2(p):
     '''
-    function2 : ID LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY   
+    function2 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY   
     ''' 
 
+def p_save_fun(p):
+    '''save_fun:''' 
+    fid = p[-1]
+    tablaFun.add_Fun(ytipo, fid,0, [], [],0)
+    
 def p_statement(p):
     '''
     statement :  statement1 statement
