@@ -144,7 +144,6 @@ def p_addP(p):
     # asigna nombre del programa
     global fid
     fid = p[-1]
-    
     global tablaFun
     tablaFun = tabFun()
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
@@ -196,7 +195,20 @@ def p_var(p):
     '''
     var : VAR var2
     '''     
-
+    
+def p_addV(p):
+    'addV:'
+    global tablaFun
+    global actual_varTipo
+    global varId
+    actual_varTipo = p[-1]
+    varId = p[1]
+    print (fid)
+    if tablaFun.search_tabFun(fid):
+        tablaFun.addVar(fid, actual_varTipo, varId)
+    else:
+        print("funcion no existe")
+        
 def p_var1(p):
     '''
         var1 : ID
@@ -208,17 +220,26 @@ def p_var1(p):
             | ID mat especial
             | empty
     '''
-
-
+def p_addV(p):
+    'addV:'
+    global tablaFun
+    global actual_varTipo
+    global varId
+    actual_varTipo = p[-1]
+    varId = p[1]
+    print (fid)
+    if tablaFun.search_tabFun(fid):
+        tablaFun.addVar(fid, actual_varTipo, varId)
+    else:
+        print("funcion no existe")
+        
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
     '''
-        var2 : var2 tipo var1 SEMICOLON
-             | var2 tipo arr SEMICOLON
-             | var2 tipo mat SEMICOLON
+        var2 : var2 tipo addVar var1 SEMICOLON
              | empty
     ''' 
-    
+
 def p_especial(p):
     '''
     especial : TRANSPUESTA
