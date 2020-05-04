@@ -196,22 +196,11 @@ def p_var(p):
     var : VAR var2
     '''     
     
-def p_addV(p):
-    'addV:'
-    global tablaFun
-    global actual_varTipo
-    global varId
-    actual_varTipo = p[-1]
-    varId = p[1]
-    print (fid)
-    if tablaFun.search_tabFun(fid):
-        tablaFun.addVar(fid, actual_varTipo, varId)
-    else:
-        print("funcion no existe")
+
         
 def p_var1(p):
     '''
-        var1 : ID
+        var1 : ID 
             | ID COMMA var1
             | ID arr 
             | ID arr COMMA var1
@@ -220,23 +209,23 @@ def p_var1(p):
             | ID mat especial
             | empty
     '''
-def p_addV(p):
-    'addV:'
-    global tablaFun
-    global actual_varTipo
     global varId
-    actual_varTipo = p[-1]
     varId = p[1]
-    print (fid)
-    if tablaFun.search_tabFun(fid):
-        tablaFun.addVar(fid, actual_varTipo, varId)
-    else:
-        print("funcion no existe")
+    print( "var id",varId)
+    
+
+def p_addV(p):
+    'addV :'
+    global actual_varTipo
+    actual_varTipo = p[-1]
+    print("actualVar tipo:",actual_varTipo)
+   
+
         
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
     '''
-        var2 : var2 tipo addVar var1 SEMICOLON
+        var2 : var2 tipo addV var1 SEMICOLON
              | empty
     ''' 
 
