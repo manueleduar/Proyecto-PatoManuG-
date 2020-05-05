@@ -1,4 +1,3 @@
-
 import ply.lex as lex
 import ply.yacc as yacc
 from tablaFuncionesVariables import tabFun, tabVar
@@ -23,11 +22,10 @@ reserved = {
     'from' : 'FROM',
     'while': 'WHILE',
     'to': 'TO'
-
 }
 
 #tokens
-tokens =[
+tokens = [
     'ID',
     'CTEI',#CONSTANTE ENTERA
     'CTEF', #CONSTANTE FLOTANTE
@@ -175,19 +173,24 @@ def p_main(p):
     tablaFun = tabFun()
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
     print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
-
 	
 
 def p_tipo(p):
     '''
-    tipo : INT 
-         | FLOAT 
-         | CHAR 
+    tipo : INT guardaTipoVar
+         | FLOAT guardaTipoVar
+         | CHAR guardaTipoVar 
     ''' 
+
+def p_guardaTipoVar(p): 
+    'guardaTipoVar : '
+    global actual_varTipo
+    actual_varTipo = p[-1]
+    # print('Tipo de VAR en TABLA de variables:', actual_varTipo)
     
 def p_vars(p):
     '''
-    vars : var 
+    vars : var
          | empty
     '''
 
@@ -200,35 +203,42 @@ def p_var(p):
         
 def p_var1(p):
     '''
-        var1 : ID 
-            | ID COMMA var1
-            | ID arr 
-            | ID arr COMMA var1
-            | ID mat COMMA var1
-            | ID mat
-            | ID mat especial
-            | empty
+        var1 : ID
+            | ID COMMA var1 addV
+            | ID arr
+            | ID arr COMMA var1  addV
+            | ID mat COMMA var1 addV
+            | ID mat 
+            | ID mat especial 
+            | empty 
     '''
     global varId
     varId = p[1]
-    print( "var id",varId)
+    
     
 
 def p_addV(p):
     'addV :'
+    global tablaFun
+    global varId
     global actual_varTipo
-    actual_varTipo = p[-1]
-    print("actualVar tipo:",actual_varTipo)
-   
+    # print ('VARTIPO de ADDV',actual_varTipo)
+    # print('VARID de ADDV', varId)
+
+    if tablaFun.search_tabFun(fid):
+        tablaFun.addVar(fid, actual_varTipo, varId)
+        print('\tVariable:', varId, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
+    else:
+        print('Función no existe')
 
         
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
     '''
-        var2 : var2 tipo addV var1 SEMICOLON
+        var2 : var2 tipo var1 SEMICOLON addV
              | empty
     ''' 
-
+    
 def p_especial(p):
     '''
     especial : TRANSPUESTA
@@ -270,8 +280,7 @@ def p_function(p):
    
 
 
-def p_save_fun(p):
-    
+def p_save_fun(p):   
     'save_fun : '
     global actual_funTipo
     actual_funTipo = p[-2]

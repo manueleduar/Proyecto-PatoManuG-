@@ -6,12 +6,12 @@ class tabVar:
         self.var_list[id] ={
             'tipo': tipo
         }
+        
     def search_vars(self, id):
-        return id in self.var_list
+        return id in self.var_list.keys()
     
     def print_vars(self):
-        for i in self.var_list:
-            print('Variable', i, 'se encuentra en la tabla de variables')
+        print(self.var_list.items())
         
 
 class tabFun():
