@@ -14,6 +14,7 @@ class Cube:
             11: '&&',
             12: '|'
             }
+            
         self.types = {
             1: 'int',
             2: 'float',
@@ -23,7 +24,7 @@ class Cube:
             6: 'CTEF',
             7: 'CTEC',
             8: 'CTESTRING',
-            9: 'ERROR',
+            9: 'ERROR de operador',
             }
 
         self.compat = {
@@ -41,8 +42,8 @@ class Cube:
                     self.operators[8]: self.types[4],
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
-                    self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
                 },
                 # int-float compatibility
                 self.types[2]: {
@@ -56,8 +57,8 @@ class Cube:
                     self.operators[8]: self.types[4],
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
-                    self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
 
                 },
                 # int-char compatibility
@@ -97,18 +98,18 @@ class Cube:
             self.types[2]: {
                     # float-int compatibility
                 self.types[1]: {
-                    self.operators[1]: self.types[9],
-                    self.operators[2]: self.types[9],
-                    self.operators[3]: self.types[9],
-                    self.operators[4]: self.types[9],
-                    self.operators[5]: self.types[9],
-                    self.operators[6]: self.types[9],
-                    self.operators[7]: self.types[9],
-                    self.operators[8]: self.types[9],
+                    self.operators[1]: self.types[2],
+                    self.operators[2]: self.types[2],
+                    self.operators[3]: self.types[2],
+                    self.operators[4]: self.types[2],
+                    self.operators[5]: self.types[4],
+                    self.operators[6]: self.types[4],
+                    self.operators[7]: self.types[4],
+                    self.operators[8]: self.types[4],
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
-                    self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
 
                 },
                 # float-float compatibility
@@ -123,8 +124,8 @@ class Cube:
                     self.operators[8]: self.types[4],
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
-                    self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
 
                 },
                 # float-char compatibility
@@ -204,8 +205,8 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
-                    self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
                 },
                  #char-bool compatibility
                 self.types[4]:{
@@ -297,20 +298,18 @@ class Cube:
        return self.compat[izq][der][op]
 
     def printO(self, izq, der, op):
-        print("valor de retorno es:")
-        print(self.getTipo(izq, der, op))
+        print('Valor de retorno es:', self.getTipo(izq, der, op))
 
 
 x = Cube()
-print("el primer operando es de tipo:", x.types[4])
-print("el segundo operando es de tipo:", x.types[4])
-print("el operador es:", x.operators[1])
-x.printO(x.types[4], x.types[4], x.operators[1])
 
-print("el primer operando es de tipo:", x.types[1])
-print("el segundo operando es de tipo:", x.types[2])
-print("el operador es:", x.operators[3])
-x.printO(x.types[1], x.types[2], x.operators[3])
+x.printO('int', 'int', '+')
+x.printO('int', 'int', '>=')
+x.printO('int', 'int', '<=')
+x.printO('int', 'int', '&&')
+x.printO('int', 'int', '|')
+x.printO('char', 'char', '==')
+
 
 
 
