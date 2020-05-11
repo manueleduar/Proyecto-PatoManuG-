@@ -1,0 +1,25 @@
+program heinz;
+
+
+main () {
+  var 
+  int a, b, c;
+  float d, e, f;
+
+  a = 5;
+  b = 10;
+  c = 15;
+  d = 20;
+  e = 25;
+  f = 30;
+
+  print(a * b);
+  print (c / d);
+  print (e + f);
+
+  if (a != b){
+      print("hola mundo");
+  }
+}
+
+end

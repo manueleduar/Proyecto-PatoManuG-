@@ -77,6 +77,7 @@ while (p<10){
     print (i + j);
     print (cal * cu);
     print (cal / cu);
+    print( i * j);
     imprimeVar();
     print(Hello(10));
 }

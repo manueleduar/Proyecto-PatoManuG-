@@ -1,6 +1,7 @@
 import ply.lex as lex
 import ply.yacc as yacc
-from tablaFuncionesVariables import tabFun, tabVar
+from tablaFuncionesVariables import tabFun, tabVar, var
+from stack import Stack
 
 #reserved
 reserved = {
@@ -76,7 +77,7 @@ t_GT = r'\>'
 t_LT = r'\<'
 t_GTE = r'\=>'
 t_LTE = r'\<='
-t_NE = r'\<>' 
+t_NE = r'\!=' 
 t_AND = r'\&&'
 t_OR = r'\|'
 t_TRANSPUESTA = r'\¡'
@@ -125,6 +126,11 @@ lexer = lex.lex()
 tablaFun = tabFun()
 actualFunType = ''
 fid = ''
+operando_name_and_types = Stack()
+
+operadores = Stack()
+
+
 
 def p_programa(p):
         '''
@@ -137,15 +143,17 @@ def p_addP(p):
     'addP :'
     #tipo de programa
     global actual_funTipo
-    actual_p_tipo = 'programa'
-    actual_funTipo = actual_p_tipo
+    actual_funTipo = 'programa'
     # asigna nombre del programa
     global fid
     fid = p[-1]
     global tablaFun
     tablaFun = tabFun()
-    tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-    print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+    if tablaFun.search_tabFun(fid):
+        print("funcion ya existe")
+    else:
+        tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+        print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 
 
 def p_programa1(p):
@@ -199,7 +207,6 @@ def p_var(p):
     var : VAR var2
     '''     
     
-
         
 def p_var1(p):
     '''
@@ -222,12 +229,15 @@ def p_addV(p):
     global tablaFun
     global varId
     global actual_varTipo
-    # print ('VARTIPO de ADDV',actual_varTipo)
-    # print('VARID de ADDV', varId)
+    
 
     if tablaFun.search_tabFun(fid):
         tablaFun.addVar(fid, actual_varTipo, varId)
         print('\tVariable:', varId, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
+        # agregando nombre y tipo a la pila
+        varDatos = var (actual_varTipo, varId)
+        operando_name_and_types.push(varDatos)
+              
     else:
         print('Función no existe')
 
@@ -404,15 +414,13 @@ def p_exp(p):
     exp : nexp  
         | nexp OR nexp
     ''' 
+
+    
 def p_nexp(p):
     '''
     nexp : compexp
-         | compexp AND compexp
+         | compexp AND saveOperator compexp
     ''' 
-    # if p[2]=='||':
-    #     p[0] = p[1] | p[3]
-    # else:
-    #     p[0] = p[1]
     
 
 def p_compexp(p):
@@ -421,60 +429,41 @@ def p_compexp(p):
             | compexp1 sumexp
     ''' 
 
-    # if p[2]=='&&':
-    #     p[0] = p[1] | p[3]
-    # else:
-    #     p[0] = p[1]
 
 
 def p_compexp1(p):
     '''
-    compexp1 : sumexp GT sumexp
-             | sumexp LT sumexp
-             | sumexp GTE sumexp
-             | sumexp LTE sumexp
-             | sumexp NE sumexp 
+    compexp1 : sumexp GT saveOperator sumexp
+             | sumexp LT saveOperator sumexp
+             | sumexp GTE saveOperator sumexp
+             | sumexp LTE saveOperator sumexp
+             | sumexp NE saveOperator sumexp 
     ''' 
 
 
-    # def switch (option):
-    #     options ={
-    #         1: p[0] = p[1] > p[3]
-    #         2: p[0] = p[1] < p[3]
-    #         3: p[0] = p[1] >= p[3]
-    #         4: p[0] = p[1] <= p[3]
-    #         3: p[0] = p[1] != p[3]
-    #     }
-    #     print options.get(option, "Invalid comparison")
 
 
 def p_sumexp(p):
     '''
     sumexp : mulexp  
-           | mulexp PLUS mulexp
-           | mulexp MINUS mulexp
+           | mulexp PLUS saveOperator mulexp
+           | mulexp MINUS saveOperator mulexp
     ''' 
+    
+def p_saveOperator(p):
+    'saveOperator : '
+    global actual_operator
+    actual_operator = p[-1]
+    operadores.push(actual_operator)
+    print(operadores.top())
 
-    # if p[2] == '+':
-    #     p[0] = p[1] + p[3]
-    # elif p[2] == '-':
-    #     p[0] = p[1] - p[3]
-    # else:
-    #     p[0] = p[1]
 
 def p_mulexp(p):
     '''
     mulexp : pexp  
-           | pexp MUL pexp
-           | pexp DIV pexp
+           | pexp MUL saveOperator pexp
+           | pexp DIV saveOperator pexp
     '''
-
-    # if p[2] == '*':
-    #     p[0] = p[1] * p[3]
-    # elif p[2] == '/':
-    #     p[0] = p[1] / p[3]
-    # else:
-    #     p[0] = p[1]
 
 
 def p_pexp(p):
@@ -496,7 +485,6 @@ def p_empty(p):
     
 
 def p_error(p):
-    #print("Syntax error at '%s'" % p.value)
     print("Syntax Error in input!", p)
 
     
@@ -506,7 +494,9 @@ parser = yacc.yacc()
 def main():
     try:
         #nombreArchivo = 'test1.txt'
-        nombreArchivo = 'prueba2.txt'
+        # nombreArchivo = 'prueba2.txt'
+        # nombreArchivo = 'prueba4.txt'
+        nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()
