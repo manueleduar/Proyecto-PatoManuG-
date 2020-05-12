@@ -1,6 +1,7 @@
 import ply.lex as lex
 import ply.yacc as yacc
 from tablaFuncionesVariables import tabFun, tabVar, var
+from cube import Cube
 from stack import Stack
 
 #reserved
@@ -127,7 +128,6 @@ tablaFun = tabFun()
 actualFunType = ''
 fid = ''
 operando_name_and_types = Stack()
-
 operadores = Stack()
 
 
@@ -182,14 +182,14 @@ def p_main(p):
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
     print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 	
-
+#---------------Tipos de variables aceptadas-------------------#
 def p_tipo(p):
     '''
     tipo : INT guardaTipoVar
          | FLOAT guardaTipoVar
          | CHAR guardaTipoVar 
     ''' 
-
+#--------------Funcion para guardar los tipos de vairbles encontrados-------------------#
 def p_guardaTipoVar(p): 
     'guardaTipoVar : '
     global actual_varTipo
@@ -223,7 +223,7 @@ def p_var1(p):
     varId = p[1]
     
     
-
+#-----------Anadir variable a la tabla de variables----------------#
 def p_addV(p):
     'addV :'
     global tablaFun
