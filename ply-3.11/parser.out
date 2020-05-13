@@ -7,7 +7,7 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> programa
-Rule 1     programa -> PROGRAM ID addP SEMICOLON programa1
+Rule 1     programa -> PROGRAM ID SEMICOLON addP programa1
 Rule 2     addP -> <empty>
 Rule 3     programa1 -> vars modules programa2
 Rule 4     programa1 -> vars modules
@@ -212,7 +212,7 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . programa
-    (1) programa -> . PROGRAM ID addP SEMICOLON programa1
+    (1) programa -> . PROGRAM ID SEMICOLON addP programa1
 
     PROGRAM         shift and go to state 2
 
@@ -226,30 +226,33 @@ state 1
 
 state 2
 
-    (1) programa -> PROGRAM . ID addP SEMICOLON programa1
+    (1) programa -> PROGRAM . ID SEMICOLON addP programa1
 
     ID              shift and go to state 3
 
 
 state 3
 
-    (1) programa -> PROGRAM ID . addP SEMICOLON programa1
-    (2) addP -> .
+    (1) programa -> PROGRAM ID . SEMICOLON addP programa1
 
-    SEMICOLON       reduce using rule 2 (addP -> .)
+    SEMICOLON       shift and go to state 4
 
-    addP                           shift and go to state 4
 
 state 4
 
-    (1) programa -> PROGRAM ID addP . SEMICOLON programa1
+    (1) programa -> PROGRAM ID SEMICOLON . addP programa1
+    (2) addP -> .
 
-    SEMICOLON       shift and go to state 5
+    VAR             reduce using rule 2 (addP -> .)
+    MAIN            reduce using rule 2 (addP -> .)
+    FUN             reduce using rule 2 (addP -> .)
+    $end            reduce using rule 2 (addP -> .)
 
+    addP                           shift and go to state 5
 
 state 5
 
-    (1) programa -> PROGRAM ID addP SEMICOLON . programa1
+    (1) programa -> PROGRAM ID SEMICOLON addP . programa1
     (3) programa1 -> . vars modules programa2
     (4) programa1 -> . vars modules
     (5) programa1 -> . programa2
@@ -277,9 +280,9 @@ state 5
 
 state 6
 
-    (1) programa -> PROGRAM ID addP SEMICOLON programa1 .
+    (1) programa -> PROGRAM ID SEMICOLON addP programa1 .
 
-    $end            reduce using rule 1 (programa -> PROGRAM ID addP SEMICOLON programa1 .)
+    $end            reduce using rule 1 (programa -> PROGRAM ID SEMICOLON addP programa1 .)
 
 
 state 7

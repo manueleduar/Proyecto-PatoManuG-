@@ -1,9 +1,9 @@
-program heinz;
+program patito_program;
 
 
 main () {
   var 
-  int a, b, c;
+  int a, b, c, d;
   float d, e, f;
 
   a = 5;
