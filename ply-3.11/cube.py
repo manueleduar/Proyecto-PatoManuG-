@@ -24,7 +24,7 @@ class Cube:
             6: 'CTEF',
             7: 'CTEC',
             8: 'CTESTRING',
-            9: 'ERROR de operador',
+            9: 'ERROR',
             }
 
         self.compat = {
@@ -301,14 +301,14 @@ class Cube:
         print('Valor de retorno es:', self.getTipo(izq, der, op))
 
 
-x = Cube()
+# x = Cube()
 
-x.printO('int', 'int', '+')
-x.printO('int', 'int', '>=')
-x.printO('int', 'int', '<=')
-x.printO('int', 'int', '&&')
-x.printO('int', 'int', '|')
-x.printO('char', 'char', '==')
+# x.printO('int', 'int', '+')
+# x.printO('int', 'int', '>=')
+# x.printO('int', 'int', '<=')
+# x.printO('int', 'int', '&&')
+# x.printO('int', 'int', '|')
+# x.printO('char', 'char', '==')
 
 
 
