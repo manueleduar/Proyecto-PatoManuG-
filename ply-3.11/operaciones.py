@@ -12,6 +12,10 @@ class Quad():
         self.quad.append(q)
         #añade el contador
         self.cont += 1
+        #anadir saltos
+    def addJ(self, goto, result, place):
+        q ={goto, result, place}
+        self.quad.append(q)
     def getQ(self):
         #obtiene el ultimo
         l = self.quad.pop()
@@ -20,7 +24,7 @@ class Quad():
 class Operaciones():
     def __init__(self):
         self.cubo = Cube()
-    def suma(self, operaodres:Stack, operando_name_and_types:Stack): 
+    def suma(self, operaodres:Stack, operando_name_and_types:Stack, quad:Quad): 
         if operaodres.top() == '+' or '-':
             #es igual al ultimo añadido 
             right_operand = operando_name_and_types.pop()
@@ -29,8 +33,7 @@ class Operaciones():
             #verifica que los tipos concuerden accediendo al atributo de los operandos
             res_type = self.cubo.getTipo(right_operand.tipo, left_operand.tipo, operador)
             if (res_type != 'ERROR'):
-                #crea un objeto cuadruplo #creo que este puede ser llamado en main para evitar crear vrios#
-                quad = Quad()
+                
                 #añade los operandos y operador para crear cuadruplo 
                 quad.addQ(right_operand, left_operand,operador)
                 var_temp =  quad.getQ()
@@ -41,27 +44,43 @@ class Operaciones():
                 #FALTA SI ALGUN OPERANDO FUERA TEMPORAL RETORNARLO A AVAIL#
             else:
                 print("Type mismatch")
+    
+    def if_salto(self, operadores:Stack, operando_name_and_types:Stack, saltos:Stack, quad:Quad):
+        #si el ultimo operador metido a la cola fue uno de los siguientes
+         if operadores.top() == '>' or '<' or'<=' or '>=' or '==' or '!=':
+             #saca el ultimo operando metido a operandos
+             res_type = operando_name_and_types.pop()
+             #si el ultimo tipo no es de tipo booleano 
+             if (res_type.tipo != 'bool'):
+                print("Type mismatch")
+             else:
+                 #genera el cuadruplo con un pointer vacio, el resultado y el operador es un goto
+                quad.addQ("pointer", res_type, "goTo")
+                #se pone el salto
+                saltos.push(quad)
+               
+            
 
-print ("hi welcome to test")
+# print ("hi welcome to test")
 
-s = Stack()
-z = Stack()
-from tablaFuncionesVariables import var
+# s = Stack()
+# z = Stack()
+# from tablaFuncionesVariables import var
 
-uno = 1
-dos = 2
-cubo = Cube()
-a = var('float', uno)
-b = var('float', dos)
+# uno = 1
+# dos = 2
+# cubo = Cube()
+# a = var('float', uno)
+# b = var('float', dos)
 
-print("a", a.tipo,"b", b.tipo)
+# print("a", a.tipo,"b", b.tipo)
 
-s.push(a)
-s.push(b)
-z.push('+')
+# s.push(a)
+# s.push(b)
+# z.push('+')
 
-o = Operaciones()
+# o = Operaciones()
 
-o.suma(z,s)
+# o.suma(z,s)
 
 

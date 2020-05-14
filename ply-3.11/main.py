@@ -129,9 +129,7 @@ actualFunType = ''
 fid = ''
 operando_name_and_types = Stack()
 operadores = Stack()
-
-
-
+saltos = Stack()
 def p_programa(p):
         '''
         programa :  PROGRAM ID addP SEMICOLON programa1
