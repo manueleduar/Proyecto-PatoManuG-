@@ -17,13 +17,21 @@ fun int Hello(int g);
     return g;    
 }
 
+
 fun void Bye();
 {
     var
     int p, q;
+    int p;
     q = 10;
     p = 11;
     print(q+p);    
+}
+fun void Bye();
+{
+    var
+    int x1, x2;
+    q = 10;   
 }
 
 fun void imprimeVar();
@@ -43,10 +51,12 @@ fun int Hello2();
     return res;    
 }
 
+
 main () {
   var 
     int uno, iMat[5][5], iArr[10];
     int mat2[5][4];
+    char c3;
     i = 1;
     j = 2;
     p = 3;

@@ -24,7 +24,7 @@ class tabFun():
         self.funciones = {}
 
     def add_Fun(self, tipo, id, nParams, tParams, idParams, nvars):
-        if id not in self.funciones.keys():
+        if self.funciones.get(id) == None:
             self.funciones[id] = {
                 'tipo' : tipo, # tipo de funcion
                 'nParams' : nParams, # numero de parametros
@@ -45,8 +45,10 @@ class tabFun():
             print('La variable', id, 'ya existe')
         else:
             self.funciones[fid]['vars'].add(tipo, id)
-            print('Variable', id, 'fue añadida exitosamente')
+            print('Variable', id, 'de tipo', tipo, 'fue añadida exitosamente')
             
     def print_fun_vars(self, fid):
         if id in self.funciones:
             self.funciones[fid]['vars'].print_vars()
+
+

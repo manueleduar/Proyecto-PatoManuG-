@@ -231,7 +231,7 @@ def p_addV(p):
 
     if tablaFun.search_tabFun(fid):
         tablaFun.addVar(fid, actual_varTipo, varId)
-        print('\tVariable:', varId, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
+        # print('\tVariable:', varId, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
         # agregando nombre y tipo a la pila
         varDatos = var (actual_varTipo, varId)
         operando_name_and_types.push(varDatos)
@@ -295,9 +295,8 @@ def p_save_fun(p):
     global fid
     fid = p[-1]
     global tablaFun
-    tablaFun = tabFun()
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-    print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+    # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 
 
 def p_function1(p):
@@ -492,9 +491,9 @@ parser = yacc.yacc()
 def main():
     try:
         #nombreArchivo = 'test1.txt'
-        # nombreArchivo = 'prueba2.txt'
+        nombreArchivo = 'prueba2.txt'
         # nombreArchivo = 'prueba4.txt'
-        nombreArchivo = 'prueba3.txt'
+        # nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()
