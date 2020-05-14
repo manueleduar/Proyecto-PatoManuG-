@@ -132,7 +132,7 @@ operadores = Stack()
 saltos = Stack()
 def p_programa(p):
         '''
-        programa :  PROGRAM ID addP SEMICOLON programa1
+        programa :  PROGRAM ID SEMICOLON addP programa1
         '''
         p[0] = 'PROGRAMA COMPILADO'
 
@@ -144,7 +144,7 @@ def p_addP(p):
     actual_funTipo = 'programa'
     # asigna nombre del programa
     global fid
-    fid = p[-1]
+    fid = p[-2]
     global tablaFun
     tablaFun = tabFun()
     if tablaFun.search_tabFun(fid):
