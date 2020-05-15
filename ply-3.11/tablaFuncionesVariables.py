@@ -37,6 +37,7 @@ class tabFun():
                 'nvars' : nvars # numero de variables
             }
             print('\nFuncion añadida:', id)
+            
         else:
             print('La funcion' , id , 'ya existe')
 
