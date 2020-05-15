@@ -17,6 +17,9 @@ class tabVar:
     
     def print_vars(self):
         print(self.var_list.items())
+
+    def get_Tipo(self, id):
+        return self.var_list[id]['tipo']
         
 
 class tabFun():
@@ -48,7 +51,7 @@ class tabFun():
             print('Variable', id, 'de tipo', tipo, 'fue añadida exitosamente')
             
     def print_fun_vars(self, fid):
-        if id in self.funciones:
+        if fid in self.funciones:
             self.funciones[fid]['vars'].print_vars()
 
 

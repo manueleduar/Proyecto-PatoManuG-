@@ -43,11 +43,11 @@ Rule 33    mat -> LBRACKET exp RBRACKET LBRACKET CTEI RBRACKET
 Rule 34    mat -> LBRACKET CTEI RBRACKET LBRACKET exp RBRACKET
 Rule 35    modules -> function modules
 Rule 36    modules -> empty
-Rule 37    function -> FUN VOID function1
-Rule 38    function -> FUN INT function2
-Rule 39    function -> FUN CHAR function2
-Rule 40    function -> FUN FLOAT function2
-Rule 41    save_fun -> <empty>
+Rule 37    save_fun -> <empty>
+Rule 38    function -> FUN VOID function1
+Rule 39    function -> FUN INT function2
+Rule 40    function -> FUN CHAR function2
+Rule 41    function -> FUN FLOAT function2
 Rule 42    function1 -> ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
 Rule 43    function2 -> ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY
 Rule 44    statement -> statement1 statement
@@ -112,7 +112,7 @@ Rule 101   empty -> <empty>
 Terminals, with rules where they appear
 
 AND                  : 80
-CHAR                 : 10 39
+CHAR                 : 10 40
 COMILLA              : 
 COMMA                : 16 18 19 59 70
 CTEC                 : 98
@@ -124,15 +124,15 @@ DIV                  : 94
 ELSE                 : 64
 END                  : 7
 EQUALS               : 53 54 55
-FLOAT                : 9 40
+FLOAT                : 9 41
 FOR                  : 66
 FROM                 : 67
-FUN                  : 37 38 39 40
+FUN                  : 38 39 40 41
 GT                   : 83
 GTE                  : 85
 ID                   : 1 15 16 17 18 19 20 21 42 43 53 54 55 58 59 61
 IF                   : 62 63
-INT                  : 8 38
+INT                  : 8 39
 INVERSA              : 27
 LBRACKET             : 29 30 31 31 32 32 33 33 34 34
 LCURLY               : 7 42 43 62 63 64 66 68
@@ -156,7 +156,7 @@ SEMICOLON            : 1 24 42 43 43 46 47 48 49
 TO                   : 67
 TRANSPUESTA          : 26
 VAR                  : 14
-VOID                 : 37
+VOID                 : 38
 WHILE                : 68
 error                : 
 
@@ -178,8 +178,8 @@ exp                  : 30 32 32 33 34 43 53 54 55 61 62 63 67 68 75 100
 for                  : 50
 for1                 : 66
 function             : 35
-function1            : 37
-function2            : 38 39 40
+function1            : 38
+function2            : 39 40 41
 guardaTipoVar        : 8 9 10
 if                   : 51
 lectura              : 48
@@ -291,10 +291,10 @@ state 7
     (4) programa1 -> vars . modules
     (35) modules -> . function modules
     (36) modules -> . empty
-    (37) function -> . FUN VOID function1
-    (38) function -> . FUN INT function2
-    (39) function -> . FUN CHAR function2
-    (40) function -> . FUN FLOAT function2
+    (38) function -> . FUN VOID function1
+    (39) function -> . FUN INT function2
+    (40) function -> . FUN CHAR function2
+    (41) function -> . FUN FLOAT function2
     (101) empty -> .
 
     FUN             shift and go to state 17
@@ -403,10 +403,10 @@ state 15
     (35) modules -> function . modules
     (35) modules -> . function modules
     (36) modules -> . empty
-    (37) function -> . FUN VOID function1
-    (38) function -> . FUN INT function2
-    (39) function -> . FUN CHAR function2
-    (40) function -> . FUN FLOAT function2
+    (38) function -> . FUN VOID function1
+    (39) function -> . FUN INT function2
+    (40) function -> . FUN CHAR function2
+    (41) function -> . FUN FLOAT function2
     (101) empty -> .
 
     FUN             shift and go to state 17
@@ -427,10 +427,10 @@ state 16
 
 state 17
 
-    (37) function -> FUN . VOID function1
-    (38) function -> FUN . INT function2
-    (39) function -> FUN . CHAR function2
-    (40) function -> FUN . FLOAT function2
+    (38) function -> FUN . VOID function1
+    (39) function -> FUN . INT function2
+    (40) function -> FUN . CHAR function2
+    (41) function -> FUN . FLOAT function2
 
     VOID            shift and go to state 23
     INT             shift and go to state 24
@@ -519,7 +519,7 @@ state 22
 
 state 23
 
-    (37) function -> FUN VOID . function1
+    (38) function -> FUN VOID . function1
     (42) function1 -> . ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
 
     ID              shift and go to state 35
@@ -528,7 +528,7 @@ state 23
 
 state 24
 
-    (38) function -> FUN INT . function2
+    (39) function -> FUN INT . function2
     (43) function2 -> . ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY
 
     ID              shift and go to state 37
@@ -537,7 +537,7 @@ state 24
 
 state 25
 
-    (39) function -> FUN CHAR . function2
+    (40) function -> FUN CHAR . function2
     (43) function2 -> . ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY
 
     ID              shift and go to state 37
@@ -546,7 +546,7 @@ state 25
 
 state 26
 
-    (40) function -> FUN FLOAT . function2
+    (41) function -> FUN FLOAT . function2
     (43) function2 -> . ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY
 
     ID              shift and go to state 37
@@ -635,56 +635,56 @@ state 33
 
 state 34
 
-    (37) function -> FUN VOID function1 .
+    (38) function -> FUN VOID function1 .
 
-    FUN             reduce using rule 37 (function -> FUN VOID function1 .)
-    MAIN            reduce using rule 37 (function -> FUN VOID function1 .)
-    $end            reduce using rule 37 (function -> FUN VOID function1 .)
+    FUN             reduce using rule 38 (function -> FUN VOID function1 .)
+    MAIN            reduce using rule 38 (function -> FUN VOID function1 .)
+    $end            reduce using rule 38 (function -> FUN VOID function1 .)
 
 
 state 35
 
     (42) function1 -> ID . save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
-    (41) save_fun -> .
+    (37) save_fun -> .
 
-    LPAREN          reduce using rule 41 (save_fun -> .)
+    LPAREN          reduce using rule 37 (save_fun -> .)
 
     save_fun                       shift and go to state 50
 
 state 36
 
-    (38) function -> FUN INT function2 .
+    (39) function -> FUN INT function2 .
 
-    FUN             reduce using rule 38 (function -> FUN INT function2 .)
-    MAIN            reduce using rule 38 (function -> FUN INT function2 .)
-    $end            reduce using rule 38 (function -> FUN INT function2 .)
+    FUN             reduce using rule 39 (function -> FUN INT function2 .)
+    MAIN            reduce using rule 39 (function -> FUN INT function2 .)
+    $end            reduce using rule 39 (function -> FUN INT function2 .)
 
 
 state 37
 
     (43) function2 -> ID . save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY
-    (41) save_fun -> .
+    (37) save_fun -> .
 
-    LPAREN          reduce using rule 41 (save_fun -> .)
+    LPAREN          reduce using rule 37 (save_fun -> .)
 
     save_fun                       shift and go to state 51
 
 state 38
 
-    (39) function -> FUN CHAR function2 .
+    (40) function -> FUN CHAR function2 .
 
-    FUN             reduce using rule 39 (function -> FUN CHAR function2 .)
-    MAIN            reduce using rule 39 (function -> FUN CHAR function2 .)
-    $end            reduce using rule 39 (function -> FUN CHAR function2 .)
+    FUN             reduce using rule 40 (function -> FUN CHAR function2 .)
+    MAIN            reduce using rule 40 (function -> FUN CHAR function2 .)
+    $end            reduce using rule 40 (function -> FUN CHAR function2 .)
 
 
 state 39
 
-    (40) function -> FUN FLOAT function2 .
+    (41) function -> FUN FLOAT function2 .
 
-    FUN             reduce using rule 40 (function -> FUN FLOAT function2 .)
-    MAIN            reduce using rule 40 (function -> FUN FLOAT function2 .)
-    $end            reduce using rule 40 (function -> FUN FLOAT function2 .)
+    FUN             reduce using rule 41 (function -> FUN FLOAT function2 .)
+    MAIN            reduce using rule 41 (function -> FUN FLOAT function2 .)
+    $end            reduce using rule 41 (function -> FUN FLOAT function2 .)
 
 
 state 40

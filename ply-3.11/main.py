@@ -3,6 +3,7 @@ import ply.yacc as yacc
 from tablaFuncionesVariables import tabFun, tabVar, var
 from cube import Cube
 from stack import Stack
+import sys
 
 #reserved
 reserved = {
@@ -132,7 +133,7 @@ operadores = Stack()
 saltos = Stack()
 def p_programa(p):
         '''
-        programa :  PROGRAM ID SEMICOLON addP programa1
+        programa :  PROGRAM ID SEMICOLON addP programa1 
         '''
         p[0] = 'PROGRAMA COMPILADO'
 
@@ -145,8 +146,8 @@ def p_addP(p):
     # asigna nombre del programa
     global fid
     fid = p[-2]
+    print('---------',fid)
     global tablaFun
-    tablaFun = tabFun()
     if tablaFun.search_tabFun(fid):
         print("funcion ya existe")
     else:
@@ -175,12 +176,13 @@ def p_main(p):
     # asigna nombre del programa
     global fid
     fid = p[1]
+    print('_________', fid)
     global tablaFun
-    tablaFun = tabFun()
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
     print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 	
 #---------------Tipos de variables aceptadas-------------------#
+
 def p_tipo(p):
     '''
     tipo : INT guardaTipoVar
@@ -188,6 +190,7 @@ def p_tipo(p):
          | CHAR guardaTipoVar 
     ''' 
 #--------------Funcion para guardar los tipos de vairbles encontrados-------------------#
+
 def p_guardaTipoVar(p): 
     'guardaTipoVar : '
     global actual_varTipo
@@ -202,13 +205,13 @@ def p_vars(p):
 
 def p_var(p):
     '''
-    var : VAR var2
+    var : VAR var2 
     '''     
     
         
 def p_var1(p):
     '''
-        var1 : ID
+        var1 : ID 
             | ID COMMA var1 addV
             | ID arr
             | ID arr COMMA var1  addV
@@ -222,22 +225,24 @@ def p_var1(p):
     
     
 #-----------Anadir variable a la tabla de variables----------------#
+
 def p_addV(p):
     'addV :'
     global tablaFun
     global varId
     global actual_varTipo
-    
-
     if tablaFun.search_tabFun(fid):
         tablaFun.addVar(fid, actual_varTipo, varId)
+        # tablaFun.print_fun_vars(fid)
         # print('\tVariable:', varId, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
+        
         # agregando nombre y tipo a la pila
-        varDatos = var (actual_varTipo, varId)
+        varDatos = var(actual_varTipo, varId)
         operando_name_and_types.push(varDatos)
               
     else:
-        print('Función no existe')
+        SystemExit()
+
 
         
 def p_var2(p):
@@ -277,38 +282,43 @@ def p_modules(p):
     
     '''     
 
+def p_save_fun(p):   
+    ' save_fun : '
+    global actual_funTipo
+    global fid
+    global tablaFun
+    if actual_funTipo == 'void':
+        actual_funTipo = p[-2]
+        fid = p[-1]
+        tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    # print('actual tipo', actual_funTipo)
+    # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+    else:
+        actual_funTipo = p[-2]
+        fid = p[-1]
+        tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+        print('actual tipo', actual_funTipo)
+        # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+
     
 def p_function(p):
     '''
     function : FUN VOID function1 
              | FUN INT function2 
              | FUN CHAR function2 
-             | FUN FLOAT function2  
+             | FUN FLOAT function2 
     ''' 
-   
-
-
-def p_save_fun(p):   
-    'save_fun : '
-    global actual_funTipo
-    actual_funTipo = p[-2]
-    global fid
-    fid = p[-1]
-    global tablaFun
-    tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-    # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 
 
 def p_function1(p):
     '''
-    function1 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY
+    function1 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY 
     '''
     
-
 def p_function2(p):
     '''
-    function2 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY   
-    ''' 
+    function2 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY 
+    '''
     
 def p_statement(p):
     '''
@@ -503,7 +513,7 @@ def main():
             tok = lexer.token()
             if not tok:
                 break
-            print(tok)
+            # print(tok)
         if (parser.parse(informacion, tracking = True) == 'PROGRAMA COMPILADO'):
             print ("Correct Syntax")
         else: 

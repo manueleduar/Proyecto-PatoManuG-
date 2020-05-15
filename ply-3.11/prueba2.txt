@@ -10,9 +10,9 @@ var
 fun int Hello(int g);
 {
     var
-    int p, q;
-    q = 10;
-    p = 11;
+    int y11, x1111, g;
+    x1111 = 10;
+    y11 = 11;
     g = p + q;
     return g;    
 }
@@ -23,25 +23,24 @@ fun void Bye();
     var
     int p, q;
     int p;
+    char q;
     q = 10;
     p = 11;
     print(q+p);    
 }
 fun void Bye();
 {
-    var
-    int x1, x2;
-    q = 10;   
+    print('HOLA MUNDO');
 }
 
 fun void imprimeVar();
 {
     var
     int q;
-    print(q);    
+    print(q);   
 }
 
-fun int Hello2();
+fun float Hello2();
 {
     var
     int p, q, res, kk;
@@ -55,7 +54,7 @@ fun int Hello2();
 main () {
   var 
     int uno, iMat[5][5], iArr[10];
-    int mat2[5][4];
+    float mat2[5][4];
     char c3;
     i = 1;
     j = 2;
