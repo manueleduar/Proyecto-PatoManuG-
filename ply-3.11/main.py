@@ -287,10 +287,12 @@ def p_save_fun(p):
     global actual_funTipo
     global fid
     global tablaFun
+
     if actual_funTipo == 'void':
         actual_funTipo = p[-2]
         fid = p[-1]
         tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+        
     # print('actual tipo', actual_funTipo)
     # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
     else:
