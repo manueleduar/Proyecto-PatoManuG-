@@ -69,7 +69,7 @@ class Operaciones():
         else:
             print("type mismatch")
             SystemExit()
-   
+  
 
 
 print("hi welcome to test")
