@@ -6,6 +6,7 @@ from operaciones import Quad, Operaciones
 from stack import Stack
 import sys
 
+
 #reserved
 reserved = {
     'fun' : 'FUN',
@@ -527,7 +528,12 @@ def p_empty(p):
     
 
 def p_error(p):
-    print("Syntax Error in input!", p)
+    if p is not None:
+        # Esto evita que se meta en un ciclo infinito al encontrar errores de sintaxis
+        parser.errok()
+        print('Syntax Error in input!', p)
+    else: 
+        print('Unexpected end of input....')
 
     
 parser = yacc.yacc()
