@@ -1,7 +1,8 @@
 import ply.lex as lex
 import ply.yacc as yacc
-from tablaFuncionesVariables import tabFun, tabVar, var
 from cube import Cube
+from tablaFuncionesVariables import tabFun, tabVar, var
+from operaciones import Quad, Operaciones
 from stack import Stack
 import sys
 
@@ -54,7 +55,7 @@ tokens = [
     'RBRACKET',
     'LCURLY',
     'RCURLY',
-    'TRANSPUESTA',
+    'TRANSPUESTA', 
     'INVERSA',
     'DETERMINANTE', 
     'COMILLA'
@@ -131,6 +132,10 @@ fid = ''
 operando_name_and_types = Stack()
 operadores = Stack()
 saltos = Stack()
+quad = Quad()
+cubo = Cube()
+quad_generator = Operaciones()
+
 def p_programa(p):
         '''
         programa :  PROGRAM ID SEMICOLON addP programa1 
@@ -179,7 +184,7 @@ def p_main(p):
     print('_________', fid)
     global tablaFun
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-    print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+    # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 	
 #---------------Tipos de variables aceptadas-------------------#
 
@@ -344,11 +349,39 @@ def p_statement1(p):
 
 def p_asignacion(p):
      '''
-    asignacion : ID EQUALS exp
-               | ID arr EQUALS exp
-               | ID mat EQUALS exp
+    asignacion : ID add_id EQUALS saveOperator exp
+               | ID add_id arr EQUALS saveOperator exp
+               | ID add_id mat EQUALS saveOperator exp
     ''' 
-    
+
+
+def p_add_id(p):
+    '''add_id : '''
+    global varId, tablaFun, fid
+    varId = p[-1]
+    if tablaFun.searchVar_tabFun(fid, varId):
+        t = tablaFun.getVar_Tipo(varId, fid)
+        variable = var(t, varId)
+        operando_name_and_types.push(variable)
+    else:
+        sys.exit()
+
+
+def genera_quad_asignacion(p): 
+    'genera_quad_asignacion : '
+    global operando_name_and_types, operadores, quad
+    if len(operadores.pop() > 0):
+        if operadores.top() == '=':
+            op = operadores.pop()
+            der = operando_name_and_types.pop()
+            izq = operando_name_and_types.pop()
+            res = cubo.getTipo(izq.tipo, der.tipo, op)
+            if res != 'ERROR':
+                quad.addQ(izq.id, der.id, op, None)
+            else:
+                print("Type mismatch")
+                SystemExit()
+
 
 def p_param(p):
     '''
@@ -500,7 +533,7 @@ def p_error(p):
 parser = yacc.yacc()
 
 
-def main():
+if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
         nombreArchivo = 'prueba2.txt'
@@ -524,4 +557,3 @@ def main():
         # print("ERROREOF")
         print(EOFError)
 
-main()

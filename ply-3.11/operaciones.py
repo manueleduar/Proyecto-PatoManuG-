@@ -10,7 +10,7 @@ class Quad():
         self.quad = []
         self.cont = 0
 
-    def addQ(self, right, left, op, result):
+    def addQ(self, left, right, op, result):
         # añade un set de operador y operando derecho e izq
         q = {op, right, left, result}
         self.quad.append(q)
@@ -26,6 +26,7 @@ class Quad():
         # obtiene el ultimo
         l = self.quad.pop()
         return l
+        
     def fill_Quad(self, index):
         temp = self.quad[index]
         temp[3]= len(self.quad)
@@ -42,11 +43,12 @@ class Operaciones():
         right_operand = operando_name_and_types.pop()
         left_operand = operando_name_and_types.pop()
          # verifica que los tipos concuerden accediendo al atributo de los operandos
-        res_type = self.cubo.getTipo(
-        right_operand.tipo, left_operand.tipo, operador)
+        
+        res_type = self.cubo.getTipo(left_operand.tipo, right_operand.tipo, operador)
+        
         if (res_type != 'ERROR'):
             result = self.avail.next()
-            quad.addQ(right_operand,left_operand,operador, result)
+            quad.addQ(right_operand.id,left_operand,operador.id, result)
             operando_name_and_types.push(result)
         else:
             print("type mismatch")

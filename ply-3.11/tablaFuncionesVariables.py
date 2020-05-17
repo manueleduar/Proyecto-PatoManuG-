@@ -42,7 +42,19 @@ class tabFun():
             print('La funcion' , id , 'ya existe')
 
     def search_tabFun(self, id):
-        return id in self.funciones 
+        return id in self.funciones
+
+    def searchVar_tabFun(self, fid, id):
+        if self.funciones[fid]['vars'].search_vars(id):
+            return True
+        else: 
+            print('La variable', id, 'no existe...')
+
+    def getVar_Tipo(self, id, fid):
+        if self.funciones[fid]['vars'].search_vars(id):
+            return self.funciones[fid]['vars'].get_Tipo(id)
+        else:
+            print('La variable', id, 'no existe...')
         
     def addVar(self, fid, tipo, id):
         if (self.funciones[fid]['vars'].search_vars(id)):

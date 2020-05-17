@@ -55,6 +55,7 @@ main () {
   var 
     int uno, iMat[5][5], iArr[10];
     float mat2[5][4];
+    int i, j, cal, cu;
     char c3;
     i = 1;
     j = 2;
