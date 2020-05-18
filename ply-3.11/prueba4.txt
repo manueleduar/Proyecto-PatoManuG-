@@ -5,13 +5,15 @@ var
     char a;
     char b[3];
     int imat3[1][1];
+    float mat4[3][3], mat5[1][1];
+    int a1, b1, c1;
 
 
 
 main () {
   var 
     int uno, iArr[10];
-    int mat2[5][4];
+    int mat2[5][4], MATRIZTERTMINAL[2][2];
     i = 1;
     j = 2;
     p = 3;

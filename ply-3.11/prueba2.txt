@@ -10,7 +10,7 @@ var
 fun int Hello(int g);
 {
     var
-    int y11, x1111, g;
+    int y11, x1111, g, f1;
     x1111 = 10;
     y11 = 11;
     g = p + q;
