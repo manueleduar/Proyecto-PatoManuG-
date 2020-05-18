@@ -2,6 +2,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 from tablaFuncionesVariables import tabFun, tabVar, var
 from cube import Cube
+from operaciones import Quad, Operaciones
 from stack import Stack
 import sys
 
@@ -131,6 +132,9 @@ fid = ''
 operando_name_and_types = Stack()
 operadores = Stack()
 saltos = Stack()
+quad = Quad()
+cuadruplos = Operaciones()
+
 def p_programa(p):
         '''
         programa :  PROGRAM ID SEMICOLON addP programa1 
@@ -457,9 +461,13 @@ def p_sumexp(p):
     sumexp : mulexp  
            | mulexp PLUS saveOperator mulexp
            | mulexp MINUS saveOperator mulexp
-    ''' 
+    '''    
     
-
+def p_genera_quad_sum(p):
+    'genera_sum_quad : '
+    global operadores, operando_name_and_types
+    if operadores.pop() == '+' or operadores.pop() == '-':
+        cuadruplos.operations(operadores, operando_name_and_types, quad)
 
 def p_mulexp(p):
     '''

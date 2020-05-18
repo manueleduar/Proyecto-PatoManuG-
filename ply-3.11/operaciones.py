@@ -2,7 +2,6 @@ from tablaFuncionesVariables import var
 from cube import Cube
 from stack import Stack
 from avail import Avail
-# Clase cuadruplo
 
 
 class Quad():

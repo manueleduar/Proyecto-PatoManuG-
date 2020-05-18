@@ -97,18 +97,19 @@ Rule 87    compexp1 -> sumexp NE saveOperator sumexp
 Rule 88    sumexp -> mulexp
 Rule 89    sumexp -> mulexp PLUS saveOperator mulexp
 Rule 90    sumexp -> mulexp MINUS saveOperator mulexp
-Rule 91    mulexp -> pexp
-Rule 92    mulexp -> pexp MUL saveOperator pexp
-Rule 93    mulexp -> pexp DIV saveOperator pexp
-Rule 94    pexp -> var1
-Rule 95    pexp -> CTEI
-Rule 96    pexp -> CTEF
-Rule 97    pexp -> CTEC
-Rule 98    pexp -> llamada
-Rule 99    pexp -> LPAREN exp RPAREN
-Rule 100   empty -> <empty>
-Rule 101   saveId -> <empty>
-Rule 102   saveOperator -> <empty>
+Rule 91    genera_sum_quad -> <empty>
+Rule 92    mulexp -> pexp
+Rule 93    mulexp -> pexp MUL saveOperator pexp
+Rule 94    mulexp -> pexp DIV saveOperator pexp
+Rule 95    pexp -> var1
+Rule 96    pexp -> CTEI
+Rule 97    pexp -> CTEF
+Rule 98    pexp -> CTEC
+Rule 99    pexp -> llamada
+Rule 100   pexp -> LPAREN exp RPAREN
+Rule 101   empty -> <empty>
+Rule 102   saveId -> <empty>
+Rule 103   saveOperator -> <empty>
 
 Terminals, with rules where they appear
 
@@ -116,12 +117,12 @@ AND                  : 80
 CHAR                 : 10 40
 COMILLA              : 
 COMMA                : 16 18 19 59 70
-CTEC                 : 97
-CTEF                 : 74 96
-CTEI                 : 29 31 31 33 34 73 95
+CTEC                 : 98
+CTEF                 : 74 97
+CTEI                 : 29 31 31 33 34 73 96
 CTESTRING            : 72
 DETERMINANTE         : 28
-DIV                  : 93
+DIV                  : 94
 ELSE                 : 64
 END                  : 7
 EQUALS               : 53 54 55
@@ -137,12 +138,12 @@ INT                  : 8 39
 INVERSA              : 27
 LBRACKET             : 29 30 31 31 32 32 33 33 34 34
 LCURLY               : 7 42 43 62 63 64 66 68
-LPAREN               : 7 42 43 61 62 63 66 68 69 76 99
+LPAREN               : 7 42 43 61 62 63 66 68 69 76 100
 LT                   : 84
 LTE                  : 86
 MAIN                 : 7
 MINUS                : 90
-MUL                  : 92
+MUL                  : 93
 NE                   : 87
 OR                   : 78
 PLUS                 : 89
@@ -152,7 +153,7 @@ RBRACKET             : 29 30 31 31 32 32 33 33 34 34
 RCURLY               : 7 42 43 62 63 64 66 68
 READ                 : 76
 RETURN               : 43
-RPAREN               : 7 42 43 61 62 63 66 68 69 76 99
+RPAREN               : 7 42 43 61 62 63 66 68 69 76 100
 SEMICOLON            : 1 24 42 43 43 46 47 48 49
 TO                   : 67
 TRANSPUESTA          : 26
@@ -175,16 +176,17 @@ escritura            : 49
 escritura1           : 69
 escritura2           : 70 70 71
 especial             : 21
-exp                  : 30 32 32 33 34 43 53 54 55 61 62 63 67 68 75 99
+exp                  : 30 32 32 33 34 43 53 54 55 61 62 63 67 68 75 100
 for                  : 50
 for1                 : 66
 function             : 35
 function1            : 38
 function2            : 39 40 41
+genera_sum_quad      : 
 guardaTipoVar        : 8 9 10
 if                   : 51
 lectura              : 48
-llamada              : 47 98
+llamada              : 47 99
 main                 : 6
 mat                  : 19 20 21 55
 modules              : 3 4 35
@@ -192,19 +194,19 @@ mulexp               : 88 89 89 90 90
 nexp                 : 77 78 78
 param                : 7 42 43
 param1               : 56 59
-pexp                 : 91 92 92 93 93
+pexp                 : 92 93 93 94 94
 programa             : 0
 programa1            : 1
 programa2            : 3 5
 saveId               : 16 18 19 24
-saveOperator         : 78 80 83 84 85 86 87 89 90 92 93
+saveOperator         : 78 80 83 84 85 86 87 89 90 93 94
 save_fun             : 42 43
 statement            : 7 42 43 44 62 63 64 66 68
 statement1           : 44
 sumexp               : 81 82 83 83 84 84 85 85 86 86 87 87
 tipo                 : 24 56
 var                  : 12
-var1                 : 16 18 19 24 76 94
+var1                 : 16 18 19 24 76 95
 var2                 : 14 24
 vars                 : 3 4 7 42 43
 while                : 52
@@ -262,16 +264,16 @@ state 5
     (13) vars -> . empty
     (6) programa2 -> . main
     (14) var -> . VAR var2
-    (100) empty -> .
+    (101) empty -> .
     (7) main -> . MAIN LPAREN param RPAREN LCURLY vars statement RCURLY END
 
   ! shift/reduce conflict for MAIN resolved as shift
     VAR             shift and go to state 12
-    FUN             reduce using rule 100 (empty -> .)
-    $end            reduce using rule 100 (empty -> .)
+    FUN             reduce using rule 101 (empty -> .)
+    $end            reduce using rule 101 (empty -> .)
     MAIN            shift and go to state 13
 
-  ! MAIN            [ reduce using rule 100 (empty -> .) ]
+  ! MAIN            [ reduce using rule 101 (empty -> .) ]
 
     programa1                      shift and go to state 6
     vars                           shift and go to state 7
@@ -297,11 +299,11 @@ state 7
     (39) function -> . FUN INT function2
     (40) function -> . FUN CHAR function2
     (41) function -> . FUN FLOAT function2
-    (100) empty -> .
+    (101) empty -> .
 
     FUN             shift and go to state 17
-    MAIN            reduce using rule 100 (empty -> .)
-    $end            reduce using rule 100 (empty -> .)
+    MAIN            reduce using rule 101 (empty -> .)
+    $end            reduce using rule 101 (empty -> .)
 
     modules                        shift and go to state 14
     function                       shift and go to state 15
@@ -360,22 +362,22 @@ state 12
     (14) var -> VAR . var2
     (24) var2 -> . var2 tipo var1 SEMICOLON addV saveId
     (25) var2 -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
-    INT             reduce using rule 100 (empty -> .)
-    FLOAT           reduce using rule 100 (empty -> .)
-    CHAR            reduce using rule 100 (empty -> .)
-    FUN             reduce using rule 100 (empty -> .)
-    MAIN            reduce using rule 100 (empty -> .)
-    $end            reduce using rule 100 (empty -> .)
-    ID              reduce using rule 100 (empty -> .)
-    READ            reduce using rule 100 (empty -> .)
-    PRINT           reduce using rule 100 (empty -> .)
-    FOR             reduce using rule 100 (empty -> .)
-    IF              reduce using rule 100 (empty -> .)
-    WHILE           reduce using rule 100 (empty -> .)
-    RCURLY          reduce using rule 100 (empty -> .)
-    RETURN          reduce using rule 100 (empty -> .)
+    INT             reduce using rule 101 (empty -> .)
+    FLOAT           reduce using rule 101 (empty -> .)
+    CHAR            reduce using rule 101 (empty -> .)
+    FUN             reduce using rule 101 (empty -> .)
+    MAIN            reduce using rule 101 (empty -> .)
+    $end            reduce using rule 101 (empty -> .)
+    ID              reduce using rule 101 (empty -> .)
+    READ            reduce using rule 101 (empty -> .)
+    PRINT           reduce using rule 101 (empty -> .)
+    FOR             reduce using rule 101 (empty -> .)
+    IF              reduce using rule 101 (empty -> .)
+    WHILE           reduce using rule 101 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
+    RETURN          reduce using rule 101 (empty -> .)
 
     var2                           shift and go to state 18
     empty                          shift and go to state 19
@@ -409,11 +411,11 @@ state 15
     (39) function -> . FUN INT function2
     (40) function -> . FUN CHAR function2
     (41) function -> . FUN FLOAT function2
-    (100) empty -> .
+    (101) empty -> .
 
     FUN             shift and go to state 17
-    MAIN            reduce using rule 100 (empty -> .)
-    $end            reduce using rule 100 (empty -> .)
+    MAIN            reduce using rule 101 (empty -> .)
+    $end            reduce using rule 101 (empty -> .)
 
     function                       shift and go to state 15
     modules                        shift and go to state 22
@@ -493,12 +495,12 @@ state 20
     (8) tipo -> . INT guardaTipoVar
     (9) tipo -> . FLOAT guardaTipoVar
     (10) tipo -> . CHAR guardaTipoVar
-    (100) empty -> .
+    (101) empty -> .
 
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
     CHAR            shift and go to state 30
-    RPAREN          reduce using rule 100 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     param                          shift and go to state 31
     tipo                           shift and go to state 32
@@ -566,10 +568,10 @@ state 27
     (20) var1 -> . ID mat
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
     ID              shift and go to state 41
-    SEMICOLON       reduce using rule 100 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
 
     var1                           shift and go to state 40
     empty                          shift and go to state 42
@@ -620,10 +622,10 @@ state 32
     (58) param1 -> . ID
     (59) param1 -> . ID COMMA param1
     (60) param1 -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
     ID              shift and go to state 48
-    RPAREN          reduce using rule 100 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     param1                         shift and go to state 47
     empty                          shift and go to state 49
@@ -872,32 +874,32 @@ state 53
     (20) var1 -> . ID mat
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for ID resolved as shift
     ID              shift and go to state 41
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
-    CTEI            reduce using rule 100 (empty -> .)
-    CTEF            reduce using rule 100 (empty -> .)
-    CTEC            reduce using rule 100 (empty -> .)
-    LPAREN          reduce using rule 100 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
+    CTEI            reduce using rule 101 (empty -> .)
+    CTEF            reduce using rule 101 (empty -> .)
+    CTEC            reduce using rule 101 (empty -> .)
+    LPAREN          reduce using rule 101 (empty -> .)
 
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     var1                           shift and go to state 62
     empty                          shift and go to state 42
@@ -994,15 +996,15 @@ state 56
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -1012,25 +1014,25 @@ state 56
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 69
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 70
     nexp                           shift and go to state 71
@@ -1049,16 +1051,16 @@ state 57
     (12) vars -> . var
     (13) vars -> . empty
     (14) var -> . VAR var2
-    (100) empty -> .
+    (101) empty -> .
 
     VAR             shift and go to state 12
-    ID              reduce using rule 100 (empty -> .)
-    READ            reduce using rule 100 (empty -> .)
-    PRINT           reduce using rule 100 (empty -> .)
-    FOR             reduce using rule 100 (empty -> .)
-    IF              reduce using rule 100 (empty -> .)
-    WHILE           reduce using rule 100 (empty -> .)
-    RCURLY          reduce using rule 100 (empty -> .)
+    ID              reduce using rule 101 (empty -> .)
+    READ            reduce using rule 101 (empty -> .)
+    PRINT           reduce using rule 101 (empty -> .)
+    FOR             reduce using rule 101 (empty -> .)
+    IF              reduce using rule 101 (empty -> .)
+    WHILE           reduce using rule 101 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
 
     vars                           shift and go to state 83
     var                            shift and go to state 9
@@ -1070,10 +1072,10 @@ state 58
     (58) param1 -> . ID
     (59) param1 -> . ID COMMA param1
     (60) param1 -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
     ID              shift and go to state 48
-    RPAREN          reduce using rule 100 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     param1                         shift and go to state 84
     empty                          shift and go to state 49
@@ -1086,12 +1088,12 @@ state 59
     (8) tipo -> . INT guardaTipoVar
     (9) tipo -> . FLOAT guardaTipoVar
     (10) tipo -> . CHAR guardaTipoVar
-    (100) empty -> .
+    (101) empty -> .
 
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
     CHAR            shift and go to state 30
-    RPAREN          reduce using rule 100 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     param                          shift and go to state 85
     tipo                           shift and go to state 32
@@ -1105,12 +1107,12 @@ state 60
     (8) tipo -> . INT guardaTipoVar
     (9) tipo -> . FLOAT guardaTipoVar
     (10) tipo -> . CHAR guardaTipoVar
-    (100) empty -> .
+    (101) empty -> .
 
     INT             shift and go to state 28
     FLOAT           shift and go to state 29
     CHAR            shift and go to state 30
-    RPAREN          reduce using rule 100 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     param                          shift and go to state 86
     tipo                           shift and go to state 32
@@ -1119,22 +1121,22 @@ state 60
 state 61
 
     (24) var2 -> var2 tipo var1 SEMICOLON addV . saveId
-    (101) saveId -> .
+    (102) saveId -> .
 
-    INT             reduce using rule 101 (saveId -> .)
-    FLOAT           reduce using rule 101 (saveId -> .)
-    CHAR            reduce using rule 101 (saveId -> .)
-    FUN             reduce using rule 101 (saveId -> .)
-    MAIN            reduce using rule 101 (saveId -> .)
-    $end            reduce using rule 101 (saveId -> .)
-    ID              reduce using rule 101 (saveId -> .)
-    READ            reduce using rule 101 (saveId -> .)
-    PRINT           reduce using rule 101 (saveId -> .)
-    FOR             reduce using rule 101 (saveId -> .)
-    IF              reduce using rule 101 (saveId -> .)
-    WHILE           reduce using rule 101 (saveId -> .)
-    RCURLY          reduce using rule 101 (saveId -> .)
-    RETURN          reduce using rule 101 (saveId -> .)
+    INT             reduce using rule 102 (saveId -> .)
+    FLOAT           reduce using rule 102 (saveId -> .)
+    CHAR            reduce using rule 102 (saveId -> .)
+    FUN             reduce using rule 102 (saveId -> .)
+    MAIN            reduce using rule 102 (saveId -> .)
+    $end            reduce using rule 102 (saveId -> .)
+    ID              reduce using rule 102 (saveId -> .)
+    READ            reduce using rule 102 (saveId -> .)
+    PRINT           reduce using rule 102 (saveId -> .)
+    FOR             reduce using rule 102 (saveId -> .)
+    IF              reduce using rule 102 (saveId -> .)
+    WHILE           reduce using rule 102 (saveId -> .)
+    RCURLY          reduce using rule 102 (saveId -> .)
+    RETURN          reduce using rule 102 (saveId -> .)
 
     saveId                         shift and go to state 87
 
@@ -1178,32 +1180,32 @@ state 63
     (20) var1 -> . ID mat
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for ID resolved as shift
     ID              shift and go to state 41
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
-    CTEI            reduce using rule 100 (empty -> .)
-    CTEF            reduce using rule 100 (empty -> .)
-    CTEC            reduce using rule 100 (empty -> .)
-    LPAREN          reduce using rule 100 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
+    CTEI            reduce using rule 101 (empty -> .)
+    CTEF            reduce using rule 101 (empty -> .)
+    CTEC            reduce using rule 101 (empty -> .)
+    LPAREN          reduce using rule 101 (empty -> .)
 
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     var1                           shift and go to state 89
     empty                          shift and go to state 42
@@ -1219,32 +1221,32 @@ state 64
     (20) var1 -> . ID mat
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for ID resolved as shift
     ID              shift and go to state 41
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
-    CTEI            reduce using rule 100 (empty -> .)
-    CTEF            reduce using rule 100 (empty -> .)
-    CTEC            reduce using rule 100 (empty -> .)
-    LPAREN          reduce using rule 100 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
+    CTEI            reduce using rule 101 (empty -> .)
+    CTEF            reduce using rule 101 (empty -> .)
+    CTEC            reduce using rule 101 (empty -> .)
+    LPAREN          reduce using rule 101 (empty -> .)
 
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     var1                           shift and go to state 90
     empty                          shift and go to state 42
@@ -1362,23 +1364,23 @@ state 69
     (29) arr -> LBRACKET CTEI . RBRACKET
     (31) mat -> LBRACKET CTEI . RBRACKET LBRACKET CTEI RBRACKET
     (34) mat -> LBRACKET CTEI . RBRACKET LBRACKET exp RBRACKET
-    (95) pexp -> CTEI .
+    (96) pexp -> CTEI .
 
   ! shift/reduce conflict for RBRACKET resolved as shift
     RBRACKET        shift and go to state 91
-    MUL             reduce using rule 95 (pexp -> CTEI .)
-    DIV             reduce using rule 95 (pexp -> CTEI .)
-    PLUS            reduce using rule 95 (pexp -> CTEI .)
-    MINUS           reduce using rule 95 (pexp -> CTEI .)
-    GT              reduce using rule 95 (pexp -> CTEI .)
-    LT              reduce using rule 95 (pexp -> CTEI .)
-    GTE             reduce using rule 95 (pexp -> CTEI .)
-    LTE             reduce using rule 95 (pexp -> CTEI .)
-    NE              reduce using rule 95 (pexp -> CTEI .)
-    AND             reduce using rule 95 (pexp -> CTEI .)
-    OR              reduce using rule 95 (pexp -> CTEI .)
+    MUL             reduce using rule 96 (pexp -> CTEI .)
+    DIV             reduce using rule 96 (pexp -> CTEI .)
+    PLUS            reduce using rule 96 (pexp -> CTEI .)
+    MINUS           reduce using rule 96 (pexp -> CTEI .)
+    GT              reduce using rule 96 (pexp -> CTEI .)
+    LT              reduce using rule 96 (pexp -> CTEI .)
+    GTE             reduce using rule 96 (pexp -> CTEI .)
+    LTE             reduce using rule 96 (pexp -> CTEI .)
+    NE              reduce using rule 96 (pexp -> CTEI .)
+    AND             reduce using rule 96 (pexp -> CTEI .)
+    OR              reduce using rule 96 (pexp -> CTEI .)
 
-  ! RBRACKET        [ reduce using rule 95 (pexp -> CTEI .) ]
+  ! RBRACKET        [ reduce using rule 96 (pexp -> CTEI .) ]
 
 
 state 70
@@ -1446,15 +1448,15 @@ state 74
     (88) sumexp -> . mulexp
     (89) sumexp -> . mulexp PLUS saveOperator mulexp
     (90) sumexp -> . mulexp MINUS saveOperator mulexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -1464,24 +1466,24 @@ state 74
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
 
     sumexp                         shift and go to state 100
     mulexp                         shift and go to state 75
@@ -1526,149 +1528,149 @@ state 75
 
 state 76
 
-    (91) mulexp -> pexp .
-    (92) mulexp -> pexp . MUL saveOperator pexp
-    (93) mulexp -> pexp . DIV saveOperator pexp
+    (92) mulexp -> pexp .
+    (93) mulexp -> pexp . MUL saveOperator pexp
+    (94) mulexp -> pexp . DIV saveOperator pexp
 
   ! shift/reduce conflict for MUL resolved as shift
   ! shift/reduce conflict for DIV resolved as shift
-    PLUS            reduce using rule 91 (mulexp -> pexp .)
-    MINUS           reduce using rule 91 (mulexp -> pexp .)
-    GT              reduce using rule 91 (mulexp -> pexp .)
-    LT              reduce using rule 91 (mulexp -> pexp .)
-    GTE             reduce using rule 91 (mulexp -> pexp .)
-    LTE             reduce using rule 91 (mulexp -> pexp .)
-    NE              reduce using rule 91 (mulexp -> pexp .)
-    AND             reduce using rule 91 (mulexp -> pexp .)
-    OR              reduce using rule 91 (mulexp -> pexp .)
-    RBRACKET        reduce using rule 91 (mulexp -> pexp .)
-    RPAREN          reduce using rule 91 (mulexp -> pexp .)
-    SEMICOLON       reduce using rule 91 (mulexp -> pexp .)
-    TO              reduce using rule 91 (mulexp -> pexp .)
-    COMMA           reduce using rule 91 (mulexp -> pexp .)
-    CTEI            reduce using rule 91 (mulexp -> pexp .)
-    CTEF            reduce using rule 91 (mulexp -> pexp .)
-    CTEC            reduce using rule 91 (mulexp -> pexp .)
-    LPAREN          reduce using rule 91 (mulexp -> pexp .)
-    ID              reduce using rule 91 (mulexp -> pexp .)
+    PLUS            reduce using rule 92 (mulexp -> pexp .)
+    MINUS           reduce using rule 92 (mulexp -> pexp .)
+    GT              reduce using rule 92 (mulexp -> pexp .)
+    LT              reduce using rule 92 (mulexp -> pexp .)
+    GTE             reduce using rule 92 (mulexp -> pexp .)
+    LTE             reduce using rule 92 (mulexp -> pexp .)
+    NE              reduce using rule 92 (mulexp -> pexp .)
+    AND             reduce using rule 92 (mulexp -> pexp .)
+    OR              reduce using rule 92 (mulexp -> pexp .)
+    RBRACKET        reduce using rule 92 (mulexp -> pexp .)
+    RPAREN          reduce using rule 92 (mulexp -> pexp .)
+    SEMICOLON       reduce using rule 92 (mulexp -> pexp .)
+    TO              reduce using rule 92 (mulexp -> pexp .)
+    COMMA           reduce using rule 92 (mulexp -> pexp .)
+    CTEI            reduce using rule 92 (mulexp -> pexp .)
+    CTEF            reduce using rule 92 (mulexp -> pexp .)
+    CTEC            reduce using rule 92 (mulexp -> pexp .)
+    LPAREN          reduce using rule 92 (mulexp -> pexp .)
+    ID              reduce using rule 92 (mulexp -> pexp .)
     MUL             shift and go to state 104
     DIV             shift and go to state 105
 
-  ! MUL             [ reduce using rule 91 (mulexp -> pexp .) ]
-  ! DIV             [ reduce using rule 91 (mulexp -> pexp .) ]
+  ! MUL             [ reduce using rule 92 (mulexp -> pexp .) ]
+  ! DIV             [ reduce using rule 92 (mulexp -> pexp .) ]
 
 
 state 77
 
-    (94) pexp -> var1 .
+    (95) pexp -> var1 .
 
-    MUL             reduce using rule 94 (pexp -> var1 .)
-    DIV             reduce using rule 94 (pexp -> var1 .)
-    PLUS            reduce using rule 94 (pexp -> var1 .)
-    MINUS           reduce using rule 94 (pexp -> var1 .)
-    GT              reduce using rule 94 (pexp -> var1 .)
-    LT              reduce using rule 94 (pexp -> var1 .)
-    GTE             reduce using rule 94 (pexp -> var1 .)
-    LTE             reduce using rule 94 (pexp -> var1 .)
-    NE              reduce using rule 94 (pexp -> var1 .)
-    AND             reduce using rule 94 (pexp -> var1 .)
-    OR              reduce using rule 94 (pexp -> var1 .)
-    RBRACKET        reduce using rule 94 (pexp -> var1 .)
-    RPAREN          reduce using rule 94 (pexp -> var1 .)
-    SEMICOLON       reduce using rule 94 (pexp -> var1 .)
-    TO              reduce using rule 94 (pexp -> var1 .)
-    COMMA           reduce using rule 94 (pexp -> var1 .)
-    CTEI            reduce using rule 94 (pexp -> var1 .)
-    CTEF            reduce using rule 94 (pexp -> var1 .)
-    CTEC            reduce using rule 94 (pexp -> var1 .)
-    LPAREN          reduce using rule 94 (pexp -> var1 .)
-    ID              reduce using rule 94 (pexp -> var1 .)
+    MUL             reduce using rule 95 (pexp -> var1 .)
+    DIV             reduce using rule 95 (pexp -> var1 .)
+    PLUS            reduce using rule 95 (pexp -> var1 .)
+    MINUS           reduce using rule 95 (pexp -> var1 .)
+    GT              reduce using rule 95 (pexp -> var1 .)
+    LT              reduce using rule 95 (pexp -> var1 .)
+    GTE             reduce using rule 95 (pexp -> var1 .)
+    LTE             reduce using rule 95 (pexp -> var1 .)
+    NE              reduce using rule 95 (pexp -> var1 .)
+    AND             reduce using rule 95 (pexp -> var1 .)
+    OR              reduce using rule 95 (pexp -> var1 .)
+    RBRACKET        reduce using rule 95 (pexp -> var1 .)
+    RPAREN          reduce using rule 95 (pexp -> var1 .)
+    SEMICOLON       reduce using rule 95 (pexp -> var1 .)
+    TO              reduce using rule 95 (pexp -> var1 .)
+    COMMA           reduce using rule 95 (pexp -> var1 .)
+    CTEI            reduce using rule 95 (pexp -> var1 .)
+    CTEF            reduce using rule 95 (pexp -> var1 .)
+    CTEC            reduce using rule 95 (pexp -> var1 .)
+    LPAREN          reduce using rule 95 (pexp -> var1 .)
+    ID              reduce using rule 95 (pexp -> var1 .)
 
 
 state 78
 
-    (96) pexp -> CTEF .
+    (97) pexp -> CTEF .
 
-    MUL             reduce using rule 96 (pexp -> CTEF .)
-    DIV             reduce using rule 96 (pexp -> CTEF .)
-    PLUS            reduce using rule 96 (pexp -> CTEF .)
-    MINUS           reduce using rule 96 (pexp -> CTEF .)
-    GT              reduce using rule 96 (pexp -> CTEF .)
-    LT              reduce using rule 96 (pexp -> CTEF .)
-    GTE             reduce using rule 96 (pexp -> CTEF .)
-    LTE             reduce using rule 96 (pexp -> CTEF .)
-    NE              reduce using rule 96 (pexp -> CTEF .)
-    AND             reduce using rule 96 (pexp -> CTEF .)
-    OR              reduce using rule 96 (pexp -> CTEF .)
-    RBRACKET        reduce using rule 96 (pexp -> CTEF .)
-    RPAREN          reduce using rule 96 (pexp -> CTEF .)
-    SEMICOLON       reduce using rule 96 (pexp -> CTEF .)
-    TO              reduce using rule 96 (pexp -> CTEF .)
-    COMMA           reduce using rule 96 (pexp -> CTEF .)
-    CTEI            reduce using rule 96 (pexp -> CTEF .)
-    CTEF            reduce using rule 96 (pexp -> CTEF .)
-    CTEC            reduce using rule 96 (pexp -> CTEF .)
-    LPAREN          reduce using rule 96 (pexp -> CTEF .)
-    ID              reduce using rule 96 (pexp -> CTEF .)
+    MUL             reduce using rule 97 (pexp -> CTEF .)
+    DIV             reduce using rule 97 (pexp -> CTEF .)
+    PLUS            reduce using rule 97 (pexp -> CTEF .)
+    MINUS           reduce using rule 97 (pexp -> CTEF .)
+    GT              reduce using rule 97 (pexp -> CTEF .)
+    LT              reduce using rule 97 (pexp -> CTEF .)
+    GTE             reduce using rule 97 (pexp -> CTEF .)
+    LTE             reduce using rule 97 (pexp -> CTEF .)
+    NE              reduce using rule 97 (pexp -> CTEF .)
+    AND             reduce using rule 97 (pexp -> CTEF .)
+    OR              reduce using rule 97 (pexp -> CTEF .)
+    RBRACKET        reduce using rule 97 (pexp -> CTEF .)
+    RPAREN          reduce using rule 97 (pexp -> CTEF .)
+    SEMICOLON       reduce using rule 97 (pexp -> CTEF .)
+    TO              reduce using rule 97 (pexp -> CTEF .)
+    COMMA           reduce using rule 97 (pexp -> CTEF .)
+    CTEI            reduce using rule 97 (pexp -> CTEF .)
+    CTEF            reduce using rule 97 (pexp -> CTEF .)
+    CTEC            reduce using rule 97 (pexp -> CTEF .)
+    LPAREN          reduce using rule 97 (pexp -> CTEF .)
+    ID              reduce using rule 97 (pexp -> CTEF .)
 
 
 state 79
 
-    (97) pexp -> CTEC .
+    (98) pexp -> CTEC .
 
-    MUL             reduce using rule 97 (pexp -> CTEC .)
-    DIV             reduce using rule 97 (pexp -> CTEC .)
-    PLUS            reduce using rule 97 (pexp -> CTEC .)
-    MINUS           reduce using rule 97 (pexp -> CTEC .)
-    GT              reduce using rule 97 (pexp -> CTEC .)
-    LT              reduce using rule 97 (pexp -> CTEC .)
-    GTE             reduce using rule 97 (pexp -> CTEC .)
-    LTE             reduce using rule 97 (pexp -> CTEC .)
-    NE              reduce using rule 97 (pexp -> CTEC .)
-    AND             reduce using rule 97 (pexp -> CTEC .)
-    OR              reduce using rule 97 (pexp -> CTEC .)
-    RBRACKET        reduce using rule 97 (pexp -> CTEC .)
-    RPAREN          reduce using rule 97 (pexp -> CTEC .)
-    SEMICOLON       reduce using rule 97 (pexp -> CTEC .)
-    TO              reduce using rule 97 (pexp -> CTEC .)
-    COMMA           reduce using rule 97 (pexp -> CTEC .)
-    CTEI            reduce using rule 97 (pexp -> CTEC .)
-    CTEF            reduce using rule 97 (pexp -> CTEC .)
-    CTEC            reduce using rule 97 (pexp -> CTEC .)
-    LPAREN          reduce using rule 97 (pexp -> CTEC .)
-    ID              reduce using rule 97 (pexp -> CTEC .)
+    MUL             reduce using rule 98 (pexp -> CTEC .)
+    DIV             reduce using rule 98 (pexp -> CTEC .)
+    PLUS            reduce using rule 98 (pexp -> CTEC .)
+    MINUS           reduce using rule 98 (pexp -> CTEC .)
+    GT              reduce using rule 98 (pexp -> CTEC .)
+    LT              reduce using rule 98 (pexp -> CTEC .)
+    GTE             reduce using rule 98 (pexp -> CTEC .)
+    LTE             reduce using rule 98 (pexp -> CTEC .)
+    NE              reduce using rule 98 (pexp -> CTEC .)
+    AND             reduce using rule 98 (pexp -> CTEC .)
+    OR              reduce using rule 98 (pexp -> CTEC .)
+    RBRACKET        reduce using rule 98 (pexp -> CTEC .)
+    RPAREN          reduce using rule 98 (pexp -> CTEC .)
+    SEMICOLON       reduce using rule 98 (pexp -> CTEC .)
+    TO              reduce using rule 98 (pexp -> CTEC .)
+    COMMA           reduce using rule 98 (pexp -> CTEC .)
+    CTEI            reduce using rule 98 (pexp -> CTEC .)
+    CTEF            reduce using rule 98 (pexp -> CTEC .)
+    CTEC            reduce using rule 98 (pexp -> CTEC .)
+    LPAREN          reduce using rule 98 (pexp -> CTEC .)
+    ID              reduce using rule 98 (pexp -> CTEC .)
 
 
 state 80
 
-    (98) pexp -> llamada .
+    (99) pexp -> llamada .
 
-    MUL             reduce using rule 98 (pexp -> llamada .)
-    DIV             reduce using rule 98 (pexp -> llamada .)
-    PLUS            reduce using rule 98 (pexp -> llamada .)
-    MINUS           reduce using rule 98 (pexp -> llamada .)
-    GT              reduce using rule 98 (pexp -> llamada .)
-    LT              reduce using rule 98 (pexp -> llamada .)
-    GTE             reduce using rule 98 (pexp -> llamada .)
-    LTE             reduce using rule 98 (pexp -> llamada .)
-    NE              reduce using rule 98 (pexp -> llamada .)
-    AND             reduce using rule 98 (pexp -> llamada .)
-    OR              reduce using rule 98 (pexp -> llamada .)
-    RBRACKET        reduce using rule 98 (pexp -> llamada .)
-    RPAREN          reduce using rule 98 (pexp -> llamada .)
-    SEMICOLON       reduce using rule 98 (pexp -> llamada .)
-    TO              reduce using rule 98 (pexp -> llamada .)
-    COMMA           reduce using rule 98 (pexp -> llamada .)
-    CTEI            reduce using rule 98 (pexp -> llamada .)
-    CTEF            reduce using rule 98 (pexp -> llamada .)
-    CTEC            reduce using rule 98 (pexp -> llamada .)
-    LPAREN          reduce using rule 98 (pexp -> llamada .)
-    ID              reduce using rule 98 (pexp -> llamada .)
+    MUL             reduce using rule 99 (pexp -> llamada .)
+    DIV             reduce using rule 99 (pexp -> llamada .)
+    PLUS            reduce using rule 99 (pexp -> llamada .)
+    MINUS           reduce using rule 99 (pexp -> llamada .)
+    GT              reduce using rule 99 (pexp -> llamada .)
+    LT              reduce using rule 99 (pexp -> llamada .)
+    GTE             reduce using rule 99 (pexp -> llamada .)
+    LTE             reduce using rule 99 (pexp -> llamada .)
+    NE              reduce using rule 99 (pexp -> llamada .)
+    AND             reduce using rule 99 (pexp -> llamada .)
+    OR              reduce using rule 99 (pexp -> llamada .)
+    RBRACKET        reduce using rule 99 (pexp -> llamada .)
+    RPAREN          reduce using rule 99 (pexp -> llamada .)
+    SEMICOLON       reduce using rule 99 (pexp -> llamada .)
+    TO              reduce using rule 99 (pexp -> llamada .)
+    COMMA           reduce using rule 99 (pexp -> llamada .)
+    CTEI            reduce using rule 99 (pexp -> llamada .)
+    CTEF            reduce using rule 99 (pexp -> llamada .)
+    CTEC            reduce using rule 99 (pexp -> llamada .)
+    LPAREN          reduce using rule 99 (pexp -> llamada .)
+    ID              reduce using rule 99 (pexp -> llamada .)
 
 
 state 81
 
-    (99) pexp -> LPAREN . exp RPAREN
+    (100) pexp -> LPAREN . exp RPAREN
     (77) exp -> . nexp
     (78) exp -> . nexp OR saveOperator nexp
     (79) nexp -> . compexp
@@ -1683,15 +1685,15 @@ state 81
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -1701,25 +1703,25 @@ state 81
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 106
     nexp                           shift and go to state 71
@@ -1792,7 +1794,7 @@ state 83
     (50) statement1 -> . for
     (51) statement1 -> . if
     (52) statement1 -> . while
-    (100) empty -> .
+    (101) empty -> .
     (53) asignacion -> . ID EQUALS exp
     (54) asignacion -> . ID arr EQUALS exp
     (55) asignacion -> . ID mat EQUALS exp
@@ -1804,7 +1806,7 @@ state 83
     (63) if -> . IF LPAREN exp RPAREN LCURLY statement RCURLY else
     (68) while -> . WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 
-    RCURLY          reduce using rule 100 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
     ID              shift and go to state 118
     READ            shift and go to state 119
     PRINT           shift and go to state 120
@@ -1867,29 +1869,29 @@ state 87
 state 88
 
     (16) var1 -> ID COMMA var1 addV . saveId
-    (101) saveId -> .
+    (102) saveId -> .
 
-    SEMICOLON       reduce using rule 101 (saveId -> .)
-    MUL             reduce using rule 101 (saveId -> .)
-    DIV             reduce using rule 101 (saveId -> .)
-    PLUS            reduce using rule 101 (saveId -> .)
-    MINUS           reduce using rule 101 (saveId -> .)
-    GT              reduce using rule 101 (saveId -> .)
-    LT              reduce using rule 101 (saveId -> .)
-    GTE             reduce using rule 101 (saveId -> .)
-    LTE             reduce using rule 101 (saveId -> .)
-    NE              reduce using rule 101 (saveId -> .)
-    AND             reduce using rule 101 (saveId -> .)
-    OR              reduce using rule 101 (saveId -> .)
-    RBRACKET        reduce using rule 101 (saveId -> .)
-    RPAREN          reduce using rule 101 (saveId -> .)
-    TO              reduce using rule 101 (saveId -> .)
-    COMMA           reduce using rule 101 (saveId -> .)
-    CTEI            reduce using rule 101 (saveId -> .)
-    CTEF            reduce using rule 101 (saveId -> .)
-    CTEC            reduce using rule 101 (saveId -> .)
-    LPAREN          reduce using rule 101 (saveId -> .)
-    ID              reduce using rule 101 (saveId -> .)
+    SEMICOLON       reduce using rule 102 (saveId -> .)
+    MUL             reduce using rule 102 (saveId -> .)
+    DIV             reduce using rule 102 (saveId -> .)
+    PLUS            reduce using rule 102 (saveId -> .)
+    MINUS           reduce using rule 102 (saveId -> .)
+    GT              reduce using rule 102 (saveId -> .)
+    LT              reduce using rule 102 (saveId -> .)
+    GTE             reduce using rule 102 (saveId -> .)
+    LTE             reduce using rule 102 (saveId -> .)
+    NE              reduce using rule 102 (saveId -> .)
+    AND             reduce using rule 102 (saveId -> .)
+    OR              reduce using rule 102 (saveId -> .)
+    RBRACKET        reduce using rule 102 (saveId -> .)
+    RPAREN          reduce using rule 102 (saveId -> .)
+    TO              reduce using rule 102 (saveId -> .)
+    COMMA           reduce using rule 102 (saveId -> .)
+    CTEI            reduce using rule 102 (saveId -> .)
+    CTEF            reduce using rule 102 (saveId -> .)
+    CTEC            reduce using rule 102 (saveId -> .)
+    LPAREN          reduce using rule 102 (saveId -> .)
+    ID              reduce using rule 102 (saveId -> .)
 
     saveId                         shift and go to state 126
 
@@ -2016,176 +2018,176 @@ state 92
 state 93
 
     (78) exp -> nexp OR . saveOperator nexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    GT              reduce using rule 102 (saveOperator -> .)
-    LT              reduce using rule 102 (saveOperator -> .)
-    GTE             reduce using rule 102 (saveOperator -> .)
-    LTE             reduce using rule 102 (saveOperator -> .)
-    NE              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    GT              reduce using rule 103 (saveOperator -> .)
+    LT              reduce using rule 103 (saveOperator -> .)
+    GTE             reduce using rule 103 (saveOperator -> .)
+    LTE             reduce using rule 103 (saveOperator -> .)
+    NE              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 131
 
 state 94
 
     (80) nexp -> compexp AND . saveOperator compexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    GT              reduce using rule 102 (saveOperator -> .)
-    LT              reduce using rule 102 (saveOperator -> .)
-    GTE             reduce using rule 102 (saveOperator -> .)
-    LTE             reduce using rule 102 (saveOperator -> .)
-    NE              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    GT              reduce using rule 103 (saveOperator -> .)
+    LT              reduce using rule 103 (saveOperator -> .)
+    GTE             reduce using rule 103 (saveOperator -> .)
+    LTE             reduce using rule 103 (saveOperator -> .)
+    NE              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 132
 
 state 95
 
     (83) compexp1 -> sumexp GT . saveOperator sumexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 133
 
 state 96
 
     (84) compexp1 -> sumexp LT . saveOperator sumexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 134
 
 state 97
 
     (85) compexp1 -> sumexp GTE . saveOperator sumexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 135
 
 state 98
 
     (86) compexp1 -> sumexp LTE . saveOperator sumexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 136
 
 state 99
 
     (87) compexp1 -> sumexp NE . saveOperator sumexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 137
 
@@ -2204,150 +2206,150 @@ state 100
 
 state 101
 
-    (95) pexp -> CTEI .
+    (96) pexp -> CTEI .
 
-    MUL             reduce using rule 95 (pexp -> CTEI .)
-    DIV             reduce using rule 95 (pexp -> CTEI .)
-    PLUS            reduce using rule 95 (pexp -> CTEI .)
-    MINUS           reduce using rule 95 (pexp -> CTEI .)
-    AND             reduce using rule 95 (pexp -> CTEI .)
-    OR              reduce using rule 95 (pexp -> CTEI .)
-    RBRACKET        reduce using rule 95 (pexp -> CTEI .)
-    RPAREN          reduce using rule 95 (pexp -> CTEI .)
-    SEMICOLON       reduce using rule 95 (pexp -> CTEI .)
-    TO              reduce using rule 95 (pexp -> CTEI .)
-    COMMA           reduce using rule 95 (pexp -> CTEI .)
-    GT              reduce using rule 95 (pexp -> CTEI .)
-    LT              reduce using rule 95 (pexp -> CTEI .)
-    GTE             reduce using rule 95 (pexp -> CTEI .)
-    LTE             reduce using rule 95 (pexp -> CTEI .)
-    NE              reduce using rule 95 (pexp -> CTEI .)
-    CTEI            reduce using rule 95 (pexp -> CTEI .)
-    CTEF            reduce using rule 95 (pexp -> CTEI .)
-    CTEC            reduce using rule 95 (pexp -> CTEI .)
-    LPAREN          reduce using rule 95 (pexp -> CTEI .)
-    ID              reduce using rule 95 (pexp -> CTEI .)
+    MUL             reduce using rule 96 (pexp -> CTEI .)
+    DIV             reduce using rule 96 (pexp -> CTEI .)
+    PLUS            reduce using rule 96 (pexp -> CTEI .)
+    MINUS           reduce using rule 96 (pexp -> CTEI .)
+    AND             reduce using rule 96 (pexp -> CTEI .)
+    OR              reduce using rule 96 (pexp -> CTEI .)
+    RBRACKET        reduce using rule 96 (pexp -> CTEI .)
+    RPAREN          reduce using rule 96 (pexp -> CTEI .)
+    SEMICOLON       reduce using rule 96 (pexp -> CTEI .)
+    TO              reduce using rule 96 (pexp -> CTEI .)
+    COMMA           reduce using rule 96 (pexp -> CTEI .)
+    GT              reduce using rule 96 (pexp -> CTEI .)
+    LT              reduce using rule 96 (pexp -> CTEI .)
+    GTE             reduce using rule 96 (pexp -> CTEI .)
+    LTE             reduce using rule 96 (pexp -> CTEI .)
+    NE              reduce using rule 96 (pexp -> CTEI .)
+    CTEI            reduce using rule 96 (pexp -> CTEI .)
+    CTEF            reduce using rule 96 (pexp -> CTEI .)
+    CTEC            reduce using rule 96 (pexp -> CTEI .)
+    LPAREN          reduce using rule 96 (pexp -> CTEI .)
+    ID              reduce using rule 96 (pexp -> CTEI .)
 
 
 state 102
 
     (89) sumexp -> mulexp PLUS . saveOperator mulexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    GT              reduce using rule 102 (saveOperator -> .)
-    LT              reduce using rule 102 (saveOperator -> .)
-    GTE             reduce using rule 102 (saveOperator -> .)
-    LTE             reduce using rule 102 (saveOperator -> .)
-    NE              reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    GT              reduce using rule 103 (saveOperator -> .)
+    LT              reduce using rule 103 (saveOperator -> .)
+    GTE             reduce using rule 103 (saveOperator -> .)
+    LTE             reduce using rule 103 (saveOperator -> .)
+    NE              reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 138
 
 state 103
 
     (90) sumexp -> mulexp MINUS . saveOperator mulexp
-    (102) saveOperator -> .
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
-    GT              reduce using rule 102 (saveOperator -> .)
-    LT              reduce using rule 102 (saveOperator -> .)
-    GTE             reduce using rule 102 (saveOperator -> .)
-    LTE             reduce using rule 102 (saveOperator -> .)
-    NE              reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
+    GT              reduce using rule 103 (saveOperator -> .)
+    LT              reduce using rule 103 (saveOperator -> .)
+    GTE             reduce using rule 103 (saveOperator -> .)
+    LTE             reduce using rule 103 (saveOperator -> .)
+    NE              reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 139
 
 state 104
 
-    (92) mulexp -> pexp MUL . saveOperator pexp
-    (102) saveOperator -> .
+    (93) mulexp -> pexp MUL . saveOperator pexp
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    GT              reduce using rule 102 (saveOperator -> .)
-    LT              reduce using rule 102 (saveOperator -> .)
-    GTE             reduce using rule 102 (saveOperator -> .)
-    LTE             reduce using rule 102 (saveOperator -> .)
-    NE              reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    GT              reduce using rule 103 (saveOperator -> .)
+    LT              reduce using rule 103 (saveOperator -> .)
+    GTE             reduce using rule 103 (saveOperator -> .)
+    LTE             reduce using rule 103 (saveOperator -> .)
+    NE              reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 140
 
 state 105
 
-    (93) mulexp -> pexp DIV . saveOperator pexp
-    (102) saveOperator -> .
+    (94) mulexp -> pexp DIV . saveOperator pexp
+    (103) saveOperator -> .
 
-    CTEI            reduce using rule 102 (saveOperator -> .)
-    CTEF            reduce using rule 102 (saveOperator -> .)
-    CTEC            reduce using rule 102 (saveOperator -> .)
-    LPAREN          reduce using rule 102 (saveOperator -> .)
-    ID              reduce using rule 102 (saveOperator -> .)
-    PLUS            reduce using rule 102 (saveOperator -> .)
-    MINUS           reduce using rule 102 (saveOperator -> .)
-    GT              reduce using rule 102 (saveOperator -> .)
-    LT              reduce using rule 102 (saveOperator -> .)
-    GTE             reduce using rule 102 (saveOperator -> .)
-    LTE             reduce using rule 102 (saveOperator -> .)
-    NE              reduce using rule 102 (saveOperator -> .)
-    AND             reduce using rule 102 (saveOperator -> .)
-    OR              reduce using rule 102 (saveOperator -> .)
-    RBRACKET        reduce using rule 102 (saveOperator -> .)
-    RPAREN          reduce using rule 102 (saveOperator -> .)
-    SEMICOLON       reduce using rule 102 (saveOperator -> .)
-    TO              reduce using rule 102 (saveOperator -> .)
-    COMMA           reduce using rule 102 (saveOperator -> .)
-    MUL             reduce using rule 102 (saveOperator -> .)
-    DIV             reduce using rule 102 (saveOperator -> .)
+    CTEI            reduce using rule 103 (saveOperator -> .)
+    CTEF            reduce using rule 103 (saveOperator -> .)
+    CTEC            reduce using rule 103 (saveOperator -> .)
+    LPAREN          reduce using rule 103 (saveOperator -> .)
+    ID              reduce using rule 103 (saveOperator -> .)
+    PLUS            reduce using rule 103 (saveOperator -> .)
+    MINUS           reduce using rule 103 (saveOperator -> .)
+    GT              reduce using rule 103 (saveOperator -> .)
+    LT              reduce using rule 103 (saveOperator -> .)
+    GTE             reduce using rule 103 (saveOperator -> .)
+    LTE             reduce using rule 103 (saveOperator -> .)
+    NE              reduce using rule 103 (saveOperator -> .)
+    AND             reduce using rule 103 (saveOperator -> .)
+    OR              reduce using rule 103 (saveOperator -> .)
+    RBRACKET        reduce using rule 103 (saveOperator -> .)
+    RPAREN          reduce using rule 103 (saveOperator -> .)
+    SEMICOLON       reduce using rule 103 (saveOperator -> .)
+    TO              reduce using rule 103 (saveOperator -> .)
+    COMMA           reduce using rule 103 (saveOperator -> .)
+    MUL             reduce using rule 103 (saveOperator -> .)
+    DIV             reduce using rule 103 (saveOperator -> .)
 
     saveOperator                   shift and go to state 141
 
 state 106
 
-    (99) pexp -> LPAREN exp . RPAREN
+    (100) pexp -> LPAREN exp . RPAREN
 
     RPAREN          shift and go to state 142
 
@@ -2369,15 +2371,15 @@ state 107
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -2387,25 +2389,25 @@ state 107
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 143
     nexp                           shift and go to state 71
@@ -2437,7 +2439,7 @@ state 109
     (50) statement1 -> . for
     (51) statement1 -> . if
     (52) statement1 -> . while
-    (100) empty -> .
+    (101) empty -> .
     (53) asignacion -> . ID EQUALS exp
     (54) asignacion -> . ID arr EQUALS exp
     (55) asignacion -> . ID mat EQUALS exp
@@ -2449,8 +2451,8 @@ state 109
     (63) if -> . IF LPAREN exp RPAREN LCURLY statement RCURLY else
     (68) while -> . WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 
-    RCURLY          reduce using rule 100 (empty -> .)
-    RETURN          reduce using rule 100 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
+    RETURN          reduce using rule 101 (empty -> .)
     ID              shift and go to state 118
     READ            shift and go to state 119
     PRINT           shift and go to state 120
@@ -2647,58 +2649,58 @@ state 126
 state 127
 
     (18) var1 -> ID arr COMMA var1 addV . saveId
-    (101) saveId -> .
+    (102) saveId -> .
 
-    SEMICOLON       reduce using rule 101 (saveId -> .)
-    MUL             reduce using rule 101 (saveId -> .)
-    DIV             reduce using rule 101 (saveId -> .)
-    PLUS            reduce using rule 101 (saveId -> .)
-    MINUS           reduce using rule 101 (saveId -> .)
-    GT              reduce using rule 101 (saveId -> .)
-    LT              reduce using rule 101 (saveId -> .)
-    GTE             reduce using rule 101 (saveId -> .)
-    LTE             reduce using rule 101 (saveId -> .)
-    NE              reduce using rule 101 (saveId -> .)
-    AND             reduce using rule 101 (saveId -> .)
-    OR              reduce using rule 101 (saveId -> .)
-    RBRACKET        reduce using rule 101 (saveId -> .)
-    RPAREN          reduce using rule 101 (saveId -> .)
-    TO              reduce using rule 101 (saveId -> .)
-    COMMA           reduce using rule 101 (saveId -> .)
-    CTEI            reduce using rule 101 (saveId -> .)
-    CTEF            reduce using rule 101 (saveId -> .)
-    CTEC            reduce using rule 101 (saveId -> .)
-    LPAREN          reduce using rule 101 (saveId -> .)
-    ID              reduce using rule 101 (saveId -> .)
+    SEMICOLON       reduce using rule 102 (saveId -> .)
+    MUL             reduce using rule 102 (saveId -> .)
+    DIV             reduce using rule 102 (saveId -> .)
+    PLUS            reduce using rule 102 (saveId -> .)
+    MINUS           reduce using rule 102 (saveId -> .)
+    GT              reduce using rule 102 (saveId -> .)
+    LT              reduce using rule 102 (saveId -> .)
+    GTE             reduce using rule 102 (saveId -> .)
+    LTE             reduce using rule 102 (saveId -> .)
+    NE              reduce using rule 102 (saveId -> .)
+    AND             reduce using rule 102 (saveId -> .)
+    OR              reduce using rule 102 (saveId -> .)
+    RBRACKET        reduce using rule 102 (saveId -> .)
+    RPAREN          reduce using rule 102 (saveId -> .)
+    TO              reduce using rule 102 (saveId -> .)
+    COMMA           reduce using rule 102 (saveId -> .)
+    CTEI            reduce using rule 102 (saveId -> .)
+    CTEF            reduce using rule 102 (saveId -> .)
+    CTEC            reduce using rule 102 (saveId -> .)
+    LPAREN          reduce using rule 102 (saveId -> .)
+    ID              reduce using rule 102 (saveId -> .)
 
     saveId                         shift and go to state 160
 
 state 128
 
     (19) var1 -> ID mat COMMA var1 addV . saveId
-    (101) saveId -> .
+    (102) saveId -> .
 
-    SEMICOLON       reduce using rule 101 (saveId -> .)
-    MUL             reduce using rule 101 (saveId -> .)
-    DIV             reduce using rule 101 (saveId -> .)
-    PLUS            reduce using rule 101 (saveId -> .)
-    MINUS           reduce using rule 101 (saveId -> .)
-    GT              reduce using rule 101 (saveId -> .)
-    LT              reduce using rule 101 (saveId -> .)
-    GTE             reduce using rule 101 (saveId -> .)
-    LTE             reduce using rule 101 (saveId -> .)
-    NE              reduce using rule 101 (saveId -> .)
-    AND             reduce using rule 101 (saveId -> .)
-    OR              reduce using rule 101 (saveId -> .)
-    RBRACKET        reduce using rule 101 (saveId -> .)
-    RPAREN          reduce using rule 101 (saveId -> .)
-    TO              reduce using rule 101 (saveId -> .)
-    COMMA           reduce using rule 101 (saveId -> .)
-    CTEI            reduce using rule 101 (saveId -> .)
-    CTEF            reduce using rule 101 (saveId -> .)
-    CTEC            reduce using rule 101 (saveId -> .)
-    LPAREN          reduce using rule 101 (saveId -> .)
-    ID              reduce using rule 101 (saveId -> .)
+    SEMICOLON       reduce using rule 102 (saveId -> .)
+    MUL             reduce using rule 102 (saveId -> .)
+    DIV             reduce using rule 102 (saveId -> .)
+    PLUS            reduce using rule 102 (saveId -> .)
+    MINUS           reduce using rule 102 (saveId -> .)
+    GT              reduce using rule 102 (saveId -> .)
+    LT              reduce using rule 102 (saveId -> .)
+    GTE             reduce using rule 102 (saveId -> .)
+    LTE             reduce using rule 102 (saveId -> .)
+    NE              reduce using rule 102 (saveId -> .)
+    AND             reduce using rule 102 (saveId -> .)
+    OR              reduce using rule 102 (saveId -> .)
+    RBRACKET        reduce using rule 102 (saveId -> .)
+    RPAREN          reduce using rule 102 (saveId -> .)
+    TO              reduce using rule 102 (saveId -> .)
+    COMMA           reduce using rule 102 (saveId -> .)
+    CTEI            reduce using rule 102 (saveId -> .)
+    CTEF            reduce using rule 102 (saveId -> .)
+    CTEC            reduce using rule 102 (saveId -> .)
+    LPAREN          reduce using rule 102 (saveId -> .)
+    ID              reduce using rule 102 (saveId -> .)
 
     saveId                         shift and go to state 161
 
@@ -2720,15 +2722,15 @@ state 129
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -2738,25 +2740,25 @@ state 129
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 162
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 163
     nexp                           shift and go to state 71
@@ -2787,15 +2789,15 @@ state 130
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -2805,25 +2807,25 @@ state 130
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 165
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 164
     nexp                           shift and go to state 71
@@ -2851,15 +2853,15 @@ state 131
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -2869,28 +2871,28 @@ state 131
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
 
     nexp                           shift and go to state 166
     compexp                        shift and go to state 72
@@ -2915,15 +2917,15 @@ state 132
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -2933,28 +2935,28 @@ state 132
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
 
     compexp                        shift and go to state 167
     sumexp                         shift and go to state 73
@@ -2971,15 +2973,15 @@ state 133
     (88) sumexp -> . mulexp
     (89) sumexp -> . mulexp PLUS saveOperator mulexp
     (90) sumexp -> . mulexp MINUS saveOperator mulexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -2989,7 +2991,7 @@ state 133
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3001,23 +3003,23 @@ state 133
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     sumexp                         shift and go to state 168
     mulexp                         shift and go to state 75
@@ -3032,15 +3034,15 @@ state 134
     (88) sumexp -> . mulexp
     (89) sumexp -> . mulexp PLUS saveOperator mulexp
     (90) sumexp -> . mulexp MINUS saveOperator mulexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3050,7 +3052,7 @@ state 134
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3062,23 +3064,23 @@ state 134
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     sumexp                         shift and go to state 169
     mulexp                         shift and go to state 75
@@ -3093,15 +3095,15 @@ state 135
     (88) sumexp -> . mulexp
     (89) sumexp -> . mulexp PLUS saveOperator mulexp
     (90) sumexp -> . mulexp MINUS saveOperator mulexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3111,7 +3113,7 @@ state 135
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3123,23 +3125,23 @@ state 135
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     sumexp                         shift and go to state 170
     mulexp                         shift and go to state 75
@@ -3154,15 +3156,15 @@ state 136
     (88) sumexp -> . mulexp
     (89) sumexp -> . mulexp PLUS saveOperator mulexp
     (90) sumexp -> . mulexp MINUS saveOperator mulexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3172,7 +3174,7 @@ state 136
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3184,23 +3186,23 @@ state 136
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     sumexp                         shift and go to state 171
     mulexp                         shift and go to state 75
@@ -3215,15 +3217,15 @@ state 137
     (88) sumexp -> . mulexp
     (89) sumexp -> . mulexp PLUS saveOperator mulexp
     (90) sumexp -> . mulexp MINUS saveOperator mulexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3233,7 +3235,7 @@ state 137
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3245,23 +3247,23 @@ state 137
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     sumexp                         shift and go to state 172
     mulexp                         shift and go to state 75
@@ -3273,15 +3275,15 @@ state 137
 state 138
 
     (89) sumexp -> mulexp PLUS saveOperator . mulexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3291,7 +3293,7 @@ state 138
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3303,28 +3305,28 @@ state 138
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     mulexp                         shift and go to state 173
     pexp                           shift and go to state 76
@@ -3335,15 +3337,15 @@ state 138
 state 139
 
     (90) sumexp -> mulexp MINUS saveOperator . mulexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3353,7 +3355,7 @@ state 139
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3365,28 +3367,28 @@ state 139
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     mulexp                         shift and go to state 174
     pexp                           shift and go to state 76
@@ -3396,13 +3398,13 @@ state 139
 
 state 140
 
-    (92) mulexp -> pexp MUL saveOperator . pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (93) mulexp -> pexp MUL saveOperator . pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3412,7 +3414,7 @@ state 140
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3424,28 +3426,28 @@ state 140
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     pexp                           shift and go to state 175
     var1                           shift and go to state 77
@@ -3454,13 +3456,13 @@ state 140
 
 state 141
 
-    (93) mulexp -> pexp DIV saveOperator . pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (94) mulexp -> pexp DIV saveOperator . pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3470,7 +3472,7 @@ state 141
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
   ! shift/reduce conflict for CTEI resolved as shift
   ! shift/reduce conflict for CTEF resolved as shift
@@ -3482,28 +3484,28 @@ state 141
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RBRACKET        reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RBRACKET        reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
 
-  ! CTEI            [ reduce using rule 100 (empty -> .) ]
-  ! CTEF            [ reduce using rule 100 (empty -> .) ]
-  ! CTEC            [ reduce using rule 100 (empty -> .) ]
-  ! LPAREN          [ reduce using rule 100 (empty -> .) ]
-  ! ID              [ reduce using rule 100 (empty -> .) ]
+  ! CTEI            [ reduce using rule 101 (empty -> .) ]
+  ! CTEF            [ reduce using rule 101 (empty -> .) ]
+  ! CTEC            [ reduce using rule 101 (empty -> .) ]
+  ! LPAREN          [ reduce using rule 101 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
 
     pexp                           shift and go to state 176
     var1                           shift and go to state 77
@@ -3512,29 +3514,29 @@ state 141
 
 state 142
 
-    (99) pexp -> LPAREN exp RPAREN .
+    (100) pexp -> LPAREN exp RPAREN .
 
-    MUL             reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    DIV             reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    PLUS            reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    MINUS           reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    GT              reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    LT              reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    GTE             reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    LTE             reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    NE              reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    AND             reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    OR              reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    RBRACKET        reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    RPAREN          reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    SEMICOLON       reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    TO              reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    COMMA           reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    CTEI            reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    CTEF            reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    CTEC            reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    LPAREN          reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
-    ID              reduce using rule 99 (pexp -> LPAREN exp RPAREN .)
+    MUL             reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    DIV             reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    PLUS            reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    MINUS           reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    GT              reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    LT              reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    GTE             reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    LTE             reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    NE              reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    AND             reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    OR              reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    RBRACKET        reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    RPAREN          reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    SEMICOLON       reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    TO              reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    COMMA           reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    CTEI            reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    CTEF            reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    CTEC            reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    LPAREN          reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
+    ID              reduce using rule 100 (pexp -> LPAREN exp RPAREN .)
 
 
 state 143
@@ -3632,15 +3634,15 @@ state 150
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3650,26 +3652,26 @@ state 150
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 179
     nexp                           shift and go to state 71
@@ -3707,10 +3709,10 @@ state 153
     (20) var1 -> . ID mat
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
     ID              shift and go to state 41
-    RPAREN          reduce using rule 100 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     var1                           shift and go to state 182
     empty                          shift and go to state 42
@@ -3738,15 +3740,15 @@ state 154
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3756,7 +3758,7 @@ state 154
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTESTRING       shift and go to state 185
     CTEI            shift and go to state 186
@@ -3764,19 +3766,19 @@ state 154
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    COMMA           reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    COMMA           reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     escritura1                     shift and go to state 183
     escritura2                     shift and go to state 184
@@ -3818,15 +3820,15 @@ state 156
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3836,25 +3838,25 @@ state 156
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 191
     nexp                           shift and go to state 71
@@ -3884,15 +3886,15 @@ state 157
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -3902,25 +3904,25 @@ state 157
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 192
     nexp                           shift and go to state 71
@@ -4004,23 +4006,23 @@ state 161
 state 162
 
     (31) mat -> LBRACKET CTEI RBRACKET LBRACKET CTEI . RBRACKET
-    (95) pexp -> CTEI .
+    (96) pexp -> CTEI .
 
   ! shift/reduce conflict for RBRACKET resolved as shift
     RBRACKET        shift and go to state 195
-    MUL             reduce using rule 95 (pexp -> CTEI .)
-    DIV             reduce using rule 95 (pexp -> CTEI .)
-    PLUS            reduce using rule 95 (pexp -> CTEI .)
-    MINUS           reduce using rule 95 (pexp -> CTEI .)
-    GT              reduce using rule 95 (pexp -> CTEI .)
-    LT              reduce using rule 95 (pexp -> CTEI .)
-    GTE             reduce using rule 95 (pexp -> CTEI .)
-    LTE             reduce using rule 95 (pexp -> CTEI .)
-    NE              reduce using rule 95 (pexp -> CTEI .)
-    AND             reduce using rule 95 (pexp -> CTEI .)
-    OR              reduce using rule 95 (pexp -> CTEI .)
+    MUL             reduce using rule 96 (pexp -> CTEI .)
+    DIV             reduce using rule 96 (pexp -> CTEI .)
+    PLUS            reduce using rule 96 (pexp -> CTEI .)
+    MINUS           reduce using rule 96 (pexp -> CTEI .)
+    GT              reduce using rule 96 (pexp -> CTEI .)
+    LT              reduce using rule 96 (pexp -> CTEI .)
+    GTE             reduce using rule 96 (pexp -> CTEI .)
+    LTE             reduce using rule 96 (pexp -> CTEI .)
+    NE              reduce using rule 96 (pexp -> CTEI .)
+    AND             reduce using rule 96 (pexp -> CTEI .)
+    OR              reduce using rule 96 (pexp -> CTEI .)
 
-  ! RBRACKET        [ reduce using rule 95 (pexp -> CTEI .) ]
+  ! RBRACKET        [ reduce using rule 96 (pexp -> CTEI .) ]
 
 
 state 163
@@ -4040,23 +4042,23 @@ state 164
 state 165
 
     (33) mat -> LBRACKET exp RBRACKET LBRACKET CTEI . RBRACKET
-    (95) pexp -> CTEI .
+    (96) pexp -> CTEI .
 
   ! shift/reduce conflict for RBRACKET resolved as shift
     RBRACKET        shift and go to state 198
-    MUL             reduce using rule 95 (pexp -> CTEI .)
-    DIV             reduce using rule 95 (pexp -> CTEI .)
-    PLUS            reduce using rule 95 (pexp -> CTEI .)
-    MINUS           reduce using rule 95 (pexp -> CTEI .)
-    GT              reduce using rule 95 (pexp -> CTEI .)
-    LT              reduce using rule 95 (pexp -> CTEI .)
-    GTE             reduce using rule 95 (pexp -> CTEI .)
-    LTE             reduce using rule 95 (pexp -> CTEI .)
-    NE              reduce using rule 95 (pexp -> CTEI .)
-    AND             reduce using rule 95 (pexp -> CTEI .)
-    OR              reduce using rule 95 (pexp -> CTEI .)
+    MUL             reduce using rule 96 (pexp -> CTEI .)
+    DIV             reduce using rule 96 (pexp -> CTEI .)
+    PLUS            reduce using rule 96 (pexp -> CTEI .)
+    MINUS           reduce using rule 96 (pexp -> CTEI .)
+    GT              reduce using rule 96 (pexp -> CTEI .)
+    LT              reduce using rule 96 (pexp -> CTEI .)
+    GTE             reduce using rule 96 (pexp -> CTEI .)
+    LTE             reduce using rule 96 (pexp -> CTEI .)
+    NE              reduce using rule 96 (pexp -> CTEI .)
+    AND             reduce using rule 96 (pexp -> CTEI .)
+    OR              reduce using rule 96 (pexp -> CTEI .)
 
-  ! RBRACKET        [ reduce using rule 95 (pexp -> CTEI .) ]
+  ! RBRACKET        [ reduce using rule 96 (pexp -> CTEI .) ]
 
 
 state 166
@@ -4248,56 +4250,56 @@ state 174
 
 state 175
 
-    (92) mulexp -> pexp MUL saveOperator pexp .
+    (93) mulexp -> pexp MUL saveOperator pexp .
 
-    PLUS            reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    MINUS           reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    GT              reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    LT              reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    GTE             reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    LTE             reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    NE              reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    AND             reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    OR              reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    RBRACKET        reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    RPAREN          reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    SEMICOLON       reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    TO              reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    COMMA           reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    CTEI            reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    CTEF            reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    CTEC            reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    LPAREN          reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    ID              reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    MUL             reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
-    DIV             reduce using rule 92 (mulexp -> pexp MUL saveOperator pexp .)
+    PLUS            reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    MINUS           reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    GT              reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    LT              reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    GTE             reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    LTE             reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    NE              reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    AND             reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    OR              reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    RBRACKET        reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    RPAREN          reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    SEMICOLON       reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    TO              reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    COMMA           reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    CTEI            reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    CTEF            reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    CTEC            reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    LPAREN          reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    ID              reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    MUL             reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
+    DIV             reduce using rule 93 (mulexp -> pexp MUL saveOperator pexp .)
 
 
 state 176
 
-    (93) mulexp -> pexp DIV saveOperator pexp .
+    (94) mulexp -> pexp DIV saveOperator pexp .
 
-    PLUS            reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    MINUS           reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    GT              reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    LT              reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    GTE             reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    LTE             reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    NE              reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    AND             reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    OR              reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    RBRACKET        reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    RPAREN          reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    SEMICOLON       reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    TO              reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    COMMA           reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    CTEI            reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    CTEF            reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    CTEC            reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    LPAREN          reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    ID              reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    MUL             reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
-    DIV             reduce using rule 93 (mulexp -> pexp DIV saveOperator pexp .)
+    PLUS            reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    MINUS           reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    GT              reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    LT              reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    GTE             reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    LTE             reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    NE              reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    AND             reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    OR              reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    RBRACKET        reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    RPAREN          reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    SEMICOLON       reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    TO              reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    COMMA           reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    CTEI            reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    CTEF            reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    CTEC            reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    LPAREN          reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    ID              reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    MUL             reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
+    DIV             reduce using rule 94 (mulexp -> pexp DIV saveOperator pexp .)
 
 
 state 177
@@ -4359,15 +4361,15 @@ state 180
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -4377,26 +4379,26 @@ state 180
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 199
     nexp                           shift and go to state 71
@@ -4426,15 +4428,15 @@ state 181
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -4444,26 +4446,26 @@ state 181
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
-    TO              reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
+    TO              reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 200
     nexp                           shift and go to state 71
@@ -4510,51 +4512,51 @@ state 185
 state 186
 
     (73) escritura2 -> CTEI .
-    (95) pexp -> CTEI .
+    (96) pexp -> CTEI .
 
   ! reduce/reduce conflict for COMMA resolved using rule 73 (escritura2 -> CTEI .)
   ! reduce/reduce conflict for RPAREN resolved using rule 73 (escritura2 -> CTEI .)
     COMMA           reduce using rule 73 (escritura2 -> CTEI .)
     RPAREN          reduce using rule 73 (escritura2 -> CTEI .)
-    MUL             reduce using rule 95 (pexp -> CTEI .)
-    DIV             reduce using rule 95 (pexp -> CTEI .)
-    PLUS            reduce using rule 95 (pexp -> CTEI .)
-    MINUS           reduce using rule 95 (pexp -> CTEI .)
-    GT              reduce using rule 95 (pexp -> CTEI .)
-    LT              reduce using rule 95 (pexp -> CTEI .)
-    GTE             reduce using rule 95 (pexp -> CTEI .)
-    LTE             reduce using rule 95 (pexp -> CTEI .)
-    NE              reduce using rule 95 (pexp -> CTEI .)
-    AND             reduce using rule 95 (pexp -> CTEI .)
-    OR              reduce using rule 95 (pexp -> CTEI .)
+    MUL             reduce using rule 96 (pexp -> CTEI .)
+    DIV             reduce using rule 96 (pexp -> CTEI .)
+    PLUS            reduce using rule 96 (pexp -> CTEI .)
+    MINUS           reduce using rule 96 (pexp -> CTEI .)
+    GT              reduce using rule 96 (pexp -> CTEI .)
+    LT              reduce using rule 96 (pexp -> CTEI .)
+    GTE             reduce using rule 96 (pexp -> CTEI .)
+    LTE             reduce using rule 96 (pexp -> CTEI .)
+    NE              reduce using rule 96 (pexp -> CTEI .)
+    AND             reduce using rule 96 (pexp -> CTEI .)
+    OR              reduce using rule 96 (pexp -> CTEI .)
 
-  ! COMMA           [ reduce using rule 95 (pexp -> CTEI .) ]
-  ! RPAREN          [ reduce using rule 95 (pexp -> CTEI .) ]
+  ! COMMA           [ reduce using rule 96 (pexp -> CTEI .) ]
+  ! RPAREN          [ reduce using rule 96 (pexp -> CTEI .) ]
 
 
 state 187
 
     (74) escritura2 -> CTEF .
-    (96) pexp -> CTEF .
+    (97) pexp -> CTEF .
 
   ! reduce/reduce conflict for COMMA resolved using rule 74 (escritura2 -> CTEF .)
   ! reduce/reduce conflict for RPAREN resolved using rule 74 (escritura2 -> CTEF .)
     COMMA           reduce using rule 74 (escritura2 -> CTEF .)
     RPAREN          reduce using rule 74 (escritura2 -> CTEF .)
-    MUL             reduce using rule 96 (pexp -> CTEF .)
-    DIV             reduce using rule 96 (pexp -> CTEF .)
-    PLUS            reduce using rule 96 (pexp -> CTEF .)
-    MINUS           reduce using rule 96 (pexp -> CTEF .)
-    GT              reduce using rule 96 (pexp -> CTEF .)
-    LT              reduce using rule 96 (pexp -> CTEF .)
-    GTE             reduce using rule 96 (pexp -> CTEF .)
-    LTE             reduce using rule 96 (pexp -> CTEF .)
-    NE              reduce using rule 96 (pexp -> CTEF .)
-    AND             reduce using rule 96 (pexp -> CTEF .)
-    OR              reduce using rule 96 (pexp -> CTEF .)
+    MUL             reduce using rule 97 (pexp -> CTEF .)
+    DIV             reduce using rule 97 (pexp -> CTEF .)
+    PLUS            reduce using rule 97 (pexp -> CTEF .)
+    MINUS           reduce using rule 97 (pexp -> CTEF .)
+    GT              reduce using rule 97 (pexp -> CTEF .)
+    LT              reduce using rule 97 (pexp -> CTEF .)
+    GTE             reduce using rule 97 (pexp -> CTEF .)
+    LTE             reduce using rule 97 (pexp -> CTEF .)
+    NE              reduce using rule 97 (pexp -> CTEF .)
+    AND             reduce using rule 97 (pexp -> CTEF .)
+    OR              reduce using rule 97 (pexp -> CTEF .)
 
-  ! COMMA           [ reduce using rule 96 (pexp -> CTEF .) ]
-  ! RPAREN          [ reduce using rule 96 (pexp -> CTEF .) ]
+  ! COMMA           [ reduce using rule 97 (pexp -> CTEF .) ]
+  ! RPAREN          [ reduce using rule 97 (pexp -> CTEF .) ]
 
 
 state 188
@@ -4604,16 +4606,16 @@ state 193
     (12) vars -> . var
     (13) vars -> . empty
     (14) var -> . VAR var2
-    (100) empty -> .
+    (101) empty -> .
 
     VAR             shift and go to state 12
-    ID              reduce using rule 100 (empty -> .)
-    READ            reduce using rule 100 (empty -> .)
-    PRINT           reduce using rule 100 (empty -> .)
-    FOR             reduce using rule 100 (empty -> .)
-    IF              reduce using rule 100 (empty -> .)
-    WHILE           reduce using rule 100 (empty -> .)
-    RCURLY          reduce using rule 100 (empty -> .)
+    ID              reduce using rule 101 (empty -> .)
+    READ            reduce using rule 101 (empty -> .)
+    PRINT           reduce using rule 101 (empty -> .)
+    FOR             reduce using rule 101 (empty -> .)
+    IF              reduce using rule 101 (empty -> .)
+    WHILE           reduce using rule 101 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
 
     vars                           shift and go to state 209
     var                            shift and go to state 9
@@ -4625,16 +4627,16 @@ state 194
     (12) vars -> . var
     (13) vars -> . empty
     (14) var -> . VAR var2
-    (100) empty -> .
+    (101) empty -> .
 
     VAR             shift and go to state 12
-    ID              reduce using rule 100 (empty -> .)
-    READ            reduce using rule 100 (empty -> .)
-    PRINT           reduce using rule 100 (empty -> .)
-    FOR             reduce using rule 100 (empty -> .)
-    IF              reduce using rule 100 (empty -> .)
-    WHILE           reduce using rule 100 (empty -> .)
-    RETURN          reduce using rule 100 (empty -> .)
+    ID              reduce using rule 101 (empty -> .)
+    READ            reduce using rule 101 (empty -> .)
+    PRINT           reduce using rule 101 (empty -> .)
+    FOR             reduce using rule 101 (empty -> .)
+    IF              reduce using rule 101 (empty -> .)
+    WHILE           reduce using rule 101 (empty -> .)
+    RETURN          reduce using rule 101 (empty -> .)
 
     vars                           shift and go to state 210
     var                            shift and go to state 9
@@ -4815,15 +4817,15 @@ state 203
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -4833,7 +4835,7 @@ state 203
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTESTRING       shift and go to state 185
     CTEI            shift and go to state 186
@@ -4841,18 +4843,18 @@ state 203
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     escritura2                     shift and go to state 211
     exp                            shift and go to state 188
@@ -4925,7 +4927,7 @@ state 209
     (50) statement1 -> . for
     (51) statement1 -> . if
     (52) statement1 -> . while
-    (100) empty -> .
+    (101) empty -> .
     (53) asignacion -> . ID EQUALS exp
     (54) asignacion -> . ID arr EQUALS exp
     (55) asignacion -> . ID mat EQUALS exp
@@ -4937,7 +4939,7 @@ state 209
     (63) if -> . IF LPAREN exp RPAREN LCURLY statement RCURLY else
     (68) while -> . WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 
-    RCURLY          reduce using rule 100 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
     ID              shift and go to state 118
     READ            shift and go to state 119
     PRINT           shift and go to state 120
@@ -4968,7 +4970,7 @@ state 210
     (50) statement1 -> . for
     (51) statement1 -> . if
     (52) statement1 -> . while
-    (100) empty -> .
+    (101) empty -> .
     (53) asignacion -> . ID EQUALS exp
     (54) asignacion -> . ID arr EQUALS exp
     (55) asignacion -> . ID mat EQUALS exp
@@ -4980,7 +4982,7 @@ state 210
     (63) if -> . IF LPAREN exp RPAREN LCURLY statement RCURLY else
     (68) while -> . WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 
-    RETURN          reduce using rule 100 (empty -> .)
+    RETURN          reduce using rule 101 (empty -> .)
     ID              shift and go to state 118
     READ            shift and go to state 119
     PRINT           shift and go to state 120
@@ -5018,7 +5020,7 @@ state 212
     (50) statement1 -> . for
     (51) statement1 -> . if
     (52) statement1 -> . while
-    (100) empty -> .
+    (101) empty -> .
     (53) asignacion -> . ID EQUALS exp
     (54) asignacion -> . ID arr EQUALS exp
     (55) asignacion -> . ID mat EQUALS exp
@@ -5030,7 +5032,7 @@ state 212
     (63) if -> . IF LPAREN exp RPAREN LCURLY statement RCURLY else
     (68) while -> . WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 
-    RCURLY          reduce using rule 100 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
     ID              shift and go to state 118
     READ            shift and go to state 119
     PRINT           shift and go to state 120
@@ -5066,15 +5068,15 @@ state 213
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -5084,25 +5086,25 @@ state 213
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    RPAREN          reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    RPAREN          reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 219
     nexp                           shift and go to state 71
@@ -5128,7 +5130,7 @@ state 214
     (50) statement1 -> . for
     (51) statement1 -> . if
     (52) statement1 -> . while
-    (100) empty -> .
+    (101) empty -> .
     (53) asignacion -> . ID EQUALS exp
     (54) asignacion -> . ID arr EQUALS exp
     (55) asignacion -> . ID mat EQUALS exp
@@ -5140,7 +5142,7 @@ state 214
     (63) if -> . IF LPAREN exp RPAREN LCURLY statement RCURLY else
     (68) while -> . WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 
-    RCURLY          reduce using rule 100 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
     ID              shift and go to state 118
     READ            shift and go to state 119
     PRINT           shift and go to state 120
@@ -5171,7 +5173,7 @@ state 215
     (50) statement1 -> . for
     (51) statement1 -> . if
     (52) statement1 -> . while
-    (100) empty -> .
+    (101) empty -> .
     (53) asignacion -> . ID EQUALS exp
     (54) asignacion -> . ID arr EQUALS exp
     (55) asignacion -> . ID mat EQUALS exp
@@ -5183,7 +5185,7 @@ state 215
     (63) if -> . IF LPAREN exp RPAREN LCURLY statement RCURLY else
     (68) while -> . WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 
-    RCURLY          reduce using rule 100 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
     ID              shift and go to state 118
     READ            shift and go to state 119
     PRINT           shift and go to state 120
@@ -5271,15 +5273,15 @@ state 223
     (85) compexp1 -> . sumexp GTE saveOperator sumexp
     (86) compexp1 -> . sumexp LTE saveOperator sumexp
     (87) compexp1 -> . sumexp NE saveOperator sumexp
-    (91) mulexp -> . pexp
-    (92) mulexp -> . pexp MUL saveOperator pexp
-    (93) mulexp -> . pexp DIV saveOperator pexp
-    (94) pexp -> . var1
-    (95) pexp -> . CTEI
-    (96) pexp -> . CTEF
-    (97) pexp -> . CTEC
-    (98) pexp -> . llamada
-    (99) pexp -> . LPAREN exp RPAREN
+    (92) mulexp -> . pexp
+    (93) mulexp -> . pexp MUL saveOperator pexp
+    (94) mulexp -> . pexp DIV saveOperator pexp
+    (95) pexp -> . var1
+    (96) pexp -> . CTEI
+    (97) pexp -> . CTEF
+    (98) pexp -> . CTEC
+    (99) pexp -> . llamada
+    (100) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV saveId
     (17) var1 -> . ID arr
@@ -5289,25 +5291,25 @@ state 223
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
     (61) llamada -> . ID LPAREN exp RPAREN
-    (100) empty -> .
+    (101) empty -> .
 
     CTEI            shift and go to state 101
     CTEF            shift and go to state 78
     CTEC            shift and go to state 79
     LPAREN          shift and go to state 81
     ID              shift and go to state 82
-    MUL             reduce using rule 100 (empty -> .)
-    DIV             reduce using rule 100 (empty -> .)
-    PLUS            reduce using rule 100 (empty -> .)
-    MINUS           reduce using rule 100 (empty -> .)
-    GT              reduce using rule 100 (empty -> .)
-    LT              reduce using rule 100 (empty -> .)
-    GTE             reduce using rule 100 (empty -> .)
-    LTE             reduce using rule 100 (empty -> .)
-    NE              reduce using rule 100 (empty -> .)
-    AND             reduce using rule 100 (empty -> .)
-    OR              reduce using rule 100 (empty -> .)
-    SEMICOLON       reduce using rule 100 (empty -> .)
+    MUL             reduce using rule 101 (empty -> .)
+    DIV             reduce using rule 101 (empty -> .)
+    PLUS            reduce using rule 101 (empty -> .)
+    MINUS           reduce using rule 101 (empty -> .)
+    GT              reduce using rule 101 (empty -> .)
+    LT              reduce using rule 101 (empty -> .)
+    GTE             reduce using rule 101 (empty -> .)
+    LTE             reduce using rule 101 (empty -> .)
+    NE              reduce using rule 101 (empty -> .)
+    AND             reduce using rule 101 (empty -> .)
+    OR              reduce using rule 101 (empty -> .)
+    SEMICOLON       reduce using rule 101 (empty -> .)
 
     exp                            shift and go to state 227
     nexp                           shift and go to state 71
@@ -5340,7 +5342,7 @@ state 225
     (63) if -> IF LPAREN exp RPAREN LCURLY statement RCURLY . else
     (64) else -> . ELSE LCURLY statement RCURLY
     (65) else -> . empty
-    (100) empty -> .
+    (101) empty -> .
 
   ! reduce/reduce conflict for ID resolved using rule 62 (if -> IF LPAREN exp RPAREN LCURLY statement RCURLY .)
   ! reduce/reduce conflict for READ resolved using rule 62 (if -> IF LPAREN exp RPAREN LCURLY statement RCURLY .)
@@ -5360,14 +5362,14 @@ state 225
     RETURN          reduce using rule 62 (if -> IF LPAREN exp RPAREN LCURLY statement RCURLY .)
     ELSE            shift and go to state 229
 
-  ! ID              [ reduce using rule 100 (empty -> .) ]
-  ! READ            [ reduce using rule 100 (empty -> .) ]
-  ! PRINT           [ reduce using rule 100 (empty -> .) ]
-  ! FOR             [ reduce using rule 100 (empty -> .) ]
-  ! IF              [ reduce using rule 100 (empty -> .) ]
-  ! WHILE           [ reduce using rule 100 (empty -> .) ]
-  ! RCURLY          [ reduce using rule 100 (empty -> .) ]
-  ! RETURN          [ reduce using rule 100 (empty -> .) ]
+  ! ID              [ reduce using rule 101 (empty -> .) ]
+  ! READ            [ reduce using rule 101 (empty -> .) ]
+  ! PRINT           [ reduce using rule 101 (empty -> .) ]
+  ! FOR             [ reduce using rule 101 (empty -> .) ]
+  ! IF              [ reduce using rule 101 (empty -> .) ]
+  ! WHILE           [ reduce using rule 101 (empty -> .) ]
+  ! RCURLY          [ reduce using rule 101 (empty -> .) ]
+  ! RETURN          [ reduce using rule 101 (empty -> .) ]
 
     else                           shift and go to state 228
     empty                          shift and go to state 230
@@ -5447,7 +5449,7 @@ state 232
     (50) statement1 -> . for
     (51) statement1 -> . if
     (52) statement1 -> . while
-    (100) empty -> .
+    (101) empty -> .
     (53) asignacion -> . ID EQUALS exp
     (54) asignacion -> . ID arr EQUALS exp
     (55) asignacion -> . ID mat EQUALS exp
@@ -5459,7 +5461,7 @@ state 232
     (63) if -> . IF LPAREN exp RPAREN LCURLY statement RCURLY else
     (68) while -> . WHILE LPAREN exp RPAREN LCURLY statement RCURLY
 
-    RCURLY          reduce using rule 100 (empty -> .)
+    RCURLY          reduce using rule 101 (empty -> .)
     ID              shift and go to state 118
     READ            shift and go to state 119
     PRINT           shift and go to state 120
