@@ -492,16 +492,21 @@ def p_saveId(p):
     global varId, tablaFun, fid
     if tablaFun.searchVar_tabFun(fid, varId):
         t = tablaFun.getVar_Tipo(varId, fid)
-        if t != False:
+        if t:
             if t == 'int':
                 variable = var(t, varId)
                 operando_name_and_types.push(variable)
-                print('OPERANDO AÑADIDO', operando_name_and_types.top().tipo, '-----')
+                # print('OPERANDO AÑADIDO', operando_name_and_types.top().tipo, '-----')
 
             elif t == 'float':
                 variable = var(t, varId)
                 operando_name_and_types.push(variable)
-                print('OPERANDO AÑADIDO', operando_name_and_types.top().tipo, '-----')
+                # print('OPERANDO AÑADIDO', operando_name_and_types.top().tipo, '-----')
+
+            else:
+                return
+            
+        print('OPERANDO AÑADIDO ----> ', operando_name_and_types.top().tipo)
 
     else:
         SystemExit()   
