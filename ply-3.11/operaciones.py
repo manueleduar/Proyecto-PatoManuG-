@@ -72,26 +72,24 @@ class Operaciones():
             SystemExit()
   
 
+# print("hi welcome to test")
 
-print("hi welcome to test")
+# s = Stack()
+# z = Stack()
 
-s = Stack()
-z = Stack()
-
-uno = 1
-dos = 2
-cubo = Cube()
-a = var('float', uno)
-b = var('float', dos)
+# uno = 1
+# dos = 2
+# cubo = Cube()
+# a = var('float', uno)
+# b = var('float', dos)
 
 
-s.push(a)
-s.push(b)
-z.push('+')
+# s.push(a)
+# s.push(b)
+# z.push('+')
 
-print(s.pop().tipo, s.pop().tipo, z.pop())
+# print('HOLAAAAAAAA', s.pop().tipo, s.pop().tipo, z.pop())
 
 # o = Operaciones()
 # q = Quad()
-
 

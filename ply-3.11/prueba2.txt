@@ -13,7 +13,7 @@ fun int Hello(int g);
     int y11, x1111, g, f1;
     x1111 = 10;
     y11 = 11;
-    g = p + q;
+    g = x1111 + y11;
     return g;    
 }
 

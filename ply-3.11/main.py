@@ -218,10 +218,10 @@ def p_var(p):
 def p_var1(p):
     '''
         var1 : ID 
-            | ID COMMA var1  addV
+            | ID COMMA var1 addV
             | ID arr 
-            | ID arr COMMA var1  addV
-            | ID mat COMMA var1  addV
+            | ID arr COMMA var1 addV
+            | ID mat COMMA var1 addV
             | ID mat 
             | ID mat especial 
             | empty 
@@ -253,7 +253,7 @@ def p_addV(p):
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
     '''
-        var2 : var2 tipo var1 SEMICOLON  addV
+        var2 : var2 tipo var1 SEMICOLON addV
              | empty
     ''' 
     
@@ -293,17 +293,17 @@ def p_save_fun(p):
     global fid
     global tablaFun
 
-    if actual_funTipo == 'void':
-        actual_funTipo = p[-2]
-        fid = p[-1]
-        tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    # if actual_funTipo == 'void':
+    actual_funTipo = p[-2]
+    fid = p[-1]
+    tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
         
     # print('actual tipo', actual_funTipo)
     # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
-    else:
-        actual_funTipo = p[-2]
-        fid = p[-1]
-        tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    # else:
+    #     actual_funTipo = p[-2]
+    #     fid = p[-1]
+    #     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
         # print('actual tipo', actual_funTipo)
         # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 
@@ -513,11 +513,11 @@ def p_mulexp(p):
 
 def p_pexp(p):
     '''
-    pexp : var1 saveId 
-         | CTEI 
-         | CTEF 
-         | CTEC 
-         | CTESTRING  
+    pexp : var1 saveId  
+         | CTEI saveCTE
+         | CTEF saveCTE
+         | CTEC saveCTE
+         | CTESTRING saveCTE  
          | llamada
          | LPAREN exp RPAREN
     '''
@@ -548,23 +548,23 @@ def p_saveCTE(p):
     global cte, t
     cte = p[-1]
     t = type(cte)
-    if (t == 'int'):
-        v = var(t, cte)
+    if (t == int):
+        v = var(cte, 'int')
+        v = var('int', cte)
         operando_name_and_types.push(v)
         
-    elif (t == 'float'):
-        v= var(t, cte)
+    elif (t == float):
+        v = var('float', cte)
         operando_name_and_types.push(v)
         
-    elif (t == 'string'):
-        if len(cte) > 1:
-            t = 'string'
-            v = var(t, cte)
-            operando_name_and_types.push(v)
-        else:
-            t = 'char'
-            v = var(t, cte)
-            operando_name_and_types.push(v)
+    elif (t == str):
+        v = var('string', cte)
+        operando_name_and_types.push(v)
+
+    else:
+        v = var('char', cte)
+        operando_name_and_types.push(v)
+
     print('\tOPERANDO AÑADIDO ----> ', operando_name_and_types.top().tipo, operando_name_and_types.top().id)
     
 
@@ -582,6 +582,7 @@ def p_error(p):
         # Esto evita que se meta en un ciclo infinito al encontrar errores de sintaxis
         parser.errok()
         print('Syntax Error in input!', p)
+
     else: 
         print('Unexpected end of input....')
 
@@ -605,11 +606,13 @@ if __name__ == '__main__':
             if not tok:
                 break
             # print(tok)
+            
         if (parser.parse(informacion, tracking = True) == 'PROGRAMA COMPILADO'):
             print ("Correct Syntax")
             
         else: 
             print("Syntax error")
+            
     except EOFError:
         # print("ERROREOF")
         print(EOFError)
