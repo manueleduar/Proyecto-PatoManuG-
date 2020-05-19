@@ -18,7 +18,7 @@ class Quad():
         # anadir saltos
 
     def add_logic(self, goto, result, place, other):
-        q = {goto, result, place, other}
+        q = { goto, result, place, other }
         self.quad.append(q)
 
     def getQ(self):

@@ -353,7 +353,16 @@ def p_asignacion(p):
                | ID arr EQUALS exp
                | ID mat EQUALS exp
     ''' 
-    
+def p_genera_quad_asignacion(p):
+    'genera_quad_asignacion : '
+    global operando_name_and_types, operadores, cuadruplos
+    if not operando_name_and_types.is_empty():
+        if operadores.top() =='=':
+            cuadruplos.operations(operadores, operando_name_and_types, quad)
+            print('ENTRO AL EQUAL......', quad.getQ())
+    else: 
+        print('Vacio....')
+        return  
 
 def p_param(p):
     '''
@@ -402,7 +411,7 @@ def p_while(p):
 
 def p_escritura(p):
      '''
-    escritura : PRINT LPAREN escritura1 RPAREN
+    escritura : PRINT LPAREN escritura1 RPAREN 
     ''' 
 def p_escritura1(p):
      '''
@@ -411,9 +420,9 @@ def p_escritura1(p):
     ''' 
 def p_escritura2(p):
      '''
-    escritura2 : CTESTRING  
-               | CTEI
-               | CTEF 
+    escritura2 : COMILLA CTESTRING COMILLA
+               | CTEI saveCTE
+               | CTEF saveCTE
                | exp
     ''' 
 
@@ -429,16 +438,7 @@ def p_exp(p):
         | nexp OR saveOperator nexp 
     ''' 
 
-def p_genera_quad_asignacion(p):
-    'genera_quad_asignacion : '
-    global operando_name_and_types, operadores, cuadruplos
-    if not operando_name_and_types.is_empty():
-        if operadores.top() =='=':
-            cuadruplos.operations(operadores, operando_name_and_types, quad)
-            print('ENTRO AL EQUAL......', quad.getQ())
-    else: 
-        print('Vacio....')
-        return
+
 
 
 def p_genera_quad_or(p):
@@ -493,16 +493,22 @@ def p_compexp1(p):
 def p_sumexp(p):
     '''
     sumexp : mulexp  
-           | mulexp PLUS saveOperator mulexp
-           | mulexp MINUS saveOperator mulexp
+           | mulexp PLUS saveOperator mulexp 
+           | mulexp MINUS saveOperator mulexp 
     '''    
     
-def p_genera_quad_sum(p):
+def p_genera_sum_quad(p):
     'genera_sum_quad : '
     global operadores, operando_name_and_types
     if operadores.pop() == '+' or operadores.pop() == '-':
         cuadruplos.operations(operadores, operando_name_and_types, quad)
 
+def p_genera_quad_mul(p):
+    'genera_mul_quad : '
+    global operadores, operando_name_and_types
+    if operadores.pop() == '*' or operadores.pop() == '/':
+        cuadruplos.operations(operadores, operando_name_and_types, quad)
+        
 def p_mulexp(p):
     '''
     mulexp : pexp  
@@ -549,7 +555,6 @@ def p_saveCTE(p):
     cte = p[-1]
     t = type(cte)
     if (t == int):
-        v = var(cte, 'int')
         v = var('int', cte)
         operando_name_and_types.push(v)
         
