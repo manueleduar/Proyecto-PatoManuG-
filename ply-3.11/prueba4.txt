@@ -19,6 +19,14 @@ main () {
     p = 3;
     cal = 3;
     cu = 5;
+
+    if (cu && cal != 8) {
+       i = i + 1;
+    }
+
+    if (i | j == 2) {
+      print(2);
+    }
    
 
     print (i + j);

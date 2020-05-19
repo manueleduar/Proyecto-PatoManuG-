@@ -13,7 +13,8 @@ class Cube:
             10: '!=',
             11: '&&',
             12: '|',
-            13: '='
+            13: '=',
+            14: '=='
             }
             
         self.types = {
@@ -46,6 +47,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[1],
+                    self.operators[14]: self.types[4],
                 },
                 # int-float compatibility
                 self.types[2]: {
@@ -62,6 +64,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
                 # int-char compatibility
                 self.types[3]: {
@@ -78,6 +81,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
                  #int-bool compatibility
                 self.types[4]:{
@@ -94,7 +98,7 @@ class Cube:
                     self.operators[11]:self.types[9],
                     self.operators[12]:self.types[9],
                     self.operators[13]: self.types[9],
-                    
+                    self.operators[14]: self.types[9],
                 },
 
             },
@@ -115,6 +119,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
 
                 },
                 # float-float compatibility
@@ -132,7 +137,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[2],
-
+                    self.operators[14]: self.types[4],
                 },
                 # float-char compatibility
                 self.types[3]: {
@@ -149,6 +154,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
                  #bool-float compatibility
                 self.types[4]:{
@@ -165,6 +171,7 @@ class Cube:
                     self.operators[11]:self.types[9],
                     self.operators[12]:self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
             },
             # char
@@ -184,6 +191,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
                 # char-float compatibility
                 self.types[2]: {
@@ -200,6 +208,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
                 # char-char compatibility
                 self.types[3]: {
@@ -216,6 +225,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[3],
+                    self.operators[14]: self.types[4],
                 },
                  #char-bool compatibility
                 self.types[4]:{
@@ -232,6 +242,7 @@ class Cube:
                     self.operators[11]:self.types[9],
                     self.operators[12]:self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
 
             },
@@ -252,6 +263,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
                 # bool-float compatibility
                 self.types[2]: {
@@ -268,6 +280,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
                 # bool-char compatibility
                 self.types[3]: {
@@ -284,6 +297,7 @@ class Cube:
                     self.operators[11]: self.types[9],
                     self.operators[12]: self.types[9],
                     self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
                 },
                 # bool bool compatibility
                 self.types[4]: {
@@ -300,6 +314,7 @@ class Cube:
                     self.operators[11]: self.types[4],
                     self.operators[12]: self.types[4],
                     self.operators[13]: self.types[4],
+                    self.operators[14]: self.types[4],
                 },
             },
 

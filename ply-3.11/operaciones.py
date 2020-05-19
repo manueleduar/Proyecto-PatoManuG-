@@ -23,7 +23,7 @@ class Quad():
 
     def getQ(self):
         # obtiene el ultimo
-        l = self.quad.pop()
+        l = self.quad[-1]
         return l
         
     def fill_Quad(self, index):

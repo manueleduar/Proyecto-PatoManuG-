@@ -36,6 +36,7 @@ tokens = [
     'CTEC', #CONSTANTE CHAR
     'CTESTRING',#COSNTANTE STRING
     'EQUALS',
+    'COMPARE',
     'PLUS',
     'MINUS',
     'MUL',
@@ -69,6 +70,7 @@ t_RBRACKET = r'\]'
 t_LCURLY = r'\{'
 t_RCURLY = r'\}'
 t_EQUALS = r'\='
+t_COMPARE = r'\=='
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_LPAREN = r'\('
@@ -205,7 +207,7 @@ def p_vars(p):
     '''
     vars : var 
          | empty
-    '''
+    '''     
 
 def p_var(p):
     '''
@@ -215,11 +217,11 @@ def p_var(p):
         
 def p_var1(p):
     '''
-        var1 : ID
-            | ID COMMA var1 addV saveId
+        var1 : ID 
+            | ID COMMA var1  addV
             | ID arr 
-            | ID arr COMMA var1 addV saveId
-            | ID mat COMMA var1 addV saveId
+            | ID arr COMMA var1  addV
+            | ID mat COMMA var1  addV
             | ID mat 
             | ID mat especial 
             | empty 
@@ -247,12 +249,11 @@ def p_addV(p):
     else:
         SystemExit()
 
-
         
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
     '''
-        var2 : var2 tipo var1 SEMICOLON addV saveId
+        var2 : var2 tipo var1 SEMICOLON  addV
              | empty
     ''' 
     
@@ -303,7 +304,7 @@ def p_save_fun(p):
         actual_funTipo = p[-2]
         fid = p[-1]
         tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-        print('actual tipo', actual_funTipo)
+        # print('actual tipo', actual_funTipo)
         # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 
     
@@ -425,14 +426,49 @@ def p_lectura(p):
 def p_exp(p):
     '''
     exp : nexp  
-        | nexp  OR saveOperator nexp 
+        | nexp OR saveOperator nexp 
     ''' 
 
+def p_genera_quad_asignacion(p):
+    'genera_quad_asignacion : '
+    global operando_name_and_types, operadores, cuadruplos
+    if not operando_name_and_types.is_empty():
+        if operadores.top() =='=':
+            cuadruplos.operations(operadores, operando_name_and_types, quad)
+            print('ENTRO AL EQUAL......', quad.getQ())
+    else: 
+        print('Vacio....')
+        return
+
+
+def p_genera_quad_or(p):
+    'genera_quad_or : '
+    global operando_name_and_types, operadores, cuadruplos
+    if not operando_name_and_types.is_empty():
+        if operadores.top() =='|':
+            cuadruplos.operations(operadores, operando_name_and_types, quad)
+            print('ENTRO AL OR......', quad.getQ())
+    else: 
+        print('Vacio....')
+        return
+
+def p_genera_quad_and(p):
+    'genera_quad_and : '
+    global operando_name_and_types, operadores, cuadruplos
+    if not operando_name_and_types.is_empty():
+        if operadores.top() =='&&':
+            cuadruplos.operations(operadores, operando_name_and_types, quad)
+            print('ENTRO AL AND....', quad.getQ())
+            print("el ultimo que se metió-----",operando_name_and_types.top())
+    else: 
+        print('Vacio....')
+        return
+        
     
 def p_nexp(p):
     '''
     nexp : compexp
-         | compexp  AND saveOperator compexp 
+         | compexp AND saveOperator compexp 
     ''' 
     
 
@@ -443,17 +479,15 @@ def p_compexp(p):
     ''' 
 
 
-
 def p_compexp1(p):
     '''
-    compexp1 : sumexp   GT saveOperator sumexp 
-             | sumexp  LT saveOperator sumexp 
-             | sumexp  GTE saveOperator sumexp 
-             | sumexp  LTE saveOperator sumexp 
-             | sumexp  NE saveOperator sumexp 
+    compexp1 : sumexp GT saveOperator sumexp 
+             | sumexp LT saveOperator sumexp 
+             | sumexp GTE saveOperator sumexp 
+             | sumexp LTE saveOperator sumexp 
+             | sumexp NE saveOperator sumexp 
+             | sumexp COMPARE saveOperator sumexp
     ''' 
-
-
 
 
 def p_sumexp(p):
@@ -479,10 +513,11 @@ def p_mulexp(p):
 
 def p_pexp(p):
     '''
-    pexp : var1  
-         | CTEI
-         | CTEF
-         | CTEC
+    pexp : var1 saveId 
+         | CTEI 
+         | CTEF 
+         | CTEC 
+         | CTESTRING  
          | llamada
          | LPAREN exp RPAREN
     '''
@@ -494,32 +529,45 @@ def p_empty(p):
     '''
     p[0] = None
     
-# guarda en pila variables    
+# guarda en pila variables      
 def p_saveId(p):
     '''saveId : '''
     global varId, tablaFun, fid
     if tablaFun.searchVar_tabFun(fid, varId):
         t = tablaFun.getVar_Tipo(varId, fid)
         if t:
-            if t == 'int':
-                variable = var(t, varId)
-                operando_name_and_types.push(variable)
-                # print('OPERANDO AÑADIDO', operando_name_and_types.top().tipo, '-----')
-
-            elif t == 'float':
-                variable = var(t, varId)
-                operando_name_and_types.push(variable)
-                # print('OPERANDO AÑADIDO', operando_name_and_types.top().tipo, '-----')
-
-            else:
-                return
-            
-        print('OPERANDO AÑADIDO ----> ', operando_name_and_types.top().tipo)
+            variable = var(t, varId)
+            operando_name_and_types.push(variable)
+        print('\tOPERANDO AÑADIDO ----> ', operando_name_and_types.top().tipo, operando_name_and_types.top().id)
 
     else:
         SystemExit()   
 
-  
+def p_saveCTE(p):
+    '''saveCTE : '''
+    global cte, t
+    cte = p[-1]
+    t = type(cte)
+    if (t == 'int'):
+        v = var(t, cte)
+        operando_name_and_types.push(v)
+        
+    elif (t == 'float'):
+        v= var(t, cte)
+        operando_name_and_types.push(v)
+        
+    elif (t == 'string'):
+        if len(cte) > 1:
+            t = 'string'
+            v = var(t, cte)
+            operando_name_and_types.push(v)
+        else:
+            t = 'char'
+            v = var(t, cte)
+            operando_name_and_types.push(v)
+    print('\tOPERANDO AÑADIDO ----> ', operando_name_and_types.top().tipo, operando_name_and_types.top().id)
+    
+
         
 def p_saveOperator(p):
     'saveOperator : '
