@@ -1,10 +1,4 @@
 
-
-class var():
-    def __init__(self, tipo, id):
-        self.tipo = tipo
-        self.id = id
-
 class tabVar:
     def __init__(self):
         self.var_list ={}

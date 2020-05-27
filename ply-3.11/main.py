@@ -1,8 +1,8 @@
 import ply.lex as lex
 import ply.yacc as yacc
-from tablaFuncionesVariables import tabFun, tabVar, var
+from tablaFuncionesVariables import tabFun, tabVar
+from avail import Avail
 from cube import Cube
-from operaciones import Quad, Operaciones
 from stack import Stack
 import sys
 
@@ -131,11 +131,19 @@ lexer = lex.lex()
 tablaFun = tabFun()
 actualFunType = ''
 fid = ''
-operando_name_and_types = Stack()
+
+# pilas para los cuadruplos
+stackName = Stack()
+stackTypes = Stack()
 operadores = Stack()
+quadruples = []
+
+avail = Avail()
+
+
+cubo = Cube()
 saltos = Stack()
-quad = Quad()
-cuadruplos = Operaciones()
+
 
 def p_programa(p):
         '''
@@ -212,15 +220,14 @@ def p_vars(p):
 def p_var(p):
     '''
     var : VAR var2 
-    '''     
-    
+    '''        
         
 def p_var1(p):
     '''
-        var1 : ID 
+        var1 : ID
             | ID COMMA var1 addV
             | ID arr 
-            | ID arr COMMA var1 addV
+            | ID arr COMMA var1 addV 
             | ID mat COMMA var1 addV
             | ID mat 
             | ID mat especial 
@@ -241,14 +248,22 @@ def p_addV(p):
         tablaFun.addVar(fid, actual_varTipo, varId)
         # tablaFun.print_fun_vars(fid)
         # print('\tVariable:', varId, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
-        
-        # agregando nombre y tipo a la pila
-        varDatos = var(actual_varTipo, varId)
-        operando_name_and_types.push(varDatos)
-              
+            
     else:
         SystemExit()
 
+def p_addVartoStack(p):
+    'addVartoStack : '
+    global stackName, operadores, fid
+    res = tablaFun.getVar_Tipo(p[-1], fid)
+
+    if res:
+        stackTypes.push(res)
+        stackName.push(p[-1])
+
+    else: 
+        print('NO SE PUDO')
+        sys.exit()
         
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
@@ -277,8 +292,7 @@ def p_mat(p):
         | LBRACKET exp RBRACKET LBRACKET exp RBRACKET
         | LBRACKET exp RBRACKET LBRACKET CTEI RBRACKET
         | LBRACKET CTEI RBRACKET LBRACKET exp RBRACKET
-    ''' 
-    
+    '''  
         
 def p_modules(p):
     '''
@@ -316,7 +330,6 @@ def p_function(p):
              | FUN FLOAT function2 
     ''' 
 
-
 def p_function1(p):
     '''
     function1 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY 
@@ -345,24 +358,45 @@ def p_statement1(p):
                | while
     ''' 
 
-
-
 def p_asignacion(p):
      '''
-    asignacion : ID EQUALS exp
-               | ID arr EQUALS exp
-               | ID mat EQUALS exp
+    asignacion : ID EQUALS addOperadorName exp genera_quad_asignacion
+               | ID arr EQUALS addOperadorName exp genera_quad_asignacion
+               | ID mat EQUALS addOperadorName exp genera_quad_asignacion
     ''' 
 def p_genera_quad_asignacion(p):
     'genera_quad_asignacion : '
-    global operando_name_and_types, operadores, cuadruplos
-    if not operando_name_and_types.is_empty():
-        if operadores.top() =='=':
-            cuadruplos.operations(operadores, operando_name_and_types, quad)
-            print('ENTRO AL EQUAL......', quad.getQ())
+    global stackTypes, stackName, operadores, quadruples
+    
+    if not operadores.size() > 0:
+        if operadores.top() == '=':
+            operadores2 = operadores.pop()
+            operando_derecho = stackName.pop()
+            operando_derecho_tipo = stackTypes.pop()
+            operando_izquierdo = stackName.pop()
+            operando_izquierdo_tipo = stackTypes.pop()
+
+            result = cubo.getTipo(operando_izquierdo, operando_derecho, operadores2)
+
+            if result != 'ERROR':
+                quad = (operadores2, operando_izquierdo, None, operando_derecho)
+                print('Quadruplo:', str(quad))
+                quadruples.append(quad)
+            
+            else: 
+                print('Type Dissmatch....')
+                sys.exit()
     else: 
         print('Vacio....')
         return  
+
+
+def p_addOperadorName(p):
+    'addOperadorName : '
+    global operadores
+    aux = p[-1]
+    operadores.push(aux)
+
 
 def p_param(p):
     '''
@@ -377,7 +411,6 @@ def p_param1(p):
            | ID COMMA param1
            | empty 
     ''' 
-
     
 
 def p_llamada(p): 
@@ -411,7 +444,7 @@ def p_while(p):
 
 def p_escritura(p):
      '''
-    escritura : PRINT LPAREN escritura1 RPAREN 
+    escritura : PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN 
     ''' 
 def p_escritura1(p):
      '''
@@ -421,105 +454,198 @@ def p_escritura1(p):
 def p_escritura2(p):
      '''
     escritura2 : COMILLA CTESTRING COMILLA
-               | CTEI saveCTE
-               | CTEF saveCTE
-               | exp
+               | CTEI saveCTE operatorPrintQuad
+               | CTEF saveCTE operatorPrintQuad
+               | exp 
     ''' 
 
 def p_lectura(p):
     '''
-    lectura : READ LPAREN var1 RPAREN
+    lectura : READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     ''' 
 
 #EXPRESIONES
 def p_exp(p):
     '''
-    exp : nexp  
-        | nexp OR saveOperator nexp 
+    exp : nexp genera_quad_or
+        | nexp genera_quad_or OR addOperadorName saveOperator nexp 
     ''' 
 
+def genera_cuadruplo():
+    global operadores, stackName, stackTypes, quadruples
+    
+    if operadores.size() > 0:
+        # if operadores.top() == 'print' or operadores.top() == 'read':
+        #     operando2 = operadores.pop()
+        #     valor = stackName.pop()
+        #     stackTypes.pop()
+        #     quad = (operando2, None, None, valor)
+        #     print('quad de print:', str(quad))
+        #     quadruples.append(quad)
 
+        
+        if operadores.top() != '=':
+            operando2 = operadores.pop()
+            operando_derecho = stackName.pop()
+            operando_derecho_tipo = stackTypes.pop()
+            operando_izquierdo = stackName.pop()
+            operando_izquierdo_tipo = stackTypes.pop()
+
+            result_type = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operando2)
+
+            if result_type != 'ERROR':
+                result = avail.next()
+                quad = (operando2, operando_izquierdo, operando_derecho, result)
+
+                print('quad: ' + str(quad))
+
+                quadruples.append(quad)
+                stackName.push(result)
+                stackTypes.push(result_type)
+
+            else: 
+                print('Type dismatch...')
+                sys.exit()
+    else:
+        print('PILA DE OPERANDOS VACIA....')
 
 
 def p_genera_quad_or(p):
     'genera_quad_or : '
-    global operando_name_and_types, operadores, cuadruplos
-    if not operando_name_and_types.is_empty():
-        if operadores.top() =='|':
-            cuadruplos.operations(operadores, operando_name_and_types, quad)
-            print('ENTRO AL OR......', quad.getQ())
-    else: 
-        print('Vacio....')
-        return
+    global operadores
+    if operadores.size() > 0:
+        if operadores.top() == '|':
+            genera_cuadruplo()
+     
 
 def p_genera_quad_and(p):
     'genera_quad_and : '
-    global operando_name_and_types, operadores, cuadruplos
-    if not operando_name_and_types.is_empty():
-        if operadores.top() =='&&':
-            cuadruplos.operations(operadores, operando_name_and_types, quad)
-            print('ENTRO AL AND....', quad.getQ())
-            print("el ultimo que se metió-----",operando_name_and_types.top())
+    global operadores
+    if operadores.size() > 0:
+        if operadores.top() == '&&':
+            genera_cuadruplo()
+
+
+def p_compare_quad(p):
+    'compare_quad : '
+    global operadores
+    if operadores.size() > 0:
+        if operadores.top() == '<' or operadores.top() == '>' or operadores.top() == '<=' or operadores.top() == '>=' or operadores.top() == '==' or operadores.top() == '!=':
+            genera_cuadruplo()  
+
+
+def p_if_quad(p):
+    'if_quad : '
+    global stackName, stackTypes, quadruples, saltos
+    result_type = stackTypes.pop()
+    if result_type == 'bool':
+        valor = stackName.pop()
+        quad = ('GotoF', valor, None, -1)
+        quadruples.append(quad)
+        saltos.push(len(quadruples)-1)
+
     else: 
-        print('Vacio....')
+        print('Type Dissmatch....')
         return
-        
     
 def p_nexp(p):
     '''
-    nexp : compexp
-         | compexp AND saveOperator compexp 
+    nexp : compexp genera_quad_and
+         | compexp genera_quad_and AND addOperadorName saveOperator compexp 
     ''' 
     
 
 def p_compexp(p):
     '''
-    compexp : sumexp 
-            | compexp1 sumexp
+    compexp : sumexp compare_quad
+            | compexp1 compare_quad sumexp
     ''' 
 
 
 def p_compexp1(p):
     '''
-    compexp1 : sumexp GT saveOperator sumexp 
-             | sumexp LT saveOperator sumexp 
-             | sumexp GTE saveOperator sumexp 
-             | sumexp LTE saveOperator sumexp 
-             | sumexp NE saveOperator sumexp 
-             | sumexp COMPARE saveOperator sumexp
+    compexp1 : sumexp GT addOperadorName saveOperator sumexp 
+             | sumexp LT addOperadorName saveOperator sumexp 
+             | sumexp GTE addOperadorName saveOperator sumexp 
+             | sumexp LTE addOperadorName saveOperator sumexp 
+             | sumexp NE addOperadorName saveOperator sumexp 
+             | sumexp COMPARE addOperadorName saveOperator sumexp
     ''' 
 
 
 def p_sumexp(p):
     '''
-    sumexp : mulexp  
-           | mulexp PLUS saveOperator mulexp 
-           | mulexp MINUS saveOperator mulexp 
+    sumexp : mulexp genera_sum_quad  
+           | mulexp genera_sum_quad PLUS addOperadorName saveOperator mulexp 
+           | mulexp genera_sum_quad MINUS addOperadorName saveOperator mulexp 
     '''    
     
 def p_genera_sum_quad(p):
     'genera_sum_quad : '
-    global operadores, operando_name_and_types
-    if operadores.pop() == '+' or operadores.pop() == '-':
-        cuadruplos.operations(operadores, operando_name_and_types, quad)
+    global operadores
+    if operadores.size() > 0:
+        if operadores.top() == '+' or operadores.top() == '-':
+            genera_cuadruplo()
+
 
 def p_genera_quad_mul(p):
     'genera_mul_quad : '
-    global operadores, operando_name_and_types
-    if operadores.pop() == '*' or operadores.pop() == '/':
-        cuadruplos.operations(operadores, operando_name_and_types, quad)
-        
+    global operadores
+    if operadores.size() > 0:
+        if operadores.top() == '*' or operadores.top() == '/':
+            genera_cuadruplo()
+
+
+# Leer operador print y generar quadruplo
+def p_operadorPrint(p):
+	'operadorPrint : '
+	global operadores
+	operadores.push('print')
+
+
+def p_operatorPrintQuad(p):
+    'operatorPrintQuad : '
+    global operadores
+    if operadores.size() > 0:
+        if operadores.top() == 'print':
+            operator_aux = operadores.pop()
+            valor = stackName.pop()
+            stackTypes.pop()
+            quad = (operator_aux, None, None, valor)
+            print('quad:', str(quad))
+            quadruples.append(quad)
+
+
+# Leer operador read y generar quadruplo
+def p_operatorRead(p):
+    'operatorRead : '
+    global operadores
+    operadores.push('read')
+
+def p_operatorReadQuad(p):
+    'operatorReadQuad : '
+    global operadores
+    if operadores.size() > 0:
+        if operadores.top() == 'read':
+            operator_aux = operadores.pop()
+            valor = stackName.pop()
+            stackTypes.pop()
+            quad = (operator_aux, None, None, valor)
+            print('Quadruplo de read:', str(quad))
+            quadruples.append(quad)
+
+
 def p_mulexp(p):
     '''
-    mulexp : pexp  
-           | pexp MUL saveOperator pexp
-           | pexp DIV saveOperator pexp
+    mulexp : pexp genera_mul_quad
+           | pexp genera_mul_quad MUL addOperadorName saveOperator pexp
+           | pexp genera_mul_quad DIV addOperadorName saveOperator pexp
     '''
 
 
 def p_pexp(p):
     '''
-    pexp : var1 saveId  
+    pexp : var1 saveId 
          | CTEI saveCTE
          | CTEF saveCTE
          | CTEC saveCTE
@@ -542,9 +668,9 @@ def p_saveId(p):
     if tablaFun.searchVar_tabFun(fid, varId):
         t = tablaFun.getVar_Tipo(varId, fid)
         if t:
-            variable = var(t, varId)
-            operando_name_and_types.push(variable)
-        print('\tOPERANDO AÑADIDO ----> ', operando_name_and_types.top().tipo, operando_name_and_types.top().id)
+            stackTypes.push(t)
+            stackName.push(varId)
+        # print('\t OPERANDO AÑADIDO ----> tipo y nombre: ', stackTypes.top(), stackName.top())
 
     else:
         SystemExit()   
@@ -555,31 +681,31 @@ def p_saveCTE(p):
     cte = p[-1]
     t = type(cte)
     if (t == int):
-        v = var('int', cte)
-        operando_name_and_types.push(v)
+        stackTypes.push('int')
+        stackName.push(cte)
         
     elif (t == float):
-        v = var('float', cte)
-        operando_name_and_types.push(v)
+        stackTypes.push('float')
+        stackName.push(cte)
         
     elif (t == str):
-        v = var('string', cte)
-        operando_name_and_types.push(v)
+        stackTypes.push('string')
+        stackName.push(cte)
 
     else:
-        v = var('char', cte)
-        operando_name_and_types.push(v)
+        stackTypes.push('char')
+        stackName.push(cte)
 
-    print('\tOPERANDO AÑADIDO ----> ', operando_name_and_types.top().tipo, operando_name_and_types.top().id)
+    # print('\t OPERANDO AÑADIDO ----> CTE ', stackTypes.top(), stackName.top())
     
 
         
 def p_saveOperator(p):
     'saveOperator : '
     global actual_operator
-    actual_operator = p[-1]
+    actual_operator = p[-2]
     operadores.push(actual_operator)
-    # print(operadores.top())
+    # print('Operador agregado:',operadores.top())
 
 
 def p_error(p):

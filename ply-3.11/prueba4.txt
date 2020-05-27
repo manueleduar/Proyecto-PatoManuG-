@@ -1,43 +1,31 @@
-program sushi;
+program spaceX;
+
 var 
-    int i, j, p, x;
-    float cal, cu;
-    char a;
-    char b[10];
-    int imat3[1][1];
-    float mat4[3][3], mat5[1][1];
-    int a1, b1, c1;
+    int x;
+    float y;
 
-
-main () {
-  var 
-    int uno, iArr[10];
-    int mat2[5][4], MATRIZTERTMINAL[2][2];
-    i = 1;
-    j = 2;
-    p = 3;
-    cal = 3;
-    cu = 5;
-
-    if (cu && cal != 8) {
-       i = i + 1;
-       j = 2 + 2;
-    }
-
-    if (i | j == 2) {
-      print("Hola");
-      print(cu);
-      print(0);
-    }
-   
-
-    print (i + j);
-    print (cal * cu);
-    print (cal / cu);
-    print( i * j);
-    print(2.4);
-    imprimeVar();
-    print(Hello(10));
+fun void Launch(int a, int b); {
+    a = 10;
+    b = 20;
+    print(a * b);
 }
 
+main() {
+    var 
+        int i, j, k, l, m;
+        float d;
+
+        k = i + k;
+        l = i - j;
+        m = i * j;
+
+        if(x > j){
+            d = x / y;
+        }
+
+       if (d == k) {
+           print("son iguales");
+       }
+
+}
 end
