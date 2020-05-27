@@ -183,7 +183,7 @@ def p_programa2(p):
     
 def p_main(p):
     '''
-	main : MAIN LPAREN param RPAREN LCURLY vars statement RCURLY END
+	main : MAIN LPAREN param2 RPAREN LCURLY vars statement RCURLY END
 	'''
     global actual_funTipo
     actual_funTipo = p[1]
@@ -332,7 +332,7 @@ def p_function(p):
 
 def p_function1(p):
     '''
-    function1 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RCURLY 
+    function1 : ID save_fun LPAREN param2 RPAREN SEMICOLON LCURLY vars statement RCURLY 
     '''
     
 def p_function2(p):
@@ -360,15 +360,15 @@ def p_statement1(p):
 
 def p_asignacion(p):
      '''
-    asignacion : ID EQUALS addOperadorName exp genera_quad_asignacion
-               | ID arr EQUALS addOperadorName exp genera_quad_asignacion
-               | ID mat EQUALS addOperadorName exp genera_quad_asignacion
+    asignacion : ID addV EQUALS addOperadorName exp 
+               | ID addV arr EQUALS addOperadorName exp 
+               | ID addV mat EQUALS addOperadorName exp 
     ''' 
 def p_genera_quad_asignacion(p):
     'genera_quad_asignacion : '
     global stackTypes, stackName, operadores, quadruples
     
-    if not operadores.size() > 0:
+    if operadores.size() > 0:
         if operadores.top() == '=':
             operadores2 = operadores.pop()
             operando_derecho = stackName.pop()
@@ -376,11 +376,11 @@ def p_genera_quad_asignacion(p):
             operando_izquierdo = stackName.pop()
             operando_izquierdo_tipo = stackTypes.pop()
 
-            result = cubo.getTipo(operando_izquierdo, operando_derecho, operadores2)
+            result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
 
             if result != 'ERROR':
                 quad = (operadores2, operando_izquierdo, None, operando_derecho)
-                print('Quadruplo:', str(quad))
+                print('quadruplo:', str(quad))
                 quadruples.append(quad)
             
             else: 
@@ -400,17 +400,30 @@ def p_addOperadorName(p):
 
 def p_param(p):
     '''
-    param : tipo param1  
+    param : 
           | empty
     
     ''' 
 
 def p_param1(p):
     '''
-    param1 : ID
-           | ID COMMA param1
-           | empty 
+        param1 : ID
+            | ID COMMA var1 addV
+            | ID arr 
+            | ID arr COMMA var1 addV 
+            | ID mat COMMA var1 addV
+            | ID mat 
+            | ID mat especial 
+            | empty 
     ''' 
+
+def p_param2(p):
+      '''
+        param2 : param2 tipo var1  addV
+             | empty
+    ''' 
+
+    
     
 
 def p_llamada(p): 
@@ -547,7 +560,8 @@ def p_if_quad(p):
     else: 
         print('Type Dissmatch....')
         return
-    
+
+
 def p_nexp(p):
     '''
     nexp : compexp genera_quad_and
@@ -557,27 +571,27 @@ def p_nexp(p):
 
 def p_compexp(p):
     '''
-    compexp : sumexp compare_quad
-            | compexp1 compare_quad sumexp
+    compexp : sumexp
+            | compexp1 sumexp
     ''' 
 
 
 def p_compexp1(p):
     '''
-    compexp1 : sumexp GT addOperadorName saveOperator sumexp 
-             | sumexp LT addOperadorName saveOperator sumexp 
-             | sumexp GTE addOperadorName saveOperator sumexp 
-             | sumexp LTE addOperadorName saveOperator sumexp 
-             | sumexp NE addOperadorName saveOperator sumexp 
-             | sumexp COMPARE addOperadorName saveOperator sumexp
+    compexp1 : sumexp GT addOperadorName saveOperator sumexp compare_quad
+             | sumexp LT addOperadorName saveOperator sumexp compare_quad
+             | sumexp GTE addOperadorName saveOperator sumexp compare_quad
+             | sumexp LTE addOperadorName saveOperator sumexp compare_quad
+             | sumexp NE addOperadorName saveOperator sumexp compare_quad
+             | sumexp COMPARE addOperadorName saveOperator sumexp compare_quad
     ''' 
 
 
 def p_sumexp(p):
     '''
-    sumexp : mulexp genera_sum_quad  
-           | mulexp genera_sum_quad PLUS addOperadorName saveOperator mulexp 
-           | mulexp genera_sum_quad MINUS addOperadorName saveOperator mulexp 
+    sumexp : mulexp 
+           | mulexp PLUS addOperadorName saveOperator mulexp genera_sum_quad
+           | mulexp MINUS addOperadorName saveOperator mulexp genera_sum_quad
     '''    
     
 def p_genera_sum_quad(p):
@@ -637,9 +651,9 @@ def p_operatorReadQuad(p):
 
 def p_mulexp(p):
     '''
-    mulexp : pexp genera_mul_quad
-           | pexp genera_mul_quad MUL addOperadorName saveOperator pexp
-           | pexp genera_mul_quad DIV addOperadorName saveOperator pexp
+    mulexp : pexp 
+           | pexp MUL addOperadorName saveOperator pexp genera_mul_quad
+           | pexp DIV addOperadorName saveOperator pexp genera_mul_quad
     '''
 
 

@@ -1,25 +1,25 @@
 program spaceX;
 
-var 
-    int x;
-    float y;
-
-fun void Launch(int a, int b); {
+fun void Launch(int r, int f, int j1); {
+  var
+  int a, b;
     a = 10;
     b = 20;
-    print(a * b);
+    b = a * b;
+    print(b);
 }
 
 main() {
     var 
-        int i, j, k, l, m;
-        float d;
+        int i, j, k, l, m, d, x, y;
 
         k = i + k;
         l = i - j;
-        m = i * j;
+        m = i * l;
 
-        if(x > j){
+        x = 10;
+
+        if(x != j){
             d = x / y;
         }
 
