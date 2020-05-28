@@ -81,7 +81,7 @@ t_MUL = r'\*'
 t_DIV = r'\/'
 t_GT = r'\>'
 t_LT = r'\<'
-t_GTE = r'\=>'
+t_GTE = r'\>='
 t_LTE = r'\<='
 t_NE = r'\!=' 
 t_AND = r'\&&'
@@ -379,7 +379,6 @@ def p_genera_quad_asignacion(p):
             operando_derecho_tipo = stackTypes.pop()
             operando_izquierdo = stackName.pop()
             operando_izquierdo_tipo = stackTypes.pop()
-
             result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
 
             if result != 'ERROR':
@@ -485,33 +484,25 @@ def p_lectura(p):
 #EXPRESIONES
 def p_exp(p):
     '''
-    exp : nexp genera_quad_or
-        | nexp genera_quad_or OR addOperadorName  nexp 
+    exp : nexp 
+        | nexp OR addOperadorName nexp genera_quad_or
     ''' 
 
 def genera_cuadruplo():
     global operadores, stackName, stackTypes, quadruples
     
     if operadores.size() > 0:
-        # if operadores.top() == 'print' or operadores.top() == 'read':
-        #     operando2 = operadores.pop()
-        #     valor = stackName.pop()
-        #     stackTypes.pop()
-        #     quad = (operando2, None, None, valor)
-        #     print('quad de print:', str(quad))
-        #     quadruples.append(quad)
-        
-        # if operadores.top() != '=':
         operando2 = operadores.pop()
         operando_derecho = stackName.pop()
         operando_derecho_tipo = stackTypes.pop()
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
-
+        print("opearando_izquierdo", operando_izquierdo_tipo, "operando derecho", operando_derecho_tipo)
+        # print("res type", result_type)
         result_type = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operando2)
-
         if result_type != 'ERROR':
             result = avail.next()
+            
             quad = (operando2, operando_izquierdo, operando_derecho, result)
 
             print('quad: ' + str(quad))
@@ -521,7 +512,7 @@ def genera_cuadruplo():
             stackTypes.push(result_type)
 
         else: 
-            print('Type dismatch...')
+            print('No se pudo...')
             sys.exit()
     else:
         print('PILA DE OPERANDOS VACIA....')
@@ -532,6 +523,7 @@ def p_genera_quad_or(p):
     global operadores
     if operadores.size() > 0:
         if operadores.top() == '|':
+            print('Operador or...?', operadores.top())
             genera_cuadruplo()
      
 
@@ -540,6 +532,7 @@ def p_genera_quad_and(p):
     global operadores
     if operadores.size() > 0:
         if operadores.top() == '&&':
+            print('Operador AND...?', operadores.top())
             genera_cuadruplo()
 
 
@@ -549,12 +542,13 @@ def p_compare_quad(p):
     if operadores.size() > 0:
         if operadores.top() == '<' or operadores.top() == '>' or operadores.top() == '<=' or operadores.top() == '>=' or operadores.top() == '==' or operadores.top() == '!=':
             genera_cuadruplo()  
-
+ 
 
 def p_if_quad(p):
     'if_quad : '
     global stackName, stackTypes, quadruples, saltos
     result_type = stackTypes.pop()
+    print("tipo resultado tipo", result_type)
     if result_type == 'bool':
         valor = stackName.pop()
         quad = ('GotoF', valor, None, -1)
@@ -562,14 +556,14 @@ def p_if_quad(p):
         saltos.push(len(quadruples)-1)
 
     else: 
-        print('Type Dissmatch....')
+        print('Error if quad....')
         return
 
 
 def p_nexp(p):
     '''
-    nexp : compexp genera_quad_and
-         | compexp genera_quad_and AND addOperadorName compexp 
+    nexp : compexp 
+         | compexp AND addOperadorName compexp genera_quad_and
     ''' 
     
 
@@ -727,9 +721,9 @@ def p_saveCTE(p):
         stackTypes.push('float')
         stackName.push(cte)
         
-    elif (t == str):
-        stackTypes.push('string')
-        stackName.push(cte)
+    # elif (t == str):
+    #     stackTypes.push('string')
+    #     stackName.push(cte)
 
     else:
         stackTypes.push('char')
@@ -743,6 +737,7 @@ def p_error(p):
         # Esto evita que se meta en un ciclo infinito al encontrar errores de sintaxis
         parser.errok()
         print('Syntax Error in input!', p)
+        sys.exit()
 
     else: 
         print('Unexpected end of input....')

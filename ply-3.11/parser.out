@@ -88,14 +88,14 @@ Rule 82    escritura2 -> CTEI saveCTE operatorPrintQuad
 Rule 83    escritura2 -> CTEF saveCTE operatorPrintQuad
 Rule 84    escritura2 -> exp
 Rule 85    lectura -> READ operatorRead LPAREN var1 operatorReadQuad RPAREN
-Rule 86    exp -> nexp genera_quad_or
-Rule 87    exp -> nexp genera_quad_or OR addOperadorName nexp
+Rule 86    exp -> nexp
+Rule 87    exp -> nexp OR addOperadorName nexp genera_quad_or
 Rule 88    genera_quad_or -> <empty>
 Rule 89    genera_quad_and -> <empty>
 Rule 90    compare_quad -> <empty>
 Rule 91    if_quad -> <empty>
-Rule 92    nexp -> compexp genera_quad_and
-Rule 93    nexp -> compexp genera_quad_and AND addOperadorName compexp
+Rule 92    nexp -> compexp
+Rule 93    nexp -> compexp AND addOperadorName compexp genera_quad_and
 Rule 94    compexp -> sumexp
 Rule 95    compexp -> compexp1 sumexp
 Rule 96    compexp1 -> sumexp GT addOperadorName sumexp compare_quad
@@ -203,9 +203,9 @@ function             : 35
 function1            : 38
 function2            : 39 40 41
 genera_mul_quad      : 112 113
-genera_quad_and      : 92 93
+genera_quad_and      : 93
 genera_quad_asignacion : 53 54 55
-genera_quad_or       : 86 87
+genera_quad_or       : 87
 genera_sum_quad      : 103 104
 guardaTipoVar        : 8 9 10
 if                   : 51
@@ -1048,10 +1048,10 @@ state 53
     (32) mat -> LBRACKET . exp RBRACKET LBRACKET exp RBRACKET
     (33) mat -> LBRACKET . exp RBRACKET LBRACKET CTEI RBRACKET
     (34) mat -> LBRACKET . CTEI RBRACKET LBRACKET exp RBRACKET
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -1490,34 +1490,30 @@ state 67
 
 state 68
 
-    (86) exp -> nexp . genera_quad_or
-    (87) exp -> nexp . genera_quad_or OR addOperadorName nexp
-    (88) genera_quad_or -> .
+    (86) exp -> nexp .
+    (87) exp -> nexp . OR addOperadorName nexp genera_quad_or
 
-    OR              reduce using rule 88 (genera_quad_or -> .)
-    RBRACKET        reduce using rule 88 (genera_quad_or -> .)
-    RPAREN          reduce using rule 88 (genera_quad_or -> .)
-    COMMA           reduce using rule 88 (genera_quad_or -> .)
-    SEMICOLON       reduce using rule 88 (genera_quad_or -> .)
-    TO              reduce using rule 88 (genera_quad_or -> .)
+    RBRACKET        reduce using rule 86 (exp -> nexp .)
+    RPAREN          reduce using rule 86 (exp -> nexp .)
+    COMMA           reduce using rule 86 (exp -> nexp .)
+    SEMICOLON       reduce using rule 86 (exp -> nexp .)
+    TO              reduce using rule 86 (exp -> nexp .)
+    OR              shift and go to state 92
 
-    genera_quad_or                 shift and go to state 92
 
 state 69
 
-    (92) nexp -> compexp . genera_quad_and
-    (93) nexp -> compexp . genera_quad_and AND addOperadorName compexp
-    (89) genera_quad_and -> .
+    (92) nexp -> compexp .
+    (93) nexp -> compexp . AND addOperadorName compexp genera_quad_and
 
-    AND             reduce using rule 89 (genera_quad_and -> .)
-    OR              reduce using rule 89 (genera_quad_and -> .)
-    RBRACKET        reduce using rule 89 (genera_quad_and -> .)
-    RPAREN          reduce using rule 89 (genera_quad_and -> .)
-    COMMA           reduce using rule 89 (genera_quad_and -> .)
-    SEMICOLON       reduce using rule 89 (genera_quad_and -> .)
-    TO              reduce using rule 89 (genera_quad_and -> .)
+    OR              reduce using rule 92 (nexp -> compexp .)
+    RBRACKET        reduce using rule 92 (nexp -> compexp .)
+    RPAREN          reduce using rule 92 (nexp -> compexp .)
+    COMMA           reduce using rule 92 (nexp -> compexp .)
+    SEMICOLON       reduce using rule 92 (nexp -> compexp .)
+    TO              reduce using rule 92 (nexp -> compexp .)
+    AND             shift and go to state 93
 
-    genera_quad_and                shift and go to state 93
 
 state 70
 
@@ -1824,10 +1820,10 @@ state 78
 state 79
 
     (120) pexp -> LPAREN . exp RPAREN
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -2226,30 +2222,63 @@ state 91
 
 state 92
 
-    (86) exp -> nexp genera_quad_or .
-    (87) exp -> nexp genera_quad_or . OR addOperadorName nexp
+    (87) exp -> nexp OR . addOperadorName nexp genera_quad_or
+    (57) addOperadorName -> .
 
-    RBRACKET        reduce using rule 86 (exp -> nexp genera_quad_or .)
-    RPAREN          reduce using rule 86 (exp -> nexp genera_quad_or .)
-    COMMA           reduce using rule 86 (exp -> nexp genera_quad_or .)
-    SEMICOLON       reduce using rule 86 (exp -> nexp genera_quad_or .)
-    TO              reduce using rule 86 (exp -> nexp genera_quad_or .)
-    OR              shift and go to state 134
+    CTEI            reduce using rule 57 (addOperadorName -> .)
+    CTEF            reduce using rule 57 (addOperadorName -> .)
+    CTEC            reduce using rule 57 (addOperadorName -> .)
+    CTESTRING       reduce using rule 57 (addOperadorName -> .)
+    LPAREN          reduce using rule 57 (addOperadorName -> .)
+    ID              reduce using rule 57 (addOperadorName -> .)
+    AND             reduce using rule 57 (addOperadorName -> .)
+    GT              reduce using rule 57 (addOperadorName -> .)
+    LT              reduce using rule 57 (addOperadorName -> .)
+    GTE             reduce using rule 57 (addOperadorName -> .)
+    LTE             reduce using rule 57 (addOperadorName -> .)
+    NE              reduce using rule 57 (addOperadorName -> .)
+    COMPARE         reduce using rule 57 (addOperadorName -> .)
+    PLUS            reduce using rule 57 (addOperadorName -> .)
+    MINUS           reduce using rule 57 (addOperadorName -> .)
+    MUL             reduce using rule 57 (addOperadorName -> .)
+    DIV             reduce using rule 57 (addOperadorName -> .)
+    RBRACKET        reduce using rule 57 (addOperadorName -> .)
+    RPAREN          reduce using rule 57 (addOperadorName -> .)
+    COMMA           reduce using rule 57 (addOperadorName -> .)
+    SEMICOLON       reduce using rule 57 (addOperadorName -> .)
+    TO              reduce using rule 57 (addOperadorName -> .)
 
+    addOperadorName                shift and go to state 134
 
 state 93
 
-    (92) nexp -> compexp genera_quad_and .
-    (93) nexp -> compexp genera_quad_and . AND addOperadorName compexp
+    (93) nexp -> compexp AND . addOperadorName compexp genera_quad_and
+    (57) addOperadorName -> .
 
-    OR              reduce using rule 92 (nexp -> compexp genera_quad_and .)
-    RBRACKET        reduce using rule 92 (nexp -> compexp genera_quad_and .)
-    RPAREN          reduce using rule 92 (nexp -> compexp genera_quad_and .)
-    COMMA           reduce using rule 92 (nexp -> compexp genera_quad_and .)
-    SEMICOLON       reduce using rule 92 (nexp -> compexp genera_quad_and .)
-    TO              reduce using rule 92 (nexp -> compexp genera_quad_and .)
-    AND             shift and go to state 135
+    CTEI            reduce using rule 57 (addOperadorName -> .)
+    CTEF            reduce using rule 57 (addOperadorName -> .)
+    CTEC            reduce using rule 57 (addOperadorName -> .)
+    CTESTRING       reduce using rule 57 (addOperadorName -> .)
+    LPAREN          reduce using rule 57 (addOperadorName -> .)
+    ID              reduce using rule 57 (addOperadorName -> .)
+    GT              reduce using rule 57 (addOperadorName -> .)
+    LT              reduce using rule 57 (addOperadorName -> .)
+    GTE             reduce using rule 57 (addOperadorName -> .)
+    LTE             reduce using rule 57 (addOperadorName -> .)
+    NE              reduce using rule 57 (addOperadorName -> .)
+    COMPARE         reduce using rule 57 (addOperadorName -> .)
+    PLUS            reduce using rule 57 (addOperadorName -> .)
+    MINUS           reduce using rule 57 (addOperadorName -> .)
+    MUL             reduce using rule 57 (addOperadorName -> .)
+    DIV             reduce using rule 57 (addOperadorName -> .)
+    OR              reduce using rule 57 (addOperadorName -> .)
+    RBRACKET        reduce using rule 57 (addOperadorName -> .)
+    RPAREN          reduce using rule 57 (addOperadorName -> .)
+    COMMA           reduce using rule 57 (addOperadorName -> .)
+    SEMICOLON       reduce using rule 57 (addOperadorName -> .)
+    TO              reduce using rule 57 (addOperadorName -> .)
 
+    addOperadorName                shift and go to state 135
 
 state 94
 
@@ -2695,10 +2724,10 @@ state 110
 state 111
 
     (70) llamada -> ID LPAREN . exp RPAREN
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -3025,10 +3054,10 @@ state 132
 
     (31) mat -> LBRACKET CTEI RBRACKET LBRACKET . CTEI RBRACKET
     (34) mat -> LBRACKET CTEI RBRACKET LBRACKET . exp RBRACKET
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -3096,10 +3125,10 @@ state 133
 
     (32) mat -> LBRACKET exp RBRACKET LBRACKET . exp RBRACKET
     (33) mat -> LBRACKET exp RBRACKET LBRACKET . CTEI RBRACKET
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -3165,63 +3194,140 @@ state 133
 
 state 134
 
-    (87) exp -> nexp genera_quad_or OR . addOperadorName nexp
-    (57) addOperadorName -> .
+    (87) exp -> nexp OR addOperadorName . nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
+    (94) compexp -> . sumexp
+    (95) compexp -> . compexp1 sumexp
+    (102) sumexp -> . mulexp
+    (103) sumexp -> . mulexp PLUS addOperadorName mulexp genera_sum_quad
+    (104) sumexp -> . mulexp MINUS addOperadorName mulexp genera_sum_quad
+    (96) compexp1 -> . sumexp GT addOperadorName sumexp compare_quad
+    (97) compexp1 -> . sumexp LT addOperadorName sumexp compare_quad
+    (98) compexp1 -> . sumexp GTE addOperadorName sumexp compare_quad
+    (99) compexp1 -> . sumexp LTE addOperadorName sumexp compare_quad
+    (100) compexp1 -> . sumexp NE addOperadorName sumexp compare_quad
+    (101) compexp1 -> . sumexp COMPARE addOperadorName sumexp compare_quad
+    (111) mulexp -> . pexp
+    (112) mulexp -> . pexp MUL addOperadorName pexp genera_mul_quad
+    (113) mulexp -> . pexp DIV addOperadorName pexp genera_mul_quad
+    (114) pexp -> . var1 saveId
+    (115) pexp -> . CTEI saveCTE
+    (116) pexp -> . CTEF saveCTE
+    (117) pexp -> . CTEC saveCTE
+    (118) pexp -> . CTESTRING saveCTE
+    (119) pexp -> . llamada
+    (120) pexp -> . LPAREN exp RPAREN
+    (15) var1 -> . ID
+    (16) var1 -> . ID COMMA var1 addV
+    (17) var1 -> . ID arr
+    (18) var1 -> . ID arr COMMA var1 addV
+    (19) var1 -> . ID mat COMMA var1 addV
+    (20) var1 -> . ID mat
+    (21) var1 -> . ID mat especial
+    (22) var1 -> . empty
+    (70) llamada -> . ID LPAREN exp RPAREN
+    (121) empty -> .
 
-    CTEI            reduce using rule 57 (addOperadorName -> .)
-    CTEF            reduce using rule 57 (addOperadorName -> .)
-    CTEC            reduce using rule 57 (addOperadorName -> .)
-    CTESTRING       reduce using rule 57 (addOperadorName -> .)
-    LPAREN          reduce using rule 57 (addOperadorName -> .)
-    ID              reduce using rule 57 (addOperadorName -> .)
-    AND             reduce using rule 57 (addOperadorName -> .)
-    GT              reduce using rule 57 (addOperadorName -> .)
-    LT              reduce using rule 57 (addOperadorName -> .)
-    GTE             reduce using rule 57 (addOperadorName -> .)
-    LTE             reduce using rule 57 (addOperadorName -> .)
-    NE              reduce using rule 57 (addOperadorName -> .)
-    COMPARE         reduce using rule 57 (addOperadorName -> .)
-    PLUS            reduce using rule 57 (addOperadorName -> .)
-    MINUS           reduce using rule 57 (addOperadorName -> .)
-    MUL             reduce using rule 57 (addOperadorName -> .)
-    DIV             reduce using rule 57 (addOperadorName -> .)
-    RBRACKET        reduce using rule 57 (addOperadorName -> .)
-    RPAREN          reduce using rule 57 (addOperadorName -> .)
-    COMMA           reduce using rule 57 (addOperadorName -> .)
-    SEMICOLON       reduce using rule 57 (addOperadorName -> .)
-    TO              reduce using rule 57 (addOperadorName -> .)
+    CTEI            shift and go to state 101
+    CTEF            shift and go to state 75
+    CTEC            shift and go to state 76
+    CTESTRING       shift and go to state 77
+    LPAREN          shift and go to state 79
+    ID              shift and go to state 80
+    MUL             reduce using rule 121 (empty -> .)
+    DIV             reduce using rule 121 (empty -> .)
+    PLUS            reduce using rule 121 (empty -> .)
+    MINUS           reduce using rule 121 (empty -> .)
+    GT              reduce using rule 121 (empty -> .)
+    LT              reduce using rule 121 (empty -> .)
+    GTE             reduce using rule 121 (empty -> .)
+    LTE             reduce using rule 121 (empty -> .)
+    NE              reduce using rule 121 (empty -> .)
+    COMPARE         reduce using rule 121 (empty -> .)
+    AND             reduce using rule 121 (empty -> .)
+    RBRACKET        reduce using rule 121 (empty -> .)
+    RPAREN          reduce using rule 121 (empty -> .)
+    COMMA           reduce using rule 121 (empty -> .)
+    SEMICOLON       reduce using rule 121 (empty -> .)
+    TO              reduce using rule 121 (empty -> .)
 
-    addOperadorName                shift and go to state 166
+    nexp                           shift and go to state 166
+    compexp                        shift and go to state 69
+    sumexp                         shift and go to state 70
+    compexp1                       shift and go to state 71
+    mulexp                         shift and go to state 72
+    pexp                           shift and go to state 73
+    var1                           shift and go to state 74
+    llamada                        shift and go to state 78
+    empty                          shift and go to state 41
 
 state 135
 
-    (93) nexp -> compexp genera_quad_and AND . addOperadorName compexp
-    (57) addOperadorName -> .
+    (93) nexp -> compexp AND addOperadorName . compexp genera_quad_and
+    (94) compexp -> . sumexp
+    (95) compexp -> . compexp1 sumexp
+    (102) sumexp -> . mulexp
+    (103) sumexp -> . mulexp PLUS addOperadorName mulexp genera_sum_quad
+    (104) sumexp -> . mulexp MINUS addOperadorName mulexp genera_sum_quad
+    (96) compexp1 -> . sumexp GT addOperadorName sumexp compare_quad
+    (97) compexp1 -> . sumexp LT addOperadorName sumexp compare_quad
+    (98) compexp1 -> . sumexp GTE addOperadorName sumexp compare_quad
+    (99) compexp1 -> . sumexp LTE addOperadorName sumexp compare_quad
+    (100) compexp1 -> . sumexp NE addOperadorName sumexp compare_quad
+    (101) compexp1 -> . sumexp COMPARE addOperadorName sumexp compare_quad
+    (111) mulexp -> . pexp
+    (112) mulexp -> . pexp MUL addOperadorName pexp genera_mul_quad
+    (113) mulexp -> . pexp DIV addOperadorName pexp genera_mul_quad
+    (114) pexp -> . var1 saveId
+    (115) pexp -> . CTEI saveCTE
+    (116) pexp -> . CTEF saveCTE
+    (117) pexp -> . CTEC saveCTE
+    (118) pexp -> . CTESTRING saveCTE
+    (119) pexp -> . llamada
+    (120) pexp -> . LPAREN exp RPAREN
+    (15) var1 -> . ID
+    (16) var1 -> . ID COMMA var1 addV
+    (17) var1 -> . ID arr
+    (18) var1 -> . ID arr COMMA var1 addV
+    (19) var1 -> . ID mat COMMA var1 addV
+    (20) var1 -> . ID mat
+    (21) var1 -> . ID mat especial
+    (22) var1 -> . empty
+    (70) llamada -> . ID LPAREN exp RPAREN
+    (121) empty -> .
 
-    CTEI            reduce using rule 57 (addOperadorName -> .)
-    CTEF            reduce using rule 57 (addOperadorName -> .)
-    CTEC            reduce using rule 57 (addOperadorName -> .)
-    CTESTRING       reduce using rule 57 (addOperadorName -> .)
-    LPAREN          reduce using rule 57 (addOperadorName -> .)
-    ID              reduce using rule 57 (addOperadorName -> .)
-    GT              reduce using rule 57 (addOperadorName -> .)
-    LT              reduce using rule 57 (addOperadorName -> .)
-    GTE             reduce using rule 57 (addOperadorName -> .)
-    LTE             reduce using rule 57 (addOperadorName -> .)
-    NE              reduce using rule 57 (addOperadorName -> .)
-    COMPARE         reduce using rule 57 (addOperadorName -> .)
-    PLUS            reduce using rule 57 (addOperadorName -> .)
-    MINUS           reduce using rule 57 (addOperadorName -> .)
-    MUL             reduce using rule 57 (addOperadorName -> .)
-    DIV             reduce using rule 57 (addOperadorName -> .)
-    OR              reduce using rule 57 (addOperadorName -> .)
-    RBRACKET        reduce using rule 57 (addOperadorName -> .)
-    RPAREN          reduce using rule 57 (addOperadorName -> .)
-    COMMA           reduce using rule 57 (addOperadorName -> .)
-    SEMICOLON       reduce using rule 57 (addOperadorName -> .)
-    TO              reduce using rule 57 (addOperadorName -> .)
+    CTEI            shift and go to state 101
+    CTEF            shift and go to state 75
+    CTEC            shift and go to state 76
+    CTESTRING       shift and go to state 77
+    LPAREN          shift and go to state 79
+    ID              shift and go to state 80
+    MUL             reduce using rule 121 (empty -> .)
+    DIV             reduce using rule 121 (empty -> .)
+    PLUS            reduce using rule 121 (empty -> .)
+    MINUS           reduce using rule 121 (empty -> .)
+    GT              reduce using rule 121 (empty -> .)
+    LT              reduce using rule 121 (empty -> .)
+    GTE             reduce using rule 121 (empty -> .)
+    LTE             reduce using rule 121 (empty -> .)
+    NE              reduce using rule 121 (empty -> .)
+    COMPARE         reduce using rule 121 (empty -> .)
+    OR              reduce using rule 121 (empty -> .)
+    RBRACKET        reduce using rule 121 (empty -> .)
+    RPAREN          reduce using rule 121 (empty -> .)
+    COMMA           reduce using rule 121 (empty -> .)
+    SEMICOLON       reduce using rule 121 (empty -> .)
+    TO              reduce using rule 121 (empty -> .)
 
-    addOperadorName                shift and go to state 167
+    compexp                        shift and go to state 167
+    sumexp                         shift and go to state 70
+    compexp1                       shift and go to state 71
+    mulexp                         shift and go to state 72
+    pexp                           shift and go to state 73
+    var1                           shift and go to state 74
+    llamada                        shift and go to state 78
+    empty                          shift and go to state 41
 
 state 136
 
@@ -4047,10 +4153,10 @@ state 158
 
     (71) if -> IF LPAREN . exp RPAREN LCURLY statement RCURLY
     (72) if -> IF LPAREN . exp RPAREN LCURLY statement RCURLY else
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -4117,10 +4223,10 @@ state 158
 state 159
 
     (77) while -> WHILE LPAREN . exp RPAREN LCURLY statement RCURLY
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -4264,140 +4370,30 @@ state 165
 
 state 166
 
-    (87) exp -> nexp genera_quad_or OR addOperadorName . nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
-    (94) compexp -> . sumexp
-    (95) compexp -> . compexp1 sumexp
-    (102) sumexp -> . mulexp
-    (103) sumexp -> . mulexp PLUS addOperadorName mulexp genera_sum_quad
-    (104) sumexp -> . mulexp MINUS addOperadorName mulexp genera_sum_quad
-    (96) compexp1 -> . sumexp GT addOperadorName sumexp compare_quad
-    (97) compexp1 -> . sumexp LT addOperadorName sumexp compare_quad
-    (98) compexp1 -> . sumexp GTE addOperadorName sumexp compare_quad
-    (99) compexp1 -> . sumexp LTE addOperadorName sumexp compare_quad
-    (100) compexp1 -> . sumexp NE addOperadorName sumexp compare_quad
-    (101) compexp1 -> . sumexp COMPARE addOperadorName sumexp compare_quad
-    (111) mulexp -> . pexp
-    (112) mulexp -> . pexp MUL addOperadorName pexp genera_mul_quad
-    (113) mulexp -> . pexp DIV addOperadorName pexp genera_mul_quad
-    (114) pexp -> . var1 saveId
-    (115) pexp -> . CTEI saveCTE
-    (116) pexp -> . CTEF saveCTE
-    (117) pexp -> . CTEC saveCTE
-    (118) pexp -> . CTESTRING saveCTE
-    (119) pexp -> . llamada
-    (120) pexp -> . LPAREN exp RPAREN
-    (15) var1 -> . ID
-    (16) var1 -> . ID COMMA var1 addV
-    (17) var1 -> . ID arr
-    (18) var1 -> . ID arr COMMA var1 addV
-    (19) var1 -> . ID mat COMMA var1 addV
-    (20) var1 -> . ID mat
-    (21) var1 -> . ID mat especial
-    (22) var1 -> . empty
-    (70) llamada -> . ID LPAREN exp RPAREN
-    (121) empty -> .
+    (87) exp -> nexp OR addOperadorName nexp . genera_quad_or
+    (88) genera_quad_or -> .
 
-    CTEI            shift and go to state 101
-    CTEF            shift and go to state 75
-    CTEC            shift and go to state 76
-    CTESTRING       shift and go to state 77
-    LPAREN          shift and go to state 79
-    ID              shift and go to state 80
-    MUL             reduce using rule 121 (empty -> .)
-    DIV             reduce using rule 121 (empty -> .)
-    PLUS            reduce using rule 121 (empty -> .)
-    MINUS           reduce using rule 121 (empty -> .)
-    GT              reduce using rule 121 (empty -> .)
-    LT              reduce using rule 121 (empty -> .)
-    GTE             reduce using rule 121 (empty -> .)
-    LTE             reduce using rule 121 (empty -> .)
-    NE              reduce using rule 121 (empty -> .)
-    COMPARE         reduce using rule 121 (empty -> .)
-    AND             reduce using rule 121 (empty -> .)
-    RBRACKET        reduce using rule 121 (empty -> .)
-    RPAREN          reduce using rule 121 (empty -> .)
-    COMMA           reduce using rule 121 (empty -> .)
-    SEMICOLON       reduce using rule 121 (empty -> .)
-    TO              reduce using rule 121 (empty -> .)
+    RBRACKET        reduce using rule 88 (genera_quad_or -> .)
+    RPAREN          reduce using rule 88 (genera_quad_or -> .)
+    COMMA           reduce using rule 88 (genera_quad_or -> .)
+    SEMICOLON       reduce using rule 88 (genera_quad_or -> .)
+    TO              reduce using rule 88 (genera_quad_or -> .)
 
-    nexp                           shift and go to state 195
-    compexp                        shift and go to state 69
-    sumexp                         shift and go to state 70
-    compexp1                       shift and go to state 71
-    mulexp                         shift and go to state 72
-    pexp                           shift and go to state 73
-    var1                           shift and go to state 74
-    llamada                        shift and go to state 78
-    empty                          shift and go to state 41
+    genera_quad_or                 shift and go to state 195
 
 state 167
 
-    (93) nexp -> compexp genera_quad_and AND addOperadorName . compexp
-    (94) compexp -> . sumexp
-    (95) compexp -> . compexp1 sumexp
-    (102) sumexp -> . mulexp
-    (103) sumexp -> . mulexp PLUS addOperadorName mulexp genera_sum_quad
-    (104) sumexp -> . mulexp MINUS addOperadorName mulexp genera_sum_quad
-    (96) compexp1 -> . sumexp GT addOperadorName sumexp compare_quad
-    (97) compexp1 -> . sumexp LT addOperadorName sumexp compare_quad
-    (98) compexp1 -> . sumexp GTE addOperadorName sumexp compare_quad
-    (99) compexp1 -> . sumexp LTE addOperadorName sumexp compare_quad
-    (100) compexp1 -> . sumexp NE addOperadorName sumexp compare_quad
-    (101) compexp1 -> . sumexp COMPARE addOperadorName sumexp compare_quad
-    (111) mulexp -> . pexp
-    (112) mulexp -> . pexp MUL addOperadorName pexp genera_mul_quad
-    (113) mulexp -> . pexp DIV addOperadorName pexp genera_mul_quad
-    (114) pexp -> . var1 saveId
-    (115) pexp -> . CTEI saveCTE
-    (116) pexp -> . CTEF saveCTE
-    (117) pexp -> . CTEC saveCTE
-    (118) pexp -> . CTESTRING saveCTE
-    (119) pexp -> . llamada
-    (120) pexp -> . LPAREN exp RPAREN
-    (15) var1 -> . ID
-    (16) var1 -> . ID COMMA var1 addV
-    (17) var1 -> . ID arr
-    (18) var1 -> . ID arr COMMA var1 addV
-    (19) var1 -> . ID mat COMMA var1 addV
-    (20) var1 -> . ID mat
-    (21) var1 -> . ID mat especial
-    (22) var1 -> . empty
-    (70) llamada -> . ID LPAREN exp RPAREN
-    (121) empty -> .
+    (93) nexp -> compexp AND addOperadorName compexp . genera_quad_and
+    (89) genera_quad_and -> .
 
-    CTEI            shift and go to state 101
-    CTEF            shift and go to state 75
-    CTEC            shift and go to state 76
-    CTESTRING       shift and go to state 77
-    LPAREN          shift and go to state 79
-    ID              shift and go to state 80
-    MUL             reduce using rule 121 (empty -> .)
-    DIV             reduce using rule 121 (empty -> .)
-    PLUS            reduce using rule 121 (empty -> .)
-    MINUS           reduce using rule 121 (empty -> .)
-    GT              reduce using rule 121 (empty -> .)
-    LT              reduce using rule 121 (empty -> .)
-    GTE             reduce using rule 121 (empty -> .)
-    LTE             reduce using rule 121 (empty -> .)
-    NE              reduce using rule 121 (empty -> .)
-    COMPARE         reduce using rule 121 (empty -> .)
-    OR              reduce using rule 121 (empty -> .)
-    RBRACKET        reduce using rule 121 (empty -> .)
-    RPAREN          reduce using rule 121 (empty -> .)
-    COMMA           reduce using rule 121 (empty -> .)
-    SEMICOLON       reduce using rule 121 (empty -> .)
-    TO              reduce using rule 121 (empty -> .)
+    OR              reduce using rule 89 (genera_quad_and -> .)
+    RBRACKET        reduce using rule 89 (genera_quad_and -> .)
+    RPAREN          reduce using rule 89 (genera_quad_and -> .)
+    COMMA           reduce using rule 89 (genera_quad_and -> .)
+    SEMICOLON       reduce using rule 89 (genera_quad_and -> .)
+    TO              reduce using rule 89 (genera_quad_and -> .)
 
-    compexp                        shift and go to state 196
-    sumexp                         shift and go to state 70
-    compexp1                       shift and go to state 71
-    mulexp                         shift and go to state 72
-    pexp                           shift and go to state 73
-    var1                           shift and go to state 74
-    llamada                        shift and go to state 78
-    empty                          shift and go to state 41
+    genera_quad_and                shift and go to state 196
 
 state 168
 
@@ -4779,10 +4775,10 @@ state 184
     (82) escritura2 -> . CTEI saveCTE operatorPrintQuad
     (83) escritura2 -> . CTEF saveCTE operatorPrintQuad
     (84) escritura2 -> . exp
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -5071,25 +5067,25 @@ state 194
 
 state 195
 
-    (87) exp -> nexp genera_quad_or OR addOperadorName nexp .
+    (87) exp -> nexp OR addOperadorName nexp genera_quad_or .
 
-    RBRACKET        reduce using rule 87 (exp -> nexp genera_quad_or OR addOperadorName nexp .)
-    RPAREN          reduce using rule 87 (exp -> nexp genera_quad_or OR addOperadorName nexp .)
-    COMMA           reduce using rule 87 (exp -> nexp genera_quad_or OR addOperadorName nexp .)
-    SEMICOLON       reduce using rule 87 (exp -> nexp genera_quad_or OR addOperadorName nexp .)
-    TO              reduce using rule 87 (exp -> nexp genera_quad_or OR addOperadorName nexp .)
+    RBRACKET        reduce using rule 87 (exp -> nexp OR addOperadorName nexp genera_quad_or .)
+    RPAREN          reduce using rule 87 (exp -> nexp OR addOperadorName nexp genera_quad_or .)
+    COMMA           reduce using rule 87 (exp -> nexp OR addOperadorName nexp genera_quad_or .)
+    SEMICOLON       reduce using rule 87 (exp -> nexp OR addOperadorName nexp genera_quad_or .)
+    TO              reduce using rule 87 (exp -> nexp OR addOperadorName nexp genera_quad_or .)
 
 
 state 196
 
-    (93) nexp -> compexp genera_quad_and AND addOperadorName compexp .
+    (93) nexp -> compexp AND addOperadorName compexp genera_quad_and .
 
-    OR              reduce using rule 93 (nexp -> compexp genera_quad_and AND addOperadorName compexp .)
-    RBRACKET        reduce using rule 93 (nexp -> compexp genera_quad_and AND addOperadorName compexp .)
-    RPAREN          reduce using rule 93 (nexp -> compexp genera_quad_and AND addOperadorName compexp .)
-    COMMA           reduce using rule 93 (nexp -> compexp genera_quad_and AND addOperadorName compexp .)
-    SEMICOLON       reduce using rule 93 (nexp -> compexp genera_quad_and AND addOperadorName compexp .)
-    TO              reduce using rule 93 (nexp -> compexp genera_quad_and AND addOperadorName compexp .)
+    OR              reduce using rule 93 (nexp -> compexp AND addOperadorName compexp genera_quad_and .)
+    RBRACKET        reduce using rule 93 (nexp -> compexp AND addOperadorName compexp genera_quad_and .)
+    RPAREN          reduce using rule 93 (nexp -> compexp AND addOperadorName compexp genera_quad_and .)
+    COMMA           reduce using rule 93 (nexp -> compexp AND addOperadorName compexp genera_quad_and .)
+    SEMICOLON       reduce using rule 93 (nexp -> compexp AND addOperadorName compexp genera_quad_and .)
+    TO              reduce using rule 93 (nexp -> compexp AND addOperadorName compexp genera_quad_and .)
 
 
 state 197
@@ -5349,10 +5345,10 @@ state 206
 state 207
 
     (53) asignacion -> ID saveId2 EQUALS addOperadorName . exp genera_quad_asignacion
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -5701,10 +5697,10 @@ state 224
 state 225
 
     (54) asignacion -> ID saveId2 arr EQUALS addOperadorName . exp genera_quad_asignacion
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -5772,10 +5768,10 @@ state 225
 state 226
 
     (55) asignacion -> ID saveId2 mat EQUALS addOperadorName . exp genera_quad_asignacion
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -5861,10 +5857,10 @@ state 229
     (82) escritura2 -> . CTEI saveCTE operatorPrintQuad
     (83) escritura2 -> . CTEF saveCTE operatorPrintQuad
     (84) escritura2 -> . exp
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -6039,10 +6035,10 @@ state 233
 state 234
 
     (76) for1 -> FROM asignacion TO . exp
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp
@@ -6321,10 +6317,10 @@ state 252
 state 253
 
     (43) function2 -> ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN . exp SEMICOLON RCURLY
-    (86) exp -> . nexp genera_quad_or
-    (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
-    (92) nexp -> . compexp genera_quad_and
-    (93) nexp -> . compexp genera_quad_and AND addOperadorName compexp
+    (86) exp -> . nexp
+    (87) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (92) nexp -> . compexp
+    (93) nexp -> . compexp AND addOperadorName compexp genera_quad_and
     (94) compexp -> . sumexp
     (95) compexp -> . compexp1 sumexp
     (102) sumexp -> . mulexp

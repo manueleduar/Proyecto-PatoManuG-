@@ -13,13 +13,16 @@ fun void Launch(int r, int f, int j1); {
 main() {
     var 
         int i, j, k, l, m, d, x, y, ggg[3];
+        char a1, b1;
 
         k = i + k;
         l = i - j;
         m = i * l;
-        ggg[3] = 12;
+        ggg[2] = 12;
+        a1 = 'e';
+        b1 = 'f';
 
-        x = 10;
+       x = 10;
 
         if(x != j){
             d = x / y;
@@ -27,6 +30,14 @@ main() {
 
        if (d == k) {
            print("son iguales");
+       }
+
+        if (d >= k) {
+           print("d es mayor");
+       }
+
+        if (a1 && b1) {
+           print("d es mayor");
        }
 
 }
