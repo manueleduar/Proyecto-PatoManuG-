@@ -17,8 +17,9 @@ main() {
         k = i + k;
         l = i - j;
         m = i * l;
+        ggg[3] = 12;
 
-      x = 10;
+        x = 10;
 
         if(x != j){
             d = x / y;
