@@ -150,6 +150,8 @@ def p_programa(p):
         programa :  PROGRAM ID SEMICOLON addP programa1 
         '''
         p[0] = 'PROGRAMA COMPILADO'
+        global programId
+        programId = p[2]
 
 
 def p_addP(p):
@@ -247,23 +249,23 @@ def p_addV(p):
     if tablaFun.search_tabFun(fid):
         tablaFun.addVar(fid, actual_varTipo, varId)
         # tablaFun.print_fun_vars(fid)
-        # print('\tVariable:', varId, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
+        #print('\tVariable:', varI         d, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
             
     else:
         SystemExit()
 
-def p_addVartoStack(p):
-    'addVartoStack : '
-    global stackName, operadores, fid
-    res = tablaFun.getVar_Tipo(p[-1], fid)
+# def p_addVartoStack(p):
+#     'addVartoStack : '
+#     global stackName, operadores, fid
+#     res = tablaFun.getVar_Tipo(p[-1], fid)
 
-    if res:
-        stackTypes.push(res)
-        stackName.push(p[-1])
+#     if res:
+#         stackTypes.push(res)
+#         stackName.push(p[-1])
 
-    else: 
-        print('NO SE PUDO')
-        sys.exit()
+#     else: 
+#         print('NO SE PUDO')
+#         sys.exit()
         
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
@@ -360,9 +362,9 @@ def p_statement1(p):
 
 def p_asignacion(p):
      '''
-    asignacion : ID addV EQUALS addOperadorName exp 
-               | ID addV arr EQUALS addOperadorName exp 
-               | ID addV mat EQUALS addOperadorName exp 
+    asignacion : ID saveId EQUALS addOperadorName exp genera_quad_asignacion
+               | ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
+               | ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
     ''' 
 def p_genera_quad_asignacion(p):
     'genera_quad_asignacion : '
@@ -398,6 +400,7 @@ def p_addOperadorName(p):
     operadores.push(aux)
 
 
+    
 def p_param(p):
     '''
     param : 
@@ -481,7 +484,7 @@ def p_lectura(p):
 def p_exp(p):
     '''
     exp : nexp genera_quad_or
-        | nexp genera_quad_or OR addOperadorName saveOperator nexp 
+        | nexp genera_quad_or OR addOperadorName  nexp 
     ''' 
 
 def genera_cuadruplo():
@@ -495,7 +498,6 @@ def genera_cuadruplo():
         #     quad = (operando2, None, None, valor)
         #     print('quad de print:', str(quad))
         #     quadruples.append(quad)
-
         
         if operadores.top() != '=':
             operando2 = operadores.pop()
@@ -565,7 +567,7 @@ def p_if_quad(p):
 def p_nexp(p):
     '''
     nexp : compexp genera_quad_and
-         | compexp genera_quad_and AND addOperadorName saveOperator compexp 
+         | compexp genera_quad_and AND addOperadorName compexp 
     ''' 
     
 
@@ -578,20 +580,20 @@ def p_compexp(p):
 
 def p_compexp1(p):
     '''
-    compexp1 : sumexp GT addOperadorName saveOperator sumexp compare_quad
-             | sumexp LT addOperadorName saveOperator sumexp compare_quad
-             | sumexp GTE addOperadorName saveOperator sumexp compare_quad
-             | sumexp LTE addOperadorName saveOperator sumexp compare_quad
-             | sumexp NE addOperadorName saveOperator sumexp compare_quad
-             | sumexp COMPARE addOperadorName saveOperator sumexp compare_quad
+    compexp1 : sumexp GT addOperadorName sumexp compare_quad
+             | sumexp LT addOperadorName sumexp compare_quad
+             | sumexp GTE addOperadorName sumexp compare_quad
+             | sumexp LTE addOperadorName sumexp compare_quad
+             | sumexp NE addOperadorName sumexp compare_quad
+             | sumexp COMPARE addOperadorName sumexp compare_quad
     ''' 
 
 
 def p_sumexp(p):
     '''
     sumexp : mulexp 
-           | mulexp PLUS addOperadorName saveOperator mulexp genera_sum_quad
-           | mulexp MINUS addOperadorName saveOperator mulexp genera_sum_quad
+           | mulexp PLUS addOperadorName mulexp genera_sum_quad
+           | mulexp MINUS addOperadorName mulexp genera_sum_quad
     '''    
     
 def p_genera_sum_quad(p):
@@ -652,8 +654,8 @@ def p_operatorReadQuad(p):
 def p_mulexp(p):
     '''
     mulexp : pexp 
-           | pexp MUL addOperadorName saveOperator pexp genera_mul_quad
-           | pexp DIV addOperadorName saveOperator pexp genera_mul_quad
+           | pexp MUL addOperadorName  pexp genera_mul_quad
+           | pexp DIV addOperadorName  pexp genera_mul_quad
     '''
 
 
@@ -713,13 +715,7 @@ def p_saveCTE(p):
     # print('\t OPERANDO AÑADIDO ----> CTE ', stackTypes.top(), stackName.top())
     
 
-        
-def p_saveOperator(p):
-    'saveOperator : '
-    global actual_operator
-    actual_operator = p[-2]
-    operadores.push(actual_operator)
-    # print('Operador agregado:',operadores.top())
+
 
 
 def p_error(p):

@@ -14,7 +14,9 @@ class Stack:
         self.items.append(data)
  
     def pop(self):
-         return self.items.pop()
+         if self.size() > 0:
+             return self.items.pop()
+         print('Pila vacia....')
 
     def top(self):
         return self.items[len(self.items)-1]

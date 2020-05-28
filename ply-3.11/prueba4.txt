@@ -11,13 +11,13 @@ fun void Launch(int r, int f, int j1); {
 
 main() {
     var 
-        int i, j, k, l, m, d, x, y;
+        int i, j, k, l, m, d, x, y, ggg[3];
 
         k = i + k;
         l = i - j;
         m = i * l;
 
-        x = 10;
+      x = 10;
 
         if(x != j){
             d = x / y;
