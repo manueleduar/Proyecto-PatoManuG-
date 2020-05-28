@@ -1,5 +1,8 @@
 program patito_program;
 
+fun void Launch(); {
+    print("Hola mundo");
+}
 
 main () {
   var 
@@ -13,13 +16,15 @@ main () {
   e = 25;
   f = 30;
 
+  a = e * 6;
+  f = d + c;
+  c = b / a;
+
   print(a * b);
   print (c / d);
   print (e + f);
 
-  if (a != b){
-      print("hola mundo");
-  }
+
 }
 
 end

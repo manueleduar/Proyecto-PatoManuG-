@@ -49,6 +49,9 @@ class Cube:
                     self.operators[13]: self.types[1],
                     self.operators[14]: self.types[4],
                 },
+               
+                
+                
                 # int-float compatibility
                 self.types[2]: {
                     self.operators[1]: self.types[2],
@@ -100,6 +103,74 @@ class Cube:
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
+                # int-ctei compatibility
+                self.types[5]: {
+                    self.operators[1]: self.types[1],
+                    self.operators[2]: self.types[1],
+                    self.operators[3]: self.types[1],
+                    self.operators[4]: self.types[1],
+                    self.operators[5]: self.types[4],
+                    self.operators[6]: self.types[4],
+                    self.operators[7]: self.types[4],
+                    self.operators[8]: self.types[4],
+                    self.operators[9]: self.types[4],
+                    self.operators[10]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[1],
+                    self.operators[14]: self.types[4],
+                }, 
+                # int-ctef compatibility
+                self.types[6]: {
+                    self.operators[1]: self.types[2],
+                    self.operators[2]: self.types[2],
+                    self.operators[3]: self.types[2],
+                    self.operators[4]: self.types[2],
+                    self.operators[5]: self.types[4],
+                    self.operators[6]: self.types[4],
+                    self.operators[7]: self.types[4],
+                    self.operators[8]: self.types[4],
+                    self.operators[9]: self.types[4],
+                    self.operators[10]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
+                # int-ctec compatibility
+                self.types[7]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                }, 
+                # int-cteString compatibility
+                self.types[8]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },  
 
             },
             # float
@@ -156,7 +227,7 @@ class Cube:
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
-                 #bool-float compatibility
+                 #float-bool compatibility
                 self.types[4]:{
                     self.operators[1]:self.types[9],
                     self.operators[2]:self.types[9],
@@ -173,10 +244,81 @@ class Cube:
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
+                # float-ctei compatibility
+                self.types[5]: {
+                    self.operators[1]: self.types[2],
+                    self.operators[2]: self.types[2],
+                    self.operators[3]: self.types[2],
+                    self.operators[4]: self.types[2],
+                    self.operators[5]: self.types[4],
+                    self.operators[6]: self.types[4],
+                    self.operators[7]: self.types[4],
+                    self.operators[8]: self.types[4],
+                    self.operators[9]: self.types[4],
+                    self.operators[10]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+
+                },
             },
+
+            # float-ctef compatibility
+                self.types[6]: {
+                    self.operators[1]: self.types[2],
+                    self.operators[2]: self.types[2],
+                    self.operators[3]: self.types[2],
+                    self.operators[4]: self.types[2],
+                    self.operators[5]: self.types[4],
+                    self.operators[6]: self.types[4],
+                    self.operators[7]: self.types[4],
+                    self.operators[8]: self.types[4],
+                    self.operators[9]: self.types[4],
+                    self.operators[10]: self.types[4],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[2],
+                    self.operators[14]: self.types[4],
+                },
+                # float-ctec compatibility
+                self.types[7]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
+                # float-ctestrig compatibility
+                self.types[8]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
+
             # char
             self.types[3]: {
-                    # char-int compatibility
+                # char-int compatibility
                 self.types[1]: {
                     self.operators[1]: self.types[9],
                     self.operators[2]: self.types[9],
@@ -244,7 +386,74 @@ class Cube:
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
-
+                 # char-ctei compatibility
+                self.types[5]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
+                 # char-ctef compatibility
+                self.types[6]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
+                 # char-ctec compatibility
+                self.types[7]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
+                 # char-ctestring compatibility
+                self.types[8]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
             },
             # BOOLEAN
             self.types[4]: {
@@ -316,6 +525,74 @@ class Cube:
                     self.operators[13]: self.types[4],
                     self.operators[14]: self.types[4],
                 },
+                
+                # bool-ctei COMPAT
+                self.types[5]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                    },
+                # bool-ctef COMPAT
+                self.types[6]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],                  
+                },
+                # bool-ctec COMPAT
+                self.types[7]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
+                self.types[8]: {
+                    self.operators[1]: self.types[9],
+                    self.operators[2]: self.types[9],
+                    self.operators[3]: self.types[9],
+                    self.operators[4]: self.types[9],
+                    self.operators[5]: self.types[9],
+                    self.operators[6]: self.types[9],
+                    self.operators[7]: self.types[9],
+                    self.operators[8]: self.types[9],
+                    self.operators[9]: self.types[9],
+                    self.operators[10]: self.types[9],
+                    self.operators[11]: self.types[9],
+                    self.operators[12]: self.types[9],
+                    self.operators[13]: self.types[9],
+                    self.operators[14]: self.types[9],
+                },
             },
 
         }
@@ -329,12 +606,10 @@ class Cube:
 
 # x = Cube()
 
-# x.printO('int', 'int', '+')
-# x.printO('int', 'int', '>=')
-# x.printO('int', 'int', '<=')
-# x.printO('int', 'int', '&&')
-# x.printO('int', 'int', '|')
-# x.printO('char', 'char', '==')
+# x.printO("int", "ctei", "<")
+
+
+
 
 
 
