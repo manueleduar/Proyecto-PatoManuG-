@@ -55,9 +55,9 @@ Rule 49    statement1 -> escritura SEMICOLON
 Rule 50    statement1 -> for
 Rule 51    statement1 -> if
 Rule 52    statement1 -> while
-Rule 53    asignacion -> ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-Rule 54    asignacion -> ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-Rule 55    asignacion -> ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+Rule 53    asignacion -> ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+Rule 54    asignacion -> ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+Rule 55    asignacion -> ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
 Rule 56    genera_quad_asignacion -> <empty>
 Rule 57    addOperadorName -> <empty>
 Rule 58    param -> <empty>
@@ -125,7 +125,8 @@ Rule 119   pexp -> llamada
 Rule 120   pexp -> LPAREN exp RPAREN
 Rule 121   empty -> <empty>
 Rule 122   saveId -> <empty>
-Rule 123   saveCTE -> <empty>
+Rule 123   saveId2 -> <empty>
+Rule 124   saveCTE -> <empty>
 
 Terminals, with rules where they appear
 
@@ -228,7 +229,8 @@ programa             : 0
 programa1            : 1
 programa2            : 3 5
 saveCTE              : 82 83 115 116 117 118
-saveId               : 53 54 55 114
+saveId               : 114
+saveId2              : 53 54 55
 save_fun             : 42 43
 statement            : 7 42 43 44 71 72 73 75 77
 statement1           : 44
@@ -1456,24 +1458,24 @@ state 66
     (31) mat -> LBRACKET CTEI . RBRACKET LBRACKET CTEI RBRACKET
     (34) mat -> LBRACKET CTEI . RBRACKET LBRACKET exp RBRACKET
     (115) pexp -> CTEI . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
   ! shift/reduce conflict for RBRACKET resolved as shift
     RBRACKET        shift and go to state 89
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
 
-  ! RBRACKET        [ reduce using rule 123 (saveCTE -> .) ]
+  ! RBRACKET        [ reduce using rule 124 (saveCTE -> .) ]
 
     saveCTE                        shift and go to state 90
 
@@ -1700,93 +1702,93 @@ state 74
 state 75
 
     (116) pexp -> CTEF . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
-    RBRACKET        reduce using rule 123 (saveCTE -> .)
-    RPAREN          reduce using rule 123 (saveCTE -> .)
-    COMMA           reduce using rule 123 (saveCTE -> .)
-    SEMICOLON       reduce using rule 123 (saveCTE -> .)
-    TO              reduce using rule 123 (saveCTE -> .)
-    CTEI            reduce using rule 123 (saveCTE -> .)
-    CTEF            reduce using rule 123 (saveCTE -> .)
-    CTEC            reduce using rule 123 (saveCTE -> .)
-    CTESTRING       reduce using rule 123 (saveCTE -> .)
-    LPAREN          reduce using rule 123 (saveCTE -> .)
-    ID              reduce using rule 123 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
+    RBRACKET        reduce using rule 124 (saveCTE -> .)
+    RPAREN          reduce using rule 124 (saveCTE -> .)
+    COMMA           reduce using rule 124 (saveCTE -> .)
+    SEMICOLON       reduce using rule 124 (saveCTE -> .)
+    TO              reduce using rule 124 (saveCTE -> .)
+    CTEI            reduce using rule 124 (saveCTE -> .)
+    CTEF            reduce using rule 124 (saveCTE -> .)
+    CTEC            reduce using rule 124 (saveCTE -> .)
+    CTESTRING       reduce using rule 124 (saveCTE -> .)
+    LPAREN          reduce using rule 124 (saveCTE -> .)
+    ID              reduce using rule 124 (saveCTE -> .)
 
     saveCTE                        shift and go to state 107
 
 state 76
 
     (117) pexp -> CTEC . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
-    RBRACKET        reduce using rule 123 (saveCTE -> .)
-    RPAREN          reduce using rule 123 (saveCTE -> .)
-    COMMA           reduce using rule 123 (saveCTE -> .)
-    SEMICOLON       reduce using rule 123 (saveCTE -> .)
-    TO              reduce using rule 123 (saveCTE -> .)
-    CTEI            reduce using rule 123 (saveCTE -> .)
-    CTEF            reduce using rule 123 (saveCTE -> .)
-    CTEC            reduce using rule 123 (saveCTE -> .)
-    CTESTRING       reduce using rule 123 (saveCTE -> .)
-    LPAREN          reduce using rule 123 (saveCTE -> .)
-    ID              reduce using rule 123 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
+    RBRACKET        reduce using rule 124 (saveCTE -> .)
+    RPAREN          reduce using rule 124 (saveCTE -> .)
+    COMMA           reduce using rule 124 (saveCTE -> .)
+    SEMICOLON       reduce using rule 124 (saveCTE -> .)
+    TO              reduce using rule 124 (saveCTE -> .)
+    CTEI            reduce using rule 124 (saveCTE -> .)
+    CTEF            reduce using rule 124 (saveCTE -> .)
+    CTEC            reduce using rule 124 (saveCTE -> .)
+    CTESTRING       reduce using rule 124 (saveCTE -> .)
+    LPAREN          reduce using rule 124 (saveCTE -> .)
+    ID              reduce using rule 124 (saveCTE -> .)
 
     saveCTE                        shift and go to state 108
 
 state 77
 
     (118) pexp -> CTESTRING . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
-    RBRACKET        reduce using rule 123 (saveCTE -> .)
-    RPAREN          reduce using rule 123 (saveCTE -> .)
-    COMMA           reduce using rule 123 (saveCTE -> .)
-    SEMICOLON       reduce using rule 123 (saveCTE -> .)
-    TO              reduce using rule 123 (saveCTE -> .)
-    CTEI            reduce using rule 123 (saveCTE -> .)
-    CTEF            reduce using rule 123 (saveCTE -> .)
-    CTEC            reduce using rule 123 (saveCTE -> .)
-    CTESTRING       reduce using rule 123 (saveCTE -> .)
-    LPAREN          reduce using rule 123 (saveCTE -> .)
-    ID              reduce using rule 123 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
+    RBRACKET        reduce using rule 124 (saveCTE -> .)
+    RPAREN          reduce using rule 124 (saveCTE -> .)
+    COMMA           reduce using rule 124 (saveCTE -> .)
+    SEMICOLON       reduce using rule 124 (saveCTE -> .)
+    TO              reduce using rule 124 (saveCTE -> .)
+    CTEI            reduce using rule 124 (saveCTE -> .)
+    CTEF            reduce using rule 124 (saveCTE -> .)
+    CTEC            reduce using rule 124 (saveCTE -> .)
+    CTESTRING       reduce using rule 124 (saveCTE -> .)
+    LPAREN          reduce using rule 124 (saveCTE -> .)
+    ID              reduce using rule 124 (saveCTE -> .)
 
     saveCTE                        shift and go to state 109
 
@@ -1952,9 +1954,9 @@ state 81
     (51) statement1 -> . if
     (52) statement1 -> . while
     (121) empty -> .
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> . ID LPAREN exp RPAREN
     (85) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     (78) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
@@ -2415,31 +2417,31 @@ state 100
 state 101
 
     (115) pexp -> CTEI . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
-    RBRACKET        reduce using rule 123 (saveCTE -> .)
-    RPAREN          reduce using rule 123 (saveCTE -> .)
-    COMMA           reduce using rule 123 (saveCTE -> .)
-    SEMICOLON       reduce using rule 123 (saveCTE -> .)
-    TO              reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    CTEI            reduce using rule 123 (saveCTE -> .)
-    CTEF            reduce using rule 123 (saveCTE -> .)
-    CTEC            reduce using rule 123 (saveCTE -> .)
-    CTESTRING       reduce using rule 123 (saveCTE -> .)
-    LPAREN          reduce using rule 123 (saveCTE -> .)
-    ID              reduce using rule 123 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
+    RBRACKET        reduce using rule 124 (saveCTE -> .)
+    RPAREN          reduce using rule 124 (saveCTE -> .)
+    COMMA           reduce using rule 124 (saveCTE -> .)
+    SEMICOLON       reduce using rule 124 (saveCTE -> .)
+    TO              reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    CTEI            reduce using rule 124 (saveCTE -> .)
+    CTEF            reduce using rule 124 (saveCTE -> .)
+    CTEC            reduce using rule 124 (saveCTE -> .)
+    CTESTRING       reduce using rule 124 (saveCTE -> .)
+    LPAREN          reduce using rule 124 (saveCTE -> .)
+    ID              reduce using rule 124 (saveCTE -> .)
 
     saveCTE                        shift and go to state 90
 
@@ -2780,9 +2782,9 @@ state 113
     (51) statement1 -> . if
     (52) statement1 -> . while
     (121) empty -> .
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> . ID LPAREN exp RPAREN
     (85) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     (78) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
@@ -2891,17 +2893,17 @@ state 121
 
 state 122
 
-    (53) asignacion -> ID . saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> ID . saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> ID . saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> ID . saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> ID . saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> ID . saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> ID . LPAREN exp RPAREN
-    (122) saveId -> .
+    (123) saveId2 -> .
 
     LPAREN          shift and go to state 111
-    EQUALS          reduce using rule 122 (saveId -> .)
-    LBRACKET        reduce using rule 122 (saveId -> .)
+    EQUALS          reduce using rule 123 (saveId2 -> .)
+    LBRACKET        reduce using rule 123 (saveId2 -> .)
 
-    saveId                         shift and go to state 154
+    saveId2                        shift and go to state 154
 
 state 123
 
@@ -3980,9 +3982,9 @@ state 153
 
 state 154
 
-    (53) asignacion -> ID saveId . EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> ID saveId . arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> ID saveId . mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> ID saveId2 . EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> ID saveId2 . arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> ID saveId2 . mat EQUALS addOperadorName exp genera_quad_asignacion
     (29) arr -> . LBRACKET CTEI RBRACKET
     (30) arr -> . LBRACKET exp RBRACKET
     (31) mat -> . LBRACKET CTEI RBRACKET LBRACKET CTEI RBRACKET
@@ -4200,24 +4202,24 @@ state 162
 
     (31) mat -> LBRACKET CTEI RBRACKET LBRACKET CTEI . RBRACKET
     (115) pexp -> CTEI . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
   ! shift/reduce conflict for RBRACKET resolved as shift
     RBRACKET        shift and go to state 191
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
 
-  ! RBRACKET        [ reduce using rule 123 (saveCTE -> .) ]
+  ! RBRACKET        [ reduce using rule 124 (saveCTE -> .) ]
 
     saveCTE                        shift and go to state 90
 
@@ -4239,24 +4241,24 @@ state 165
 
     (33) mat -> LBRACKET exp RBRACKET LBRACKET CTEI . RBRACKET
     (115) pexp -> CTEI . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
   ! shift/reduce conflict for RBRACKET resolved as shift
     RBRACKET        shift and go to state 194
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
 
-  ! RBRACKET        [ reduce using rule 123 (saveCTE -> .) ]
+  ! RBRACKET        [ reduce using rule 124 (saveCTE -> .) ]
 
     saveCTE                        shift and go to state 90
 
@@ -4709,7 +4711,7 @@ state 179
 
 state 180
 
-    (53) asignacion -> ID saveId EQUALS . addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> ID saveId2 EQUALS . addOperadorName exp genera_quad_asignacion
     (57) addOperadorName -> .
 
     CTEI            reduce using rule 57 (addOperadorName -> .)
@@ -4737,14 +4739,14 @@ state 180
 
 state 181
 
-    (54) asignacion -> ID saveId arr . EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> ID saveId2 arr . EQUALS addOperadorName exp genera_quad_asignacion
 
     EQUALS          shift and go to state 208
 
 
 state 182
 
-    (55) asignacion -> ID saveId mat . EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> ID saveId2 mat . EQUALS addOperadorName exp genera_quad_asignacion
 
     EQUALS          shift and go to state 209
 
@@ -4858,9 +4860,9 @@ state 185
 state 186
 
     (76) for1 -> FROM . asignacion TO exp
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
 
     ID              shift and go to state 219
 
@@ -5346,7 +5348,7 @@ state 206
 
 state 207
 
-    (53) asignacion -> ID saveId EQUALS addOperadorName . exp genera_quad_asignacion
+    (53) asignacion -> ID saveId2 EQUALS addOperadorName . exp genera_quad_asignacion
     (86) exp -> . nexp genera_quad_or
     (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
     (92) nexp -> . compexp genera_quad_and
@@ -5417,7 +5419,7 @@ state 207
 
 state 208
 
-    (54) asignacion -> ID saveId arr EQUALS . addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> ID saveId2 arr EQUALS . addOperadorName exp genera_quad_asignacion
     (57) addOperadorName -> .
 
     CTEI            reduce using rule 57 (addOperadorName -> .)
@@ -5445,7 +5447,7 @@ state 208
 
 state 209
 
-    (55) asignacion -> ID saveId mat EQUALS . addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> ID saveId2 mat EQUALS . addOperadorName exp genera_quad_asignacion
     (57) addOperadorName -> .
 
     CTEI            reduce using rule 57 (addOperadorName -> .)
@@ -5509,22 +5511,22 @@ state 214
 
     (82) escritura2 -> CTEI . saveCTE operatorPrintQuad
     (115) pexp -> CTEI . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
-    COMMA           reduce using rule 123 (saveCTE -> .)
-    RPAREN          reduce using rule 123 (saveCTE -> .)
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
+    COMMA           reduce using rule 124 (saveCTE -> .)
+    RPAREN          reduce using rule 124 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
 
     saveCTE                        shift and go to state 231
 
@@ -5532,22 +5534,22 @@ state 215
 
     (83) escritura2 -> CTEF . saveCTE operatorPrintQuad
     (116) pexp -> CTEF . saveCTE
-    (123) saveCTE -> .
+    (124) saveCTE -> .
 
-    COMMA           reduce using rule 123 (saveCTE -> .)
-    RPAREN          reduce using rule 123 (saveCTE -> .)
-    MUL             reduce using rule 123 (saveCTE -> .)
-    DIV             reduce using rule 123 (saveCTE -> .)
-    PLUS            reduce using rule 123 (saveCTE -> .)
-    MINUS           reduce using rule 123 (saveCTE -> .)
-    GT              reduce using rule 123 (saveCTE -> .)
-    LT              reduce using rule 123 (saveCTE -> .)
-    GTE             reduce using rule 123 (saveCTE -> .)
-    LTE             reduce using rule 123 (saveCTE -> .)
-    NE              reduce using rule 123 (saveCTE -> .)
-    COMPARE         reduce using rule 123 (saveCTE -> .)
-    AND             reduce using rule 123 (saveCTE -> .)
-    OR              reduce using rule 123 (saveCTE -> .)
+    COMMA           reduce using rule 124 (saveCTE -> .)
+    RPAREN          reduce using rule 124 (saveCTE -> .)
+    MUL             reduce using rule 124 (saveCTE -> .)
+    DIV             reduce using rule 124 (saveCTE -> .)
+    PLUS            reduce using rule 124 (saveCTE -> .)
+    MINUS           reduce using rule 124 (saveCTE -> .)
+    GT              reduce using rule 124 (saveCTE -> .)
+    LT              reduce using rule 124 (saveCTE -> .)
+    GTE             reduce using rule 124 (saveCTE -> .)
+    LTE             reduce using rule 124 (saveCTE -> .)
+    NE              reduce using rule 124 (saveCTE -> .)
+    COMPARE         reduce using rule 124 (saveCTE -> .)
+    AND             reduce using rule 124 (saveCTE -> .)
+    OR              reduce using rule 124 (saveCTE -> .)
 
     saveCTE                        shift and go to state 232
 
@@ -5575,15 +5577,15 @@ state 218
 
 state 219
 
-    (53) asignacion -> ID . saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> ID . saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> ID . saveId mat EQUALS addOperadorName exp genera_quad_asignacion
-    (122) saveId -> .
+    (53) asignacion -> ID . saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> ID . saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> ID . saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
+    (123) saveId2 -> .
 
-    EQUALS          reduce using rule 122 (saveId -> .)
-    LBRACKET        reduce using rule 122 (saveId -> .)
+    EQUALS          reduce using rule 123 (saveId2 -> .)
+    LBRACKET        reduce using rule 123 (saveId2 -> .)
 
-    saveId                         shift and go to state 154
+    saveId2                        shift and go to state 154
 
 state 220
 
@@ -5613,9 +5615,9 @@ state 222
     (51) statement1 -> . if
     (52) statement1 -> . while
     (121) empty -> .
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> . ID LPAREN exp RPAREN
     (85) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     (78) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
@@ -5656,9 +5658,9 @@ state 223
     (51) statement1 -> . if
     (52) statement1 -> . while
     (121) empty -> .
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> . ID LPAREN exp RPAREN
     (85) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     (78) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
@@ -5688,7 +5690,7 @@ state 223
 
 state 224
 
-    (53) asignacion -> ID saveId EQUALS addOperadorName exp . genera_quad_asignacion
+    (53) asignacion -> ID saveId2 EQUALS addOperadorName exp . genera_quad_asignacion
     (56) genera_quad_asignacion -> .
 
     SEMICOLON       reduce using rule 56 (genera_quad_asignacion -> .)
@@ -5698,7 +5700,7 @@ state 224
 
 state 225
 
-    (54) asignacion -> ID saveId arr EQUALS addOperadorName . exp genera_quad_asignacion
+    (54) asignacion -> ID saveId2 arr EQUALS addOperadorName . exp genera_quad_asignacion
     (86) exp -> . nexp genera_quad_or
     (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
     (92) nexp -> . compexp genera_quad_and
@@ -5769,7 +5771,7 @@ state 225
 
 state 226
 
-    (55) asignacion -> ID saveId mat EQUALS addOperadorName . exp genera_quad_asignacion
+    (55) asignacion -> ID saveId2 mat EQUALS addOperadorName . exp genera_quad_asignacion
     (86) exp -> . nexp genera_quad_or
     (87) exp -> . nexp genera_quad_or OR addOperadorName nexp
     (92) nexp -> . compexp genera_quad_and
@@ -6004,9 +6006,9 @@ state 233
     (51) statement1 -> . if
     (52) statement1 -> . while
     (121) empty -> .
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> . ID LPAREN exp RPAREN
     (85) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     (78) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
@@ -6118,9 +6120,9 @@ state 235
     (51) statement1 -> . if
     (52) statement1 -> . while
     (121) empty -> .
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> . ID LPAREN exp RPAREN
     (85) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     (78) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
@@ -6161,9 +6163,9 @@ state 236
     (51) statement1 -> . if
     (52) statement1 -> . while
     (121) empty -> .
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> . ID LPAREN exp RPAREN
     (85) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     (78) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
@@ -6207,15 +6209,15 @@ state 238
 
 state 239
 
-    (53) asignacion -> ID saveId EQUALS addOperadorName exp genera_quad_asignacion .
+    (53) asignacion -> ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion .
 
-    SEMICOLON       reduce using rule 53 (asignacion -> ID saveId EQUALS addOperadorName exp genera_quad_asignacion .)
-    TO              reduce using rule 53 (asignacion -> ID saveId EQUALS addOperadorName exp genera_quad_asignacion .)
+    SEMICOLON       reduce using rule 53 (asignacion -> ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion .)
+    TO              reduce using rule 53 (asignacion -> ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion .)
 
 
 state 240
 
-    (54) asignacion -> ID saveId arr EQUALS addOperadorName exp . genera_quad_asignacion
+    (54) asignacion -> ID saveId2 arr EQUALS addOperadorName exp . genera_quad_asignacion
     (56) genera_quad_asignacion -> .
 
     SEMICOLON       reduce using rule 56 (genera_quad_asignacion -> .)
@@ -6225,7 +6227,7 @@ state 240
 
 state 241
 
-    (55) asignacion -> ID saveId mat EQUALS addOperadorName exp . genera_quad_asignacion
+    (55) asignacion -> ID saveId2 mat EQUALS addOperadorName exp . genera_quad_asignacion
     (56) genera_quad_asignacion -> .
 
     SEMICOLON       reduce using rule 56 (genera_quad_asignacion -> .)
@@ -6388,18 +6390,18 @@ state 253
 
 state 254
 
-    (54) asignacion -> ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion .
+    (54) asignacion -> ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion .
 
-    SEMICOLON       reduce using rule 54 (asignacion -> ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion .)
-    TO              reduce using rule 54 (asignacion -> ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion .)
+    SEMICOLON       reduce using rule 54 (asignacion -> ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion .)
+    TO              reduce using rule 54 (asignacion -> ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion .)
 
 
 state 255
 
-    (55) asignacion -> ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion .
+    (55) asignacion -> ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion .
 
-    SEMICOLON       reduce using rule 55 (asignacion -> ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion .)
-    TO              reduce using rule 55 (asignacion -> ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion .)
+    SEMICOLON       reduce using rule 55 (asignacion -> ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion .)
+    TO              reduce using rule 55 (asignacion -> ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion .)
 
 
 state 256
@@ -6530,9 +6532,9 @@ state 264
     (51) statement1 -> . if
     (52) statement1 -> . while
     (121) empty -> .
-    (53) asignacion -> . ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-    (54) asignacion -> . ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-    (55) asignacion -> . ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    (53) asignacion -> . ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+    (54) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+    (55) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (70) llamada -> . ID LPAREN exp RPAREN
     (85) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
     (78) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN

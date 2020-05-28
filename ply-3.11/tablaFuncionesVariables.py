@@ -57,7 +57,7 @@ class tabFun():
             print('La variable', id, 'ya existe')
         else:
             self.funciones[fid]['vars'].add(tipo, id)
-            print('Variable', id, 'de tipo', tipo, 'fue añadida exitosamente')
+            # print('Variable', id, 'de tipo', tipo, 'fue añadida exitosamente')
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:

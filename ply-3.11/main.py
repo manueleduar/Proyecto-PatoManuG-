@@ -362,9 +362,9 @@ def p_statement1(p):
 
 def p_asignacion(p):
      '''
-    asignacion : ID saveId EQUALS addOperadorName exp genera_quad_asignacion
-               | ID saveId arr EQUALS addOperadorName exp genera_quad_asignacion
-               | ID saveId mat EQUALS addOperadorName exp genera_quad_asignacion
+    asignacion : ID saveId2 EQUALS addOperadorName exp genera_quad_asignacion
+               | ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
+               | ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     ''' 
 def p_genera_quad_asignacion(p):
     'genera_quad_asignacion : '
@@ -381,7 +381,7 @@ def p_genera_quad_asignacion(p):
             result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
 
             if result != 'ERROR':
-                quad = (operadores2, operando_izquierdo, None, operando_derecho)
+                quad = (operadores2, operando_derecho, None, operando_izquierdo)
                 print('quadruplo:', str(quad))
                 quadruples.append(quad)
             
@@ -499,28 +499,28 @@ def genera_cuadruplo():
         #     print('quad de print:', str(quad))
         #     quadruples.append(quad)
         
-        if operadores.top() != '=':
-            operando2 = operadores.pop()
-            operando_derecho = stackName.pop()
-            operando_derecho_tipo = stackTypes.pop()
-            operando_izquierdo = stackName.pop()
-            operando_izquierdo_tipo = stackTypes.pop()
+        # if operadores.top() != '=':
+        operando2 = operadores.pop()
+        operando_derecho = stackName.pop()
+        operando_derecho_tipo = stackTypes.pop()
+        operando_izquierdo = stackName.pop()
+        operando_izquierdo_tipo = stackTypes.pop()
 
-            result_type = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operando2)
+        result_type = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operando2)
 
-            if result_type != 'ERROR':
-                result = avail.next()
-                quad = (operando2, operando_izquierdo, operando_derecho, result)
+        if result_type != 'ERROR':
+            result = avail.next()
+            quad = (operando2, operando_izquierdo, operando_derecho, result)
 
-                print('quad: ' + str(quad))
+            print('quad: ' + str(quad))
 
-                quadruples.append(quad)
-                stackName.push(result)
-                stackTypes.push(result_type)
+            quadruples.append(quad)
+            stackName.push(result)
+            stackTypes.push(result_type)
 
-            else: 
-                print('Type dismatch...')
-                sys.exit()
+        else: 
+            print('Type dismatch...')
+            sys.exit()
     else:
         print('PILA DE OPERANDOS VACIA....')
 
@@ -654,8 +654,8 @@ def p_operatorReadQuad(p):
 def p_mulexp(p):
     '''
     mulexp : pexp 
-           | pexp MUL addOperadorName  pexp genera_mul_quad
-           | pexp DIV addOperadorName  pexp genera_mul_quad
+           | pexp MUL addOperadorName pexp genera_mul_quad
+           | pexp DIV addOperadorName pexp genera_mul_quad
     '''
 
 
@@ -680,16 +680,32 @@ def p_empty(p):
 # guarda en pila variables      
 def p_saveId(p):
     '''saveId : '''
-    global varId, tablaFun, fid
+    global varId, tablaFun, fid, stackName, stackTypes
     if tablaFun.searchVar_tabFun(fid, varId):
-        t = tablaFun.getVar_Tipo(varId, fid)
-        if t:
-            stackTypes.push(t)
+        tipos = tablaFun.getVar_Tipo(varId, fid)
+        if tipos:
+            stackTypes.push(tipos)
             stackName.push(varId)
         # print('\t OPERANDO AÑADIDO ----> tipo y nombre: ', stackTypes.top(), stackName.top())
 
     else:
         SystemExit()   
+
+
+def p_saveId2(p):
+    '''saveId2 : '''
+    global varId, tablaFun, fid, stackName, stackTypes
+    varId = p[-1]
+    if tablaFun.searchVar_tabFun(fid, varId):
+        tipos = tablaFun.getVar_Tipo(varId, fid)
+        stackTypes.push(tipos)
+        stackName.push(varId)
+        # print('\t OPERANDO_asignacion AÑADIDO ----> tipo y nombre: ', stackTypes.top(), stackName.top())
+
+    else:
+        SystemExit()   
+
+
 
 def p_saveCTE(p):
     '''saveCTE : '''
@@ -713,9 +729,6 @@ def p_saveCTE(p):
         stackName.push(cte)
 
     # print('\t OPERANDO AÑADIDO ----> CTE ', stackTypes.top(), stackName.top())
-    
-
-
 
 
 def p_error(p):
