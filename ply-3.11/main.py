@@ -4,6 +4,7 @@ from tablaFuncionesVariables import tabFun, tabVar
 from avail import Avail
 from cube import Cube
 from stack import Stack
+from mem import Memory
 import sys
 
 #reserved
@@ -140,18 +141,19 @@ quadruples = []
 
 avail = Avail()
 
-
+#instanciar Objetos de clases utilizadas
 cubo = Cube()
 saltos = Stack()
-
+memoria = Memory()
 
 def p_programa(p):
         '''
         programa :  PROGRAM ID SEMICOLON addP programa1 
         '''
-        p[0] = 'PROGRAMA COMPILADO'
         global programId
         programId = p[2]
+        p[0] = 'PROGRAMA COMPILADO'
+      
 
 
 def p_addP(p):
@@ -680,9 +682,10 @@ def p_empty(p):
 # guarda en pila variables      
 def p_saveId(p):
     '''saveId : '''
-    global varId, tablaFun, fid, stackName, stackTypes
+    global varId, tablaFun, fid, stackName, stackTypes 
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
+        # memoria.set_var_direction(tipos, varId,actual_funTipo,fid)
         if tipos:
             stackTypes.push(tipos)
             stackName.push(varId)
@@ -695,6 +698,7 @@ def p_saveId(p):
 def p_saveId2(p):
     '''saveId2 : '''
     global varId, tablaFun, fid, stackName, stackTypes
+
     varId = p[-1]
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
@@ -712,6 +716,9 @@ def p_saveCTE(p):
     global cte, t
     cte = p[-1]
     t = type(cte)
+    
+    memoria.set_cte(cte)
+    
     if (t == int):
         stackTypes.push('int')
         stackName.push(cte)

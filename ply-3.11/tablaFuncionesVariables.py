@@ -45,6 +45,8 @@ class tabFun():
             return True
         else: 
             print('La variable', id, 'no existe...')
+            
+
 
     def getVar_Tipo(self, id, fid):
         if self.funciones[fid]['vars'].search_vars(id):
