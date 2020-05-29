@@ -36,9 +36,22 @@ main() {
            print("d es mayor");
        }
 
-        if (a1 && b1) {
+        if (a1 == b1) {
            print("d es mayor");
        }
 
+        if (4 && 4) {
+           print("d es mayor");
+       }
+
+        if (4 | 4) {
+           print("d es mayor");
+       }
+
+              else {
+           print("HOLA MUNDO");
+       }
+
+     print (a+b);
 }
-end
+end 

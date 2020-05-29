@@ -164,7 +164,7 @@ def p_addP(p):
     # asigna nombre del programa
     global fid
     fid = p[-2]
-    print('---------',fid)
+    # print('---------',fid)
     global tablaFun
     if tablaFun.search_tabFun(fid):
         print("funcion ya existe")
@@ -249,25 +249,11 @@ def p_addV(p):
     global varId
     global actual_varTipo
     if tablaFun.search_tabFun(fid):
-        tablaFun.addVar(fid, actual_varTipo, varId)
-        # tablaFun.print_fun_vars(fid)
-        #print('\tVariable:', varI         d, 'de tipo', actual_varTipo, 'agregada a la tabla de variables')
-            
+        tablaFun.addVar(fid, actual_varTipo, varId)    
     else:
         SystemExit()
 
-# def p_addVartoStack(p):
-#     'addVartoStack : '
-#     global stackName, operadores, fid
-#     res = tablaFun.getVar_Tipo(p[-1], fid)
 
-#     if res:
-#         stackTypes.push(res)
-#         stackName.push(p[-1])
-
-#     else: 
-#         print('NO SE PUDO')
-#         sys.exit()
         
 def p_var2(p):
     # Recursividad para tener varios tipos de variables
@@ -311,19 +297,11 @@ def p_save_fun(p):
     global fid
     global tablaFun
 
-    # if actual_funTipo == 'void':
     actual_funTipo = p[-2]
     fid = p[-1]
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
         
-    # print('actual tipo', actual_funTipo)
-    # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
-    # else:
-    #     actual_funTipo = p[-2]
-    #     fid = p[-1]
-    #     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-        # print('actual tipo', actual_funTipo)
-        # print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+
 
     
 def p_function(p):
@@ -391,7 +369,7 @@ def p_genera_quad_asignacion(p):
                 sys.exit()
     else: 
         print('Vacio....')
-        return  
+        sys.exit()  
 
 
 def p_addOperadorName(p):
@@ -437,13 +415,13 @@ def p_llamada(p):
 
 def p_if(p):
     '''
-    if : IF LPAREN exp RPAREN LCURLY statement RCURLY
-       | IF LPAREN exp RPAREN LCURLY statement RCURLY else
+    if : IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY
+       | IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else
     ''' 
 
 def p_else(p):
     '''
-    else : ELSE LCURLY statement RCURLY
+    else : ELSE else_quad LCURLY statement RCURLY
          | empty
     ''' 
 def p_for(p):
@@ -488,6 +466,8 @@ def p_exp(p):
         | nexp OR addOperadorName nexp genera_quad_or
     ''' 
 
+
+
 def genera_cuadruplo():
     global operadores, stackName, stackTypes, quadruples
     
@@ -497,18 +477,18 @@ def genera_cuadruplo():
         operando_derecho_tipo = stackTypes.pop()
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
-        print("opearando_izquierdo", operando_izquierdo_tipo, "operando derecho", operando_derecho_tipo)
-        # print("res type", result_type)
+      
         result_type = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operando2)
         if result_type != 'ERROR':
             result = avail.next()
-            
             quad = (operando2, operando_izquierdo, operando_derecho, result)
-
+            # print("el resultado previo a genrar este quad es: ",result_type)
             print('quad: ' + str(quad))
 
             quadruples.append(quad)
+            #print("lo que se va a meter es", result)
             stackName.push(result)
+            #print("lo que se va a meter tipo es", result_type)
             stackTypes.push(result_type)
 
         else: 
@@ -523,7 +503,6 @@ def p_genera_quad_or(p):
     global operadores
     if operadores.size() > 0:
         if operadores.top() == '|':
-            print('Operador or...?', operadores.top())
             genera_cuadruplo()
      
 
@@ -532,7 +511,6 @@ def p_genera_quad_and(p):
     global operadores
     if operadores.size() > 0:
         if operadores.top() == '&&':
-            print('Operador AND...?', operadores.top())
             genera_cuadruplo()
 
 
@@ -542,23 +520,42 @@ def p_compare_quad(p):
     if operadores.size() > 0:
         if operadores.top() == '<' or operadores.top() == '>' or operadores.top() == '<=' or operadores.top() == '>=' or operadores.top() == '==' or operadores.top() == '!=':
             genera_cuadruplo()  
+            
  
 
 def p_if_quad(p):
     'if_quad : '
     global stackName, stackTypes, quadruples, saltos
     result_type = stackTypes.pop()
-    print("tipo resultado tipo", result_type)
+
     if result_type == 'bool':
         valor = stackName.pop()
         quad = ('GotoF', valor, None, -1)
+        print('quad:', str(quad))
         quadruples.append(quad)
         saltos.push(len(quadruples)-1)
 
     else: 
         print('Error if quad....')
-        return
+        sys.exit()
+             
 
+def p_else_quad(p):
+    'else_quad : '
+    global quadruples, saltos
+    quad = ('Goto', None, None, -1)
+    quadruples.append(quad)
+    print('quad:', str(quad))
+    fAux = saltos.pop()
+    saltos.push(len(quadruples)-1)
+    print("cuadruplo al que se va a ir con end", fAux)
+    llenar_quad(fAux, -1)
+
+def llenar_quad(end, cont):
+    global quadruples
+    temp = list(quadruples[end])
+    temp[3] = len(quadruples)
+    quadruples[end] = tuple(temp)
 
 def p_nexp(p):
     '''
@@ -682,6 +679,7 @@ def p_saveId(p):
         # memoria.set_var_direction(tipos, varId,actual_funTipo,fid)
         if tipos:
             stackTypes.push(tipos)
+            # print('Mete tipos saveID2', tipos)
             stackName.push(varId)
         # print('\t OPERANDO AÑADIDO ----> tipo y nombre: ', stackTypes.top(), stackName.top())
 
@@ -697,6 +695,7 @@ def p_saveId2(p):
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
         stackTypes.push(tipos)
+        # print('Mete tipos saveID2', tipos)
         stackName.push(varId)
         # print('\t OPERANDO_asignacion AÑADIDO ----> tipo y nombre: ', stackTypes.top(), stackName.top())
 
@@ -716,21 +715,17 @@ def p_saveCTE(p):
     if (t == int):
         stackTypes.push('int')
         stackName.push(cte)
-        
+        #print("tipo y nombre que se ven", cte)
+
     elif (t == float):
         stackTypes.push('float')
         stackName.push(cte)
-        
-    # elif (t == str):
-    #     stackTypes.push('string')
-    #     stackName.push(cte)
+
 
     else:
         stackTypes.push('char')
         stackName.push(cte)
-
-    # print('\t OPERANDO AÑADIDO ----> CTE ', stackTypes.top(), stackName.top())
-
+     
 
 def p_error(p):
     if p is not None:

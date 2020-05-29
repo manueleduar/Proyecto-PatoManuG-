@@ -16,7 +16,7 @@ class Cube:
             13: '=',
             14: '=='
             }
-            
+
         self.types = {
             1: 'int',
             2: 'float',
@@ -43,15 +43,15 @@ class Cube:
                     self.operators[7]: self.types[4],
                     self.operators[8]: self.types[4],
                     self.operators[9]: self.types[4],
-                    self.operators[10]: self.types[4],
+                    self.operators[10]: self.types[4], # int int != => bool
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[1],
                     self.operators[14]: self.types[4],
                 },
-               
-                
-                
+
+
+
                 # int-float compatibility
                 self.types[2]: {
                     self.operators[1]: self.types[2],
@@ -65,7 +65,7 @@ class Cube:
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -82,7 +82,7 @@ class Cube:
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -116,10 +116,10 @@ class Cube:
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[1],
                     self.operators[14]: self.types[4],
-                }, 
+                },
                 # int-ctef compatibility
                 self.types[6]: {
                     self.operators[1]: self.types[2],
@@ -133,7 +133,7 @@ class Cube:
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -150,10 +150,10 @@ class Cube:
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
-                }, 
+                },
                 # int-cteString compatibility
                 self.types[8]: {
                     self.operators[1]: self.types[9],
@@ -167,10 +167,10 @@ class Cube:
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
-                },  
+                },
 
             },
             # float
@@ -188,7 +188,7 @@ class Cube:
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
 
@@ -206,7 +206,7 @@ class Cube:
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[2],
                     self.operators[14]: self.types[4],
                 },
@@ -223,7 +223,7 @@ class Cube:
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -257,7 +257,7 @@ class Cube:
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
 
@@ -276,8 +276,8 @@ class Cube:
                     self.operators[8]: self.types[4],
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
-                    self.operators[11]: self.types[4],,
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[2],
                     self.operators[14]: self.types[4],
                 },
@@ -294,7 +294,7 @@ class Cube:
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -311,7 +311,7 @@ class Cube:
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -331,7 +331,7 @@ class Cube:
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -347,8 +347,8 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
-                    self.operators[11]: self.types[9],
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -365,7 +365,7 @@ class Cube:
                     self.operators[9]: self.types[4],
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[3],
                     self.operators[14]: self.types[4],
                 },
@@ -433,7 +433,7 @@ class Cube:
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
-                    self.operators[12]: self.types[9],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -469,8 +469,8 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
-                    self.operators[11]: self.types[9],
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -486,8 +486,8 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
-                    self.operators[11]: self.types[9],
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -503,8 +503,8 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
-                    self.operators[11]: self.types[9],
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -525,7 +525,7 @@ class Cube:
                     self.operators[13]: self.types[4],
                     self.operators[14]: self.types[4],
                 },
-                
+
                 # bool-ctei COMPAT
                 self.types[5]: {
                     self.operators[1]: self.types[9],
@@ -538,8 +538,8 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
-                    self.operators[11]: self.types[9],
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                     },
@@ -555,10 +555,10 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
-                    self.operators[11]: self.types[9],
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
-                    self.operators[14]: self.types[9],                  
+                    self.operators[14]: self.types[9],
                 },
                 # bool-ctec COMPAT
                 self.types[7]: {
@@ -572,8 +572,8 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
-                    self.operators[11]: self.types[9],
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -588,8 +588,8 @@ class Cube:
                     self.operators[8]: self.types[9],
                     self.operators[9]: self.types[9],
                     self.operators[10]: self.types[9],
-                    self.operators[11]: self.types[9],
-                    self.operators[12]: self.types[9],
+                    self.operators[11]: self.types[4],
+                    self.operators[12]: self.types[4],
                     self.operators[13]: self.types[9],
                     self.operators[14]: self.types[9],
                 },
@@ -606,12 +606,5 @@ class Cube:
 
 # x = Cube()
 
-# x.printO("int", "ctei", "<")
-
-
-
-
-
-
-
-
+# x.printO("int", "int", ">=")
+# x.printO("int", "int", ">")

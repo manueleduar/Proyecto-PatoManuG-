@@ -40,94 +40,94 @@ class Memory:
             if tipo == 'int':
                 if self.gi <3000:
                     address = self.gi
-                    print("adress", address)
-                    print("se ha configurado la var", id, "global, la direccion es:", address)
+                    #print("adress", address)
+                    #print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gi += 1
-                    print("address actualizada a ", self.gi)
+                    #print("address actualizada a ", self.gi)
                 else:
                     print("index out of range")
             elif tipo == 'float':
                 if self.gf < 5000:
                     address = self.gf
-                    print("se ha configurado la var", id, "global, la direccion es:", address)
+                    #print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gf += 1
-                    print("address actualizada a ", self.gf)
+                    #print("address actualizada a ", self.gf)
                 else:
                     print("index out of range")
             elif tipo == 'char':
                 if self.gc < 7000:
                     address = self.gc
-                    print("se ha configurado la var", id, "global, la direccion es:", address)                   
+                    #print("se ha configurado la var", id, "global, la direccion es:", address)                   
                     self.gc += 1
-                    print("address actualizada a ", self.gc)
+                    #print("address actualizada a ", self.gc)
                 else:
                     print("index out of range")
             else:
                 if self.gb < 9000:
                     address = self.gb
-                    print("se ha configurado la var", id, "global, la direccion es:", address)
+                    #print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gb += 1
-                    print("address actualizada a ", self.gb)
+                    #print("address actualizada a ", self.gb)
         #VARIABLES TEMPORALES AKA FUNCIONES
         else:
             if tipo == 'int':
                 if self.gi <26000:
                     address = self.li
-                    print("adress", address)
-                    print("se ha configurado la var", id, "Local, la direccion es:", address)
+                    #print("adress", address)
+                    #print("se ha configurado la var", id, "Local, la direccion es:", address)
                     self.li += 1
-                    print("address actualizada a ", self.li)
+                    #print("address actualizada a ", self.li)
                 else:
                     print("index out of range")
             elif tipo == 'float':
                 if self.gf < 29000:
                     address = self.lf
-                    print("se ha configurado la var", id, "local, la direccion es:", address)
+                    #print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lf += 1
-                    print("address actualizada a ", self.lf)
+                    #print("address actualizada a ", self.lf)
                 else:
                     print("index out of range")
             elif tipo == 'char':
                 if self.lc < 31000:
                     address = self.lc
-                    print("se ha configurado la var", id, "local, la direccion es:", address)                   
+                    #print("se ha configurado la var", id, "local, la direccion es:", address)                   
                     self.lc += 1
-                    print("address actualizada a ", self.lc)
+                    #print("address actualizada a ", self.lc)
                 else:
                     print("index out of range")
             else:
                 if self.lb < 33000:
                     address = self.lb
-                    print("se ha configurado la var", id, "local, la direccion es:", address)
+                    #print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lb += 1
-                    print("address actualizada a ", self.lb)
+                    #print("address actualizada a ", self.lb)
      # CONSTANTES            
     def set_cte(self, val):
         if isinstance(val, int):
             if(self.ctei < 46000):
                 address = self.ctei
-                print("constante entera se ha configurado con dir ",val, address)
+                #print("constante entera se ha configurado con dir ",val, address)
                 self.ctei += 1
-                print("constante entera updated ", self.ctei)
+                #print("constante entera updated ", self.ctei)
         elif isinstance(val, float):
             if self.ctef < 47000:
                 address = self.ctef
-                print("constante flotante se ha configurado con dir",val, address)
+                #print("constante flotante se ha configurado con dir",val, address)
                 self.ctef += 1
-                print("constante flotante updated ", self.ctef)
+                #print("constante flotante updated ", self.ctef)
         elif isinstance(val, str):
             if len(val)<2:
                 if self.ctec < 48000:
                     address = self.cteString
-                    print("constante char se ha configurado con dir ",val ,address)
+                    #print("constante char se ha configurado con dir ",val ,address)
                     self.ctec += 1
-                    print("constante char updated ", self.ctec)
+                    #print("constante char updated ", self.ctec)
             else:
                 if self.cteString < 49000:
                     address = self.cteString
-                    print("constante string se ha configurado con dir ",val, address)
+                    #print("constante string se ha configurado con dir ",val, address)
                     self.cteString += 1
-                    print("constante string updated ", self.cteString)
+                    #print("constante string updated ", self.cteString)
                     
                 
                 
