@@ -1,0 +1,15 @@
+program spaceX1;
+
+main() {
+    var 
+        int x, j, d, y;
+        x = 10;
+        y = 3;
+        j = 20;
+        d = 0;
+
+        if(x != j){
+            d = x / y;
+        }
+}
+end 

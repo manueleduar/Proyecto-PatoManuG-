@@ -351,22 +351,22 @@ def p_genera_quad_asignacion(p):
     global stackTypes, stackName, operadores, quadruples
     
     if operadores.size() > 0:
-        if operadores.top() == '=':
-            operadores2 = operadores.pop()
-            operando_derecho = stackName.pop()
-            operando_derecho_tipo = stackTypes.pop()
-            operando_izquierdo = stackName.pop()
-            operando_izquierdo_tipo = stackTypes.pop()
-            result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
+        # if operadores.top() == '=':
+        operadores2 = operadores.pop()
+        operando_derecho = stackName.pop()
+        operando_derecho_tipo = stackTypes.pop()
+        operando_izquierdo = stackName.pop()
+        operando_izquierdo_tipo = stackTypes.pop()
+        result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
 
-            if result != 'ERROR':
-                quad = (operadores2, operando_derecho, None, operando_izquierdo)
-                print('quadruplo:', str(quad))
-                quadruples.append(quad)
+        if result != 'ERROR':
+            quad = (operadores2, operando_derecho, None, operando_izquierdo)
+            print('quadruplo:', str(quad))
+            quadruples.append(quad)
             
-            else: 
-                print('Type Dissmatch....')
-                sys.exit()
+        else: 
+            print('Type Dissmatch....')
+            sys.exit()
     else: 
         print('Vacio....')
         sys.exit()  
@@ -482,13 +482,10 @@ def genera_cuadruplo():
         if result_type != 'ERROR':
             result = avail.next()
             quad = (operando2, operando_izquierdo, operando_derecho, result)
-            # print("el resultado previo a genrar este quad es: ",result_type)
             print('quad: ' + str(quad))
 
             quadruples.append(quad)
-            #print("lo que se va a meter es", result)
             stackName.push(result)
-            #print("lo que se va a meter tipo es", result_type)
             stackTypes.push(result_type)
 
         else: 
@@ -677,11 +674,11 @@ def p_saveId(p):
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
         # memoria.set_var_direction(tipos, varId,actual_funTipo,fid)
+        print('tipos saveID', tipos)
+        print('varID saveID', varId)
         if tipos:
             stackTypes.push(tipos)
-            # print('Mete tipos saveID2', tipos)
             stackName.push(varId)
-        # print('\t OPERANDO AÑADIDO ----> tipo y nombre: ', stackTypes.top(), stackName.top())
 
     else:
         SystemExit()   
@@ -694,10 +691,10 @@ def p_saveId2(p):
     varId = p[-1]
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
+        print('tipos saveID2', tipos)
+        print('varID saveID2', varId)
         stackTypes.push(tipos)
-        # print('Mete tipos saveID2', tipos)
         stackName.push(varId)
-        # print('\t OPERANDO_asignacion AÑADIDO ----> tipo y nombre: ', stackTypes.top(), stackName.top())
 
     else:
         SystemExit()   
