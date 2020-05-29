@@ -59,9 +59,14 @@ main() {
     }
    
 
-   for (from x=10 to x<100){
+   for (from x = 10 to x <100){
        x = x + 2;
        print (x);
    }
+
+   
+        while (y == x) {
+            print(1);
+        }
 }
 end 

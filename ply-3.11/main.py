@@ -352,6 +352,7 @@ def p_asignacion(p):
                | ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
                | ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     ''' 
+
 def p_genera_quad_asignacion(p):
     'genera_quad_asignacion : '
     global stackTypes, stackName, operadores, quadruples
@@ -412,8 +413,6 @@ def p_param2(p):
     ''' 
 
     
-    
-
 def p_llamada(p): 
     '''
     llamada : ID LPAREN exp RPAREN
@@ -421,8 +420,7 @@ def p_llamada(p):
 
 def p_if(p):
     '''
-    if : IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY
-       | IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else
+    if : IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if   
     ''' 
 
 def p_else(p):
@@ -430,30 +428,13 @@ def p_else(p):
     else : ELSE else_quad LCURLY statement RCURLY
          | empty
     ''' 
-def p_for(p):
-    '''
-    for : FOR LPAREN for1 RPAREN for_quad  LCURLY statement RCURLY loop_end
-    '''
-def p_for1(p):
-    '''
-    for1 : FROM asignacion TO exp
-    '''
-def p_while_quad(p):
-    'while_quad : '
-    global stackName, stackTypes, quadruples, saltos
-    result_type = stackTypes.pop()
 
-    if result_type == 'bool':
-        valor = stackName.pop()
-        quad = ('GotoF', valor, None, -1)
-        print('quad:', str(quad))
-        quadruples.append(quad)
-        saltos.push(len(quadruples)-1)
+def p_for_op(p):
+    'for_op :'
+    global operadores, quadruples, saltos
+    operadores.push('for')
+    saltos.push(len(quadruples))
 
-    else: 
-        print('Error for quad....')
-        sys.exit()
-        
 def p_for_quad(p):
     'for_quad : '
     global stackName, stackTypes, quadruples, saltos
@@ -462,34 +443,59 @@ def p_for_quad(p):
     if result_type == 'bool':
         valor = stackName.pop()
         quad = ('GotoV', valor, None, -1)
-        print('quad:', str(quad))
+        # print('quad:', str(quad))
         quadruples.append(quad)
         saltos.push(len(quadruples)-1)
-
     else: 
         print('Error for quad....')
         sys.exit()
-    
-    
-def p_while(p):
+
+def p_for(p):
     '''
-    while : WHILE while_op LPAREN exp RPAREN while_quad LCURLY statement RCURLY loop_end
-    ''' 
-    
-    
-def p_while_op(p):
-    'while_op :'
-    global operadores, quadruples, saltos
-    saltos.push(len(quadruples))
+    for : FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
+    '''
+def p_for1(p):
+    '''
+    for1 : FROM asignacion TO exp
+    '''
 
         
 def p_loop_end(p):
     'loop_end : '
     global stackName, stackTypes, quadruples, saltos
     end = saltos.pop()
-    print("end loop", end)
+    retroceso = saltos.pop()
+    quad = ('Goto', None, None, retroceso)
+    quadruples.append(quad)
     llenar_quad(end, -1)
+    # print('quad:', str(quad))
+
+def p_while_quad(p):
+    'while_quad : '
+    global stackName, stackTypes, quadruples, saltos
+    result_type = stackTypes.pop()
+
+    if result_type == 'bool':
+        valor = stackName.pop()
+        quad = ('GotoF', valor, None, -1)
+        #print('quad:', str(quad))
+        quadruples.append(quad)
+        saltos.push(len(quadruples)-1)
+
+    else: 
+        print('Error while quad....')
+        sys.exit()
     
+def p_while_op(p):
+    'while_op :'
+    global operadores, quadruples, saltos
+    operadores.push('while')
+    saltos.push(len(quadruples))   
+
+def p_while(p):
+    '''
+    while : WHILE while_op LPAREN exp RPAREN while_quad LCURLY statement RCURLY loop_end
+    ''' 
 
 def p_escritura(p):
      '''
@@ -582,31 +588,37 @@ def p_if_quad(p):
     if result_type == 'bool':
         valor = stackName.pop()
         quad = ('GotoF', valor, None, -1)
-        print('quad:', str(quad))
+        # print('quad:', str(quad))
         quadruples.append(quad)
         saltos.push(len(quadruples)-1)
 
     else: 
         print('Error if quad....')
         sys.exit()
-             
+
+def p_end_if(p):
+    'end_if : '
+    global saltos
+    end = saltos.pop()
+    # print("el end que debe guardar en F:", end, '\n')
+    llenar_quad(end, -1)           
 
 def p_else_quad(p):
     'else_quad : '
     global quadruples, saltos
     quad = ('Goto', None, None, -1)
     quadruples.append(quad)
-    print('quad:', str(quad))
     fAux = saltos.pop()
     saltos.push(len(quadruples)-1)
-    print("cuadruplo al que se va a ir con end", fAux)
     llenar_quad(fAux, -1)
+    # print('quad:', str(quad))
 
 def llenar_quad(end, cont):
     global quadruples
     temp = list(quadruples[end])
     temp[3] = len(quadruples)
     quadruples[end] = tuple(temp)
+    print('quad', quadruples[end])
     
     
 
@@ -802,7 +814,7 @@ if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
         # nombreArchivo = 'prueba2.txt'
-        nombreArchivo = 'prueba4.txt'
+        nombreArchivo = 'prueba5.txt'
         # nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
@@ -813,7 +825,7 @@ if __name__ == '__main__':
             tok = lexer.token()
             if not tok:
                 break
-            # print(tok)
+            #print(tok)
             
         if (parser.parse(informacion, tracking = True) == 'PROGRAMA COMPILADO'):
             print ("Correct Syntax")
