@@ -239,6 +239,9 @@ def p_var1(p):
     '''
     global varId
     varId = p[1]
+   
+   
+    # print ("var que está almacenando", varId)
     
     
 #-----------Anadir variable a la tabla de variables----------------#
@@ -248,10 +251,13 @@ def p_addV(p):
     global tablaFun
     global varId
     global actual_varTipo
-    if tablaFun.search_tabFun(fid):
-        tablaFun.addVar(fid, actual_varTipo, varId)    
-    else:
-        SystemExit()
+    if not varId == None:
+        if tablaFun.search_tabFun(fid):
+          tablaFun.addVar(fid, actual_varTipo, varId)    
+        else:
+          SystemExit()
+    # else:
+    #     print("no se puede añadir none")
 
 
         
@@ -671,17 +677,20 @@ def p_empty(p):
 def p_saveId(p):
     '''saveId : '''
     global varId, tablaFun, fid, stackName, stackTypes 
-    if tablaFun.searchVar_tabFun(fid, varId):
-        tipos = tablaFun.getVar_Tipo(varId, fid)
+    if not varId == None:
+        if tablaFun.searchVar_tabFun(fid, varId):
+            tipos = tablaFun.getVar_Tipo(varId, fid)
         # memoria.set_var_direction(tipos, varId,actual_funTipo,fid)
-        print('tipos saveID', tipos)
-        print('varID saveID', varId)
-        if tipos:
-            stackTypes.push(tipos)
-            stackName.push(varId)
+            # print('tipos saveID', tipos)
+            # print('varID saveID', varId)
+            if tipos:
+                stackTypes.push(tipos)
+                stackName.push(varId)
 
-    else:
-        SystemExit()   
+            else:
+                 SystemExit()  
+    # else:
+    #     print("no se puede añadir variable none") 
 
 
 def p_saveId2(p):
@@ -691,8 +700,8 @@ def p_saveId2(p):
     varId = p[-1]
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
-        print('tipos saveID2', tipos)
-        print('varID saveID2', varId)
+        # print('tipos saveID2', tipos)
+        # print('varID saveID2', varId)
         stackTypes.push(tipos)
         stackName.push(varId)
 
