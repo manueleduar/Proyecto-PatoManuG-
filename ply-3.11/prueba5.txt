@@ -11,10 +11,14 @@ main() {
         if(x != j){
             d = x / y;
         }
+        else {
+            x = x + 1;
+        }
 
-        while (y > x) {
+        while (y > 100) {
             x = x - 1;
             print("Holi");
         }
+
 }
 end 
