@@ -53,5 +53,15 @@ main() {
        }
 
      print (a+b);
+
+    while(x<y){
+        x = x+y;
+    }
+   
+
+   for (from x=10 to x<100){
+       x = x + 2;
+       print (x);
+   }
 }
 end 

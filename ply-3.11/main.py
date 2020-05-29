@@ -432,16 +432,64 @@ def p_else(p):
     ''' 
 def p_for(p):
     '''
-    for : FOR LPAREN for1 RPAREN LCURLY statement RCURLY
+    for : FOR LPAREN for1 RPAREN for_quad  LCURLY statement RCURLY loop_end
     '''
 def p_for1(p):
     '''
     for1 : FROM asignacion TO exp
     '''
+def p_while_quad(p):
+    'while_quad : '
+    global stackName, stackTypes, quadruples, saltos
+    result_type = stackTypes.pop()
+
+    if result_type == 'bool':
+        valor = stackName.pop()
+        quad = ('GotoF', valor, None, -1)
+        print('quad:', str(quad))
+        quadruples.append(quad)
+        saltos.push(len(quadruples)-1)
+
+    else: 
+        print('Error for quad....')
+        sys.exit()
+        
+def p_for_quad(p):
+    'for_quad : '
+    global stackName, stackTypes, quadruples, saltos
+    result_type = stackTypes.pop()
+
+    if result_type == 'bool':
+        valor = stackName.pop()
+        quad = ('GotoV', valor, None, -1)
+        print('quad:', str(quad))
+        quadruples.append(quad)
+        saltos.push(len(quadruples)-1)
+
+    else: 
+        print('Error for quad....')
+        sys.exit()
+    
+    
 def p_while(p):
     '''
-    while : WHILE LPAREN exp RPAREN while_quad LCURLY statement RCURLY
+    while : WHILE while_op LPAREN exp RPAREN while_quad LCURLY statement RCURLY loop_end
     ''' 
+    
+    
+def p_while_op(p):
+    'while_op :'
+    global operadores, quadruples, saltos
+    saltos.push(len(quadruples))
+
+        
+def p_loop_end(p):
+    'loop_end : '
+    global stackName, stackTypes, quadruples, saltos
+    end = saltos.pop()
+    print("end loop", end)
+    llenar_quad(end, -1)
+    
 
 def p_escritura(p):
      '''
@@ -559,24 +607,9 @@ def llenar_quad(end, cont):
     temp = list(quadruples[end])
     temp[3] = len(quadruples)
     quadruples[end] = tuple(temp)
-
-
-def p_while_quad(p):
-    'while_quad : '
-    global stackTypes, quadruples, saltos
-    result_type = stackTypes.pop()
-
-    if (result_type == 'bool'):
-        operadores.pop()
-        valor = stackName.pop()
-        quad = ('GotoF', valor, None, -1)
-        print('quad:', str(quad))
-        quadruples.append(quad)
-        saltos.push(len(quadruples)-1)
     
-    else: 
-        print('type dissmatch...')
-        sys.exit()
+    
+
 
 def p_nexp(p):
     '''
@@ -769,7 +802,7 @@ if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
         # nombreArchivo = 'prueba2.txt'
-        nombreArchivo = 'prueba5.txt'
+        nombreArchivo = 'prueba4.txt'
         # nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
