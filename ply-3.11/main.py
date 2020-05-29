@@ -440,7 +440,7 @@ def p_for1(p):
     '''
 def p_while(p):
     '''
-    while : WHILE LPAREN exp RPAREN LCURLY statement RCURLY
+    while : WHILE LPAREN exp RPAREN while_quad LCURLY statement RCURLY
     ''' 
 
 def p_escritura(p):
@@ -559,6 +559,24 @@ def llenar_quad(end, cont):
     temp = list(quadruples[end])
     temp[3] = len(quadruples)
     quadruples[end] = tuple(temp)
+
+
+def p_while_quad(p):
+    'while_quad : '
+    global stackTypes, quadruples, saltos
+    result_type = stackTypes.pop()
+
+    if (result_type == 'bool'):
+        operadores.pop()
+        valor = stackName.pop()
+        quad = ('GotoF', valor, None, -1)
+        print('quad:', str(quad))
+        quadruples.append(quad)
+        saltos.push(len(quadruples)-1)
+    
+    else: 
+        print('type dissmatch...')
+        sys.exit()
 
 def p_nexp(p):
     '''
@@ -751,7 +769,7 @@ if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
         # nombreArchivo = 'prueba2.txt'
-        nombreArchivo = 'prueba4.txt'
+        nombreArchivo = 'prueba5.txt'
         # nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
