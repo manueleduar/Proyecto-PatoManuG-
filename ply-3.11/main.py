@@ -740,11 +740,13 @@ def p_saveId(p):
     if not varId == None:
         if tablaFun.searchVar_tabFun(fid, varId):
             tipos = tablaFun.getVar_Tipo(varId, fid)
-       
+
+            mem = tablaFun.get_address_var_Fun(fid, varId)
             if tipos:
                 stackTypes.push(tipos)
-                stackName.push(varId)
-                print('Direccion de', varId, 'es', tablaFun.get_address_var_Fun(fid, varId))
+                # print('\tvarID antes del push:', varId)
+                # print('\tDireccion de', varId, 'es', tablaFun.get_address_var_Fun(fid, varId))
+                stackName.push(mem)
 
             else:
                  SystemExit()  

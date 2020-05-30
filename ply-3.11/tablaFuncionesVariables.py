@@ -69,6 +69,7 @@ class tabFun():
         else:
             print('Variable', id, 'no tiene direccion porque no se encontró...')
         
+    
     def addVar(self, fid, tipo, id):
         if (self.funciones[fid]['vars'].search_vars(id) or self.funciones['programa']['vars'].search_vars(id)):
             print('La variable', id, 'ya existe')
@@ -76,7 +77,8 @@ class tabFun():
             ad = self.m.set_var_direction(tipo, id, fid)
             print("variable", id, "se agrega con memoria", ad)
             self.funciones[fid]['vars'].add(tipo, id, ad)
-           
+    
+    #HACER METODO PARA ACCESAR A LAS CONSTANTES       
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:
