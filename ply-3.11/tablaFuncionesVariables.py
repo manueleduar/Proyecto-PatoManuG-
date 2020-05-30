@@ -77,17 +77,12 @@ class tabFun():
             ad = self.m.set_var_direction(tipo, id, fid)
             print("variable", id, "se agrega con memoria", ad)
             self.funciones[fid]['vars'].add(tipo, id, ad)
-<<<<<<< HEAD
             
     def add_cte_mem(self, val):
         self.m.set_cte_address(val)    
         
     def get_cte_mem(self, val):
         return self.m.get_cte_address(val) 
-=======
-    
-    #HACER METODO PARA ACCESAR A LAS CONSTANTES       
->>>>>>> 0fe3bc34cc1215b14d622e71bb5fb4051d3b902b
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:
