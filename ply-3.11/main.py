@@ -759,10 +759,12 @@ def p_saveId2(p):
     global varId, tablaFun, fid, stackName, stackTypes
     
     varId = p[-1]
+
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
+        memVar = tablaFun.get_address_var_Fun(fid,varId)
         stackTypes.push(tipos)
-        stackName.push(varId)
+        stackName.push(memVar)
 
     else:
         SystemExit()   
