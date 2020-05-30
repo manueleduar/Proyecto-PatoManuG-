@@ -1,8 +1,7 @@
 class Memory:
     def __init__(self):
         #DICCIONARIOS PARA VARIABLES
-        self.varGlobales = {}
-        self.varLocal = {}
+        self.constants = {}
               
         #GLOBALES 
         self.gi = 1000 #lower 1000 upper 2999
@@ -141,23 +140,22 @@ class Memory:
                     #print("constante string se ha configurado con dir ",val, address)
                     self.cteString += 1
                     #print("constante string updated ", self.cteString)
-                    
-                
-m = Memory()
+        return address 
 
-m.set_cte(3.14)
+    def set_cte_address(self, val):
+        #asigna una direccion de memoria para agregar al diccionario de ctes
+        if self.get_cte_address(val) == -1:
+            ad = self.set_cte(val)
+            print("la cte", val, "ahora se ha guardado en ", ad)
+            self.constants[val] = {
+            'address': ad}
+        else:
+            print ("esa cte ya tiene asignada una direccion", self.get_cte_address(val))
+        
+    def get_cte_address (self, val):
+        if val in self.constants.keys():
+            return self.constants[val]["address"]
+        else:
+            return -1
 
-m.set_cte(3)
 
-m.set_cte("s")
-
-
-m.set_var_direction("int", "A", "programa")
-m.set_var_direction("float", "B", "Heinz")
-m.set_var_direction("int", "C", "Heinz")
-
-
-m.set_var_direction("int", "r", "Hello")
-m.set_var_direction("char", "r",  "Hello" )
-
-m.set_cte("print")

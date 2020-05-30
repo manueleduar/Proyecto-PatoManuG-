@@ -740,10 +740,12 @@ def p_saveId(p):
     if not varId == None:
         if tablaFun.searchVar_tabFun(fid, varId):
             tipos = tablaFun.getVar_Tipo(varId, fid)
+            
+            varmem =  tablaFun.get_address_var_Fun(fid, varId)
        
             if tipos:
                 stackTypes.push(tipos)
-                stackName.push(varId)
+                stackName.push(varmem)
                 print('Direccion de', varId, 'es', tablaFun.get_address_var_Fun(fid, varId))
 
             else:
@@ -755,7 +757,7 @@ def p_saveId(p):
 def p_saveId2(p):
     '''saveId2 : '''
     global varId, tablaFun, fid, stackName, stackTypes
-
+    
     varId = p[-1]
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
@@ -773,21 +775,23 @@ def p_saveCTE(p):
     cte = p[-1]
     t = type(cte)
     
-  
+    tablaFun.add_cte_mem(cte)
+    
+    cte_address = tablaFun.get_cte_mem(cte)
     
     if (t == int):
         stackTypes.push('int')
-        stackName.push(cte)
+        stackName.push(cte_address)
         #print("tipo y nombre que se ven", cte)
 
     elif (t == float):
         stackTypes.push('float')
-        stackName.push(cte)
+        stackName.push(cte_address)
 
 
     else:
         stackTypes.push('char')
-        stackName.push(cte)
+        stackName.push(cte_address)
      
 
 def p_error(p):
