@@ -121,12 +121,14 @@ class Memory:
                 #print("constante entera se ha configurado con dir ",val, address)
                 self.ctei += 1
                 #print("constante entera updated ", self.ctei)
+        
         elif isinstance(val, float):
             if self.ctef < 47000:
                 address = self.ctef
                 #print("constante flotante se ha configurado con dir",val, address)
                 self.ctef += 1
                 #print("constante flotante updated ", self.ctef)
+        
         elif isinstance(val, str):
             if len(val)<2:
                 if self.ctec < 48000:
@@ -146,14 +148,20 @@ class Memory:
         #asigna una direccion de memoria para agregar al diccionario de ctes
         if self.get_cte_address(val) == -1:
             ad = self.set_cte(val)
-            print("la cte", val, "ahora se ha guardado en ", ad)
+            #print("\tla cte", val, "ahora se ha guardado en ", ad)
             self.constants[val] = {
             'address': ad}
         
+<<<<<<< HEAD
+=======
+        else:
+            print ("\tEsta constante ya tiene asignada una direccion", self.get_cte_address(val))
+>>>>>>> 1697ed3cc135b5f498f662a41faa66d295f2e23b
         
     def get_cte_address (self, val):
         if val in self.constants.keys():
             return self.constants[val]["address"]
+        
         else:
             return -1
 

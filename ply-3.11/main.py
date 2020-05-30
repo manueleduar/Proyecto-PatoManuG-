@@ -368,7 +368,7 @@ def p_genera_quad_asignacion(p):
 
         if result != 'ERROR':
             quad = (operadores2, operando_derecho, None, operando_izquierdo)
-            print('quadruplo:', str(quad))
+            print('Cuadruplo:', str(quad))
             quadruples.append(quad)
             
         else: 
@@ -541,7 +541,7 @@ def genera_cuadruplo():
         if result_type != 'ERROR':
             result = avail.next()
             quad = (operando2, operando_izquierdo, operando_derecho, result)
-            print('quad: ' + str(quad))
+            print('Cuadruplo: ' + str(quad))
 
             quadruples.append(quad)
             stackName.push(result)
@@ -617,7 +617,7 @@ def llenar_quad(end, cont):
     temp = list(quadruples[end])
     temp[3] = len(quadruples)
     quadruples[end] = tuple(temp)
-    print('quad', quadruples[end])
+    print('Cuadruplo:', quadruples[end])
 
 
 def p_nexp(p):
@@ -684,7 +684,7 @@ def p_operatorPrintQuad(p):
             valor = stackName.pop()
             stackTypes.pop()
             quad = (operator_aux, None, None, valor)
-            print('quad:', str(quad))
+            print('Cuadruplo:', str(quad))
             quadruples.append(quad)
 
 
@@ -746,7 +746,7 @@ def p_saveId(p):
             if tipos:
                 stackTypes.push(tipos)
                 stackName.push(varmem)
-                print('Direccion de', varId, 'es', varmem)
+                # print('Direccion de', varId, 'es', varmem)
 
             else:
                  SystemExit()  
