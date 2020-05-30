@@ -45,7 +45,7 @@ main() {
        }
 
         if (4 | 4) {
-           print("d es mayor");
+           print("d NO es mayor");
        }
 
               else {
