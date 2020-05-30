@@ -144,8 +144,6 @@ avail = Avail()
 #instanciar Objetos de clases utilizadas
 cubo = Cube()
 saltos = Stack()
-memoria = Memory()
-
 def p_programa(p):
         '''
         programa :  PROGRAM ID SEMICOLON addP programa1 
@@ -742,12 +740,11 @@ def p_saveId(p):
     if not varId == None:
         if tablaFun.searchVar_tabFun(fid, varId):
             tipos = tablaFun.getVar_Tipo(varId, fid)
-        # memoria.set_var_direction(tipos, varId,actual_funTipo,fid)
-            # print('tipos saveID', tipos)
-            # print('varID saveID', varId)
+       
             if tipos:
                 stackTypes.push(tipos)
                 stackName.push(varId)
+                print('Direccion de', varId, 'es', tablaFun.get_address_var_Fun(fid, varId))
 
             else:
                  SystemExit()  
@@ -762,8 +759,6 @@ def p_saveId2(p):
     varId = p[-1]
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
-        # print('tipos saveID2', tipos)
-        # print('varID saveID2', varId)
         stackTypes.push(tipos)
         stackName.push(varId)
 
@@ -778,7 +773,7 @@ def p_saveCTE(p):
     cte = p[-1]
     t = type(cte)
     
-    memoria.set_cte(cte)
+  
     
     if (t == int):
         stackTypes.push('int')
@@ -813,7 +808,7 @@ if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
         # nombreArchivo = 'prueba2.txt'
-        nombreArchivo = 'prueba5.txt'
+        nombreArchivo = 'prueba4.txt'
         # nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)

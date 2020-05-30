@@ -2,6 +2,7 @@ from mem import Memory
 class tabVar:
     def __init__(self):
         self.var_list ={}
+       
         
     def add(self, tipo, id, address):
         self.var_list[id] ={
@@ -25,7 +26,7 @@ class tabVar:
 class tabFun():
     def __init__(self):
         self.funciones = {}
-
+        self.m = Memory()
     def add_Fun(self, tipo, id, nParams, tParams, idParams, nvars):
         if self.funciones.get(id) == None:
             self.funciones[id] = {
@@ -57,14 +58,24 @@ class tabFun():
             return self.funciones[fid]['vars'].get_Tipo(id)
         else:
             print('La variable', id, 'no existe...')
+
+    def get_address_var_Fun(self, fid, id):
+        if self.funciones[fid]['vars'].search_vars(id):
+            return self.funciones[fid]['vars'].get_dir_memoria(id)
+
+        elif self.funciones['programa']['vars'].search_vars(id):
+            return self.funciones[fid]['vars'].get_dir_memoria(id)
+
+        else:
+            print('Variable', id, 'no tiene direccion porque no se encontró...')
         
     def addVar(self, fid, tipo, id):
         if (self.funciones[fid]['vars'].search_vars(id) or self.funciones['programa']['vars'].search_vars(id)):
             print('La variable', id, 'ya existe')
         else:
-            #m = Memory()
-            #ad = m.set_var_direction(tipo, id, fid)
-            self.funciones[fid]['vars'].add(tipo, id, -1)
+            ad = self.m.set_var_direction(tipo, id, fid)
+            print("variable", id, "se agrega con memoria", ad)
+            self.funciones[fid]['vars'].add(tipo, id, ad)
            
             
     def print_fun_vars(self, fid):
