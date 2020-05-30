@@ -1,7 +1,7 @@
 import ply.lex as lex
 import ply.yacc as yacc
-from tablaFuncionesVariables import tabFun, tabVar
 from avail import Avail
+from tablaFuncionesVariables import tabFun, tabVar
 from cube import Cube
 from stack import Stack
 from mem import Memory
@@ -746,7 +746,7 @@ def p_saveId(p):
             if tipos:
                 stackTypes.push(tipos)
                 stackName.push(varmem)
-                print('Direccion de', varId, 'es', tablaFun.get_address_var_Fun(fid, varId))
+                print('Direccion de', varId, 'es', varmem)
 
             else:
                  SystemExit()  

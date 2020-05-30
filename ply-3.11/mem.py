@@ -8,20 +8,20 @@ class Memory:
         self.gf = 3000 #lower 3000 upper 5999
         self.gc = 5000 #lower 5000 upper 6999
         self.gb = 7000 #lower 7000 upper 8999
+
         #GLOBALES TEMPORALES
         self.gLi = 11000 #lower 1000 upper 12999
         self.gLf = 13000 #lower 3000 upper 15999
         self.gLc = 15000 #lower 5000 upper 16999
         self.gLb = 17000 #lower 7000 upper 18999
-        
-        
+                
         # LOCALES TEMPORALES 
         self.li = 19000 #lower 19000 upper 19999
         self.lf = 20000 #lower 20000 upper 29999
         self.lc = 21000 #lower 29000 upper 21999
         self.lb = 22000 #lower 41000 upper 22999
         
-        # LOCA()LES 
+        # LOCALES 
         self.li = 23000 #lower 23000 upper 25999
         self.lf = 26000 #lower 26000 upper 28999
         self.lc = 29000 #lower 29000 upper 30999
