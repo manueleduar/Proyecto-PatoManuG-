@@ -1,11 +1,12 @@
-
+from mem import Memory
 class tabVar:
     def __init__(self):
         self.var_list ={}
         
-    def add(self, tipo, id):
+    def add(self, tipo, id, address):
         self.var_list[id] ={
-            'tipo': tipo
+            'tipo': tipo,
+            'address': address
         }
         
     def search_vars(self, id):
@@ -16,6 +17,9 @@ class tabVar:
 
     def get_Tipo(self, id):
         return self.var_list[id]['tipo']
+
+    def get_dir_memoria(self, id):
+        return self.var_list[id]["address"]
         
 
 class tabFun():
@@ -41,7 +45,7 @@ class tabFun():
         return id in self.funciones
 
     def searchVar_tabFun(self, fid, id):
-        if self.funciones[fid]['vars'].search_vars(id):
+        if self.funciones[fid]['vars'].search_vars(id) or self.funciones['programa']['vars'].search_vars(id):
             return True
         else: 
             print('La variable', id, 'no existe...')
@@ -55,11 +59,13 @@ class tabFun():
             print('La variable', id, 'no existe...')
         
     def addVar(self, fid, tipo, id):
-        if (self.funciones[fid]['vars'].search_vars(id)):
+        if (self.funciones[fid]['vars'].search_vars(id) or self.funciones['programa']['vars'].search_vars(id)):
             print('La variable', id, 'ya existe')
         else:
-            self.funciones[fid]['vars'].add(tipo, id)
-            # print('Variable', id, 'de tipo', tipo, 'fue añadida exitosamente')
+            #m = Memory()
+            #ad = m.set_var_direction(tipo, id, fid)
+            self.funciones[fid]['vars'].add(tipo, id, -1)
+           
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:

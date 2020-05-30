@@ -22,7 +22,7 @@ class Memory:
         self.lc = 21000 #lower 29000 upper 21999
         self.lb = 22000 #lower 41000 upper 22999
         
-        # LOCALES 
+        # LOCA()LES 
         self.li = 23000 #lower 23000 upper 25999
         self.lf = 26000 #lower 26000 upper 28999
         self.lc = 29000 #lower 29000 upper 30999
@@ -34,34 +34,38 @@ class Memory:
         self.ctec = 47000 #lower 47000 upper 47999
         self.cteString = 48000 #lower 48000 upper 48999
         
-    def set_var_direction(self, tipo, id, funTipo, funId):
+    def set_var_direction(self, tipo, id, funId):
         #VARIABLES GLOBALES
-        if funTipo == 'program':
+        if funId == 'programa':
             if tipo == 'int':
                 if self.gi <3000:
                     address = self.gi
-                    #print("adress", address)
-                    #print("se ha configurado la var", id, "global, la direccion es:", address)
+                    print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gi += 1
                     #print("address actualizada a ", self.gi)
                 else:
                     print("index out of range")
+                    
             elif tipo == 'float':
                 if self.gf < 5000:
                     address = self.gf
                     #print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gf += 1
                     #print("address actualizada a ", self.gf)
+
                 else:
                     print("index out of range")
+
             elif tipo == 'char':
                 if self.gc < 7000:
                     address = self.gc
                     #print("se ha configurado la var", id, "global, la direccion es:", address)                   
                     self.gc += 1
                     #print("address actualizada a ", self.gc)
+
                 else:
                     print("index out of range")
+
             else:
                 if self.gb < 9000:
                     address = self.gb
@@ -69,8 +73,10 @@ class Memory:
                     self.gb += 1
                     #print("address actualizada a ", self.gb)
         #VARIABLES TEMPORALES AKA FUNCIONES
+        
         else:
             if tipo == 'int':
+
                 if self.gi <26000:
                     address = self.li
                     #print("adress", address)
@@ -79,20 +85,24 @@ class Memory:
                     #print("address actualizada a ", self.li)
                 else:
                     print("index out of range")
+
             elif tipo == 'float':
                 if self.gf < 29000:
                     address = self.lf
                     #print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lf += 1
                     #print("address actualizada a ", self.lf)
+
                 else:
                     print("index out of range")
+                    
             elif tipo == 'char':
                 if self.lc < 31000:
                     address = self.lc
                     #print("se ha configurado la var", id, "local, la direccion es:", address)                   
                     self.lc += 1
                     #print("address actualizada a ", self.lc)
+                    
                 else:
                     print("index out of range")
             else:
@@ -101,7 +111,10 @@ class Memory:
                     #print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lb += 1
                     #print("address actualizada a ", self.lb)
-     # CONSTANTES            
+        return address
+            
+     # CONSTANTES          
+       
     def set_cte(self, val):
         if isinstance(val, int):
             if(self.ctei < 46000):
@@ -130,29 +143,21 @@ class Memory:
                     #print("constante string updated ", self.cteString)
                     
                 
-                
-        
+m = Memory()
+
+m.set_cte(3.14)
+
+m.set_cte(3)
+
+m.set_cte("s")
 
 
+m.set_var_direction("int", "A", "programa")
+m.set_var_direction("float", "B", "Heinz")
+m.set_var_direction("int", "C", "Heinz")
 
 
+m.set_var_direction("int", "r", "Hello")
+m.set_var_direction("char", "r",  "Hello" )
 
-
-# m = Memory()
-
-# m.set_cte(3.14)
-
-# m.set_cte(3)
-
-# m.set_cte("s")
-
-
-# m.set_var_direction("int", "A", "program","Heinz")
-# m.set_var_direction("float", "B", "program","Heinz")
-# m.set_var_direction("int", "C", "program","Heinz")
-
-
-# m.set_var_direction("int", "r", "int", "Hello")
-# m.set_var_direction("char", "r", "int", "Hello" )
-
-# m.set_cte("print")
+m.set_cte("print")

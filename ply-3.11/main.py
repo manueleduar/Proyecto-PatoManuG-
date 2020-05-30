@@ -152,6 +152,7 @@ def p_programa(p):
         '''
         global programId
         programId = p[2]
+        # print ("Nombre programa es ––––––––––––––––––––", programId)
         p[0] = 'PROGRAMA COMPILADO'
       
 
@@ -159,18 +160,19 @@ def p_programa(p):
 def p_addP(p):
     'addP :'
     #tipo de programa
-    global actual_funTipo
+    global actual_funTipo, fid
     actual_funTipo = 'programa'
+    fid = 'programa'
+    tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
     # asigna nombre del programa
-    global fid
-    fid = p[-2]
-    # print('---------',fid)
-    global tablaFun
-    if tablaFun.search_tabFun(fid):
-        print("funcion ya existe")
-    else:
-        tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-        print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+    # global fid
+    # fid = p[-2]
+    # global tablaFun
+    # if tablaFun.search_tabFun(fid):
+    #     print("funcion ya existe")
+    # else:
+    #     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    #     print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 
 
 def p_programa1(p):
@@ -527,7 +529,6 @@ def p_exp(p):
     ''' 
 
 
-
 def genera_cuadruplo():
     global operadores, stackName, stackTypes, quadruples
     
@@ -595,7 +596,7 @@ def p_if_quad(p):
     else: 
         print('Error if quad....')
         sys.exit()
-
+    
 def p_end_if(p):
     'end_if : '
     global saltos
@@ -619,8 +620,6 @@ def llenar_quad(end, cont):
     temp[3] = len(quadruples)
     quadruples[end] = tuple(temp)
     print('quad', quadruples[end])
-    
-    
 
 
 def p_nexp(p):
@@ -739,7 +738,7 @@ def p_empty(p):
 # guarda en pila variables      
 def p_saveId(p):
     '''saveId : '''
-    global varId, tablaFun, fid, stackName, stackTypes 
+    global varId, tablaFun, fid, stackName, stackTypes
     if not varId == None:
         if tablaFun.searchVar_tabFun(fid, varId):
             tipos = tablaFun.getVar_Tipo(varId, fid)
