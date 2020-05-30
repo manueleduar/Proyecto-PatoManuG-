@@ -152,8 +152,11 @@ class Memory:
             self.constants[val] = {
             'address': ad}
         
+<<<<<<< HEAD
+=======
         else:
             print ("\tEsta constante ya tiene asignada una direccion", self.get_cte_address(val))
+>>>>>>> 1697ed3cc135b5f498f662a41faa66d295f2e23b
         
     def get_cte_address (self, val):
         if val in self.constants.keys():
