@@ -150,7 +150,8 @@ class Memory:
             ad = self.set_cte(val)
             print("\tLa CONSTANTE", val, "ahora se ha guardado en ", ad)
             self.constants[val] = {
-            'address': ad}
+            'address': ad
+            }
         
         
     def get_cte_address (self, val):
