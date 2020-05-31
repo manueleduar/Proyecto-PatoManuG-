@@ -374,7 +374,7 @@ def p_genera_quad_asignacion(p):
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
         result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
-        print("result CUBO--------",operando_izquierdo_tipo,operando_derecho_tipo   ,result)
+        # print("result CUBO--------",operando_izquierdo_tipo,operando_derecho_tipo   ,result)
 
         if result != 'ERROR':
             quad = (op, operando_derecho, None, operando_izquierdo)
@@ -393,7 +393,6 @@ def p_addOperadorName(p):
     'addOperadorName : '
     global operadores
     aux = p[-1]
-    print("el opearador",aux,"tiene memoria",  tablaFun.get_op_mem(aux))
     
     #op = tablaFun.get_op_mem(aux)
     #print('MEMORY OPERATOR', op, 'de', aux)
@@ -565,13 +564,13 @@ def genera_cuadruplo():
             result = avail.next()
 
             ##### ASIGNAR MEMORIA A TEMPORAL (result en este caso) ########
-            tablaFun.add_temp(result_type, result, fid)
+            tablaFun.add_temp_mem(result_type, result, fid)
             var_temp = tablaFun.get_temp_mem(result)
             print(result, 'result-----------------------------------', var_temp, result_type, fid)
             
             # quad = (op, operando_izquierdo, operando_derecho, result)
             quad = (op, operando_izquierdo, operando_derecho, var_temp)
-            #print('Cuadruplo: ' + str(quad))
+            print('Cuadruplo: ' + str(quad))
 
             quadruples.append(quad)
             # stackName.push(result)
@@ -707,7 +706,7 @@ def p_operadorPrint(p):
     'operadorPrint : '
     global operadores
     op = tablaFun.get_op_mem('print')
-    print('PRINT OPERATOR MEMORY', op)
+   
     operadores.push(op)
 
 
@@ -720,7 +719,7 @@ def p_operatorPrintQuad(p):
             valor = stackName.pop()
             stackTypes.pop()
             quad = (operator_aux, None, None, valor)
-            #print('Cuadruplo:', str(quad))
+            print('Cuadruplo:', str(quad))
             quadruples.append(quad)
 
 # Leer operador read y generar quadruplo
@@ -778,11 +777,12 @@ def p_saveId(p):
         if tablaFun.searchVar_tabFun(fid, varId):
             tipos = tablaFun.getVar_Tipo(varId, fid)
             
-            varmem =  tablaFun.get_address_var_Fun(fid, varId)
+            tablaFun.add_temp_mem(tipos, varId, fid)
+            varMem = tablaFun.get_temp_mem(varId)
        
             if tipos:
                 stackTypes.push(tipos)
-                stackName.push(varmem)
+                stackName.push(varMem)
                 # print('Direccion de', varId, 'es', varmem)
 
             else:
@@ -799,7 +799,8 @@ def p_saveId2(p):
 
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
-        memVar = tablaFun.get_address_var_Fun(fid,varId)
+        tablaFun.add_temp_mem(tipos, varId, fid)
+        memVar = tablaFun.get_temp_mem(varId)
         stackTypes.push(tipos)
         stackName.push(memVar)
 
@@ -850,9 +851,9 @@ parser = yacc.yacc()
 if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
-        # nombreArchivo = 'prueba2.txt'
+        nombreArchivo = 'prueba2.txt'
         # nombreArchivo = 'prueba4.txt'
-        nombreArchivo = 'prueba3.txt'
+        # nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()
@@ -880,4 +881,4 @@ if __name__ == '__main__':
     except EOFError:
         # print("ERROREOF")
         print(EOFError)
-
+f

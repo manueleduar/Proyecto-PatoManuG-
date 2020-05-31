@@ -19,8 +19,8 @@ class tabVar:
     def get_Tipo(self, id):
         return self.var_list[id]['tipo']
 
-    def get_dir_memoria(self, id):
-        return self.var_list[id]["address"]
+    # def get_dir_memoria(self, id):
+    #     return self.var_list[id]["address"]
         
 
 class tabFun():
@@ -60,30 +60,53 @@ class tabFun():
         else:
             print('La variable', id, 'no existe...')
 
-    def get_address_var_Fun(self, fid, id):
-        if self.funciones[fid]['vars'].search_vars(id):
-            return self.funciones[fid]['vars'].get_dir_memoria(id)
+    # def get_address_var_Fun(self, fid, id):
+    #     if self.funciones[fid]['vars'].search_vars(id):
+    #         return self.funciones[fid]['vars']. _memoria(id)
 
-        elif self.funciones['programa']['vars'].search_vars(id):
-            return self.funciones[fid]['vars'].get_dir_memoria(id)
+    #     elif self.funciones['programa']['vars'].search_vars(id):
+    #         return self.funciones[fid]['vars'].get_dir_memoria(id)
 
-        else:
-            print('Variable', id, 'no tiene direccion porque no se encontró...')
+    #     else:
+    #         print('Variable', id, 'no tiene direccion porque no se encontró...')
         
     
     def addVar(self, fid, tipo, id):
-        if (self.funciones[fid]['vars'].search_vars(id) or self.funciones['programa']['vars'].search_vars(id)):
-            print('La variable', id, 'ya existe')
-        else:
+        #si ya existe en local no lo agrega 
+        if self.funciones[fid]['vars'].search_vars(id):
+            print('La variable', id, 'ya existe en el scope', fid)
+        # si no existe en el local lo agrego a l local
+        elif not self.funciones[fid]['vars'].search_vars(id):
             ad = self.m.set_var_direction(tipo, id, fid)
-            print("variable", id, "se agrega con memoria", ad)
             self.funciones[fid]['vars'].add(tipo, id, ad)
+        
+        # si existe como global no lo agrego
+        elif self.funciones['programa']['vars'].search_vars(id):
+            print('La variable', id, 'ya existe en el programa como global')
+        # si no existe como global lo agrego como global
+        elif self.funciones[fid]['vars'].search_vars(id):
+            ad = self.m.set_var_direction('programa', id, fid)
+            self.funciones['programa']['vars'].add(tipo, id, ad)
+    
             
+        # elif self.funciones['programa']['vars'].search_vars(id):
+        #     ad = self.m.set_var_direction(tipo, id, fid)
+        #     self.funciones[fid]['vars'].add(tipo, id, ad)
+        # else:
+        #     ad = self.m.set_var_direction(tipo, id, fid)
+        #     print("variable", id, "se agrega con memoria", ad)
+        #     self.funciones['programa']['vars'].add(tipo, id, ad)
+            
+    
+   
+    def add_temp_mem(self, tipo, vid, funId):
+        self.m.set_temp_address(tipo, vid, funId)    
+        
+    def get_temp_mem(self, temp):
+        return self.m.get_temporal_address(temp)
+        
     def add_cte_mem(self, val):
         self.m.set_cte_address(val)
-
-    def add_temp(self, tipo, vid, funId):
-        self.m.set_temp_address(tipo, vid, funId)    
         
     def get_cte_mem(self, val):
         return self.m.get_cte_address(val) 
@@ -95,7 +118,6 @@ class tabFun():
         if fid in self.funciones:
             self.funciones[fid]['vars'].print_vars()
 
-    def get_temp_mem(self, temp):
-        return self.m.get_temporal_address(temp)
+
 
 

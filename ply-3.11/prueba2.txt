@@ -1,13 +1,13 @@
 program heinz;
 var 
-    int i, j, p, x;
+    int i, j, x;
     float cal, cu;
     char a;
     char b[3];
     int imat3[1][1];
     
 
-fun int Hello(int g);
+fun int Hello();
 {
     var
     int y11, x1111, g, f1;
@@ -23,15 +23,12 @@ fun void Bye();
     var
     int p, q;
     int p;
-    char q;
+   
     q = 10;
     p = 11;
     print(q+p);    
 }
-fun void Bye();
-{
-    print('HOLA MUNDO');
-}
+
 
 fun void imprimeVar();
 {

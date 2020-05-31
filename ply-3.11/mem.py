@@ -59,7 +59,7 @@ class Memory:
             if tipo == 'int':
                 if self.gi <3000:
                     address = self.gi
-                    print("se ha configurado la var", id, "global, la direccion es:", address)
+                    # print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gi += 1
                     #print("address actualizada a ", self.gi)
                 else:
@@ -165,6 +165,16 @@ class Memory:
                     self.cteString += 1
                     #print("constante string updated ", self.cteString)
         return address 
+    
+    def set_temp_address(self, tipo, vid, funId):
+        ad = self.set_var_direction(tipo, vid, funId)
+        self.temporal[vid]={
+            'address': ad
+        }
+    def get_temporal_address(self, temp):
+        if temp in self.temporal.keys():
+            return self.temporal[temp]['address']
+    
 
     def set_cte_address(self, val):
         #asigna una direccion de memoria para agregar al diccionario de ctes
@@ -188,20 +198,24 @@ class Memory:
             return self.operators[op]
         
 
-    def set_temp_address(self, tipo, vid, funId):
-            ad = self.set_var_direction(tipo, vid, funId)
-            self.temporal[vid]={
-                'address': ad
-            }
 
-    def get_temporal_address(self, temp):
-        if temp in self.temporal.keys():
-            return self.temporal[temp]['address']
+
+  
+        
+    def reset_temp_vals(self):
+        self.li = 19000
+        self.lf = 20000
+        self.lc = 21000
+        self.lb = 22000
+        
 
 
 # x = Memory()
-# x.set_cte_address(3.14)
+# x.set_temp_address("int", "a", "Hola")
+# x.set_temp_address("float", "b", "programa")
+# print(x.get_temporal_address("a"))
+# print(x.get_temporal_address("b"))
 
 # print(x.get_cte_address(3.14))
 
-# print(x.get_operator_address('+'))
+# print(x.get_operator_address('+')
