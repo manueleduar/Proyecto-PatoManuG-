@@ -144,6 +144,8 @@ avail = Avail()
 #instanciar Objetos de clases utilizadas
 cubo = Cube()
 saltos = Stack()
+
+
 def p_programa(p):
         '''
         programa :  PROGRAM ID SEMICOLON addP programa1 
@@ -368,7 +370,7 @@ def p_genera_quad_asignacion(p):
 
         if result != 'ERROR':
             quad = (operadores2, operando_derecho, None, operando_izquierdo)
-            print('Cuadruplo:', str(quad))
+            #print('Cuadruplo:', str(quad))
             quadruples.append(quad)
             
         else: 
@@ -541,7 +543,7 @@ def genera_cuadruplo():
         if result_type != 'ERROR':
             result = avail.next()
             quad = (operando2, operando_izquierdo, operando_derecho, result)
-            print('Cuadruplo: ' + str(quad))
+            #print('Cuadruplo: ' + str(quad))
 
             quadruples.append(quad)
             stackName.push(result)
@@ -617,7 +619,7 @@ def llenar_quad(end, cont):
     temp = list(quadruples[end])
     temp[3] = len(quadruples)
     quadruples[end] = tuple(temp)
-    print('Cuadruplo:', quadruples[end])
+    #print('Cuadruplo:', quadruples[end])
 
 
 def p_nexp(p):
@@ -684,9 +686,8 @@ def p_operatorPrintQuad(p):
             valor = stackName.pop()
             stackTypes.pop()
             quad = (operator_aux, None, None, valor)
-            print('Cuadruplo:', str(quad))
+            #print('Cuadruplo:', str(quad))
             quadruples.append(quad)
-
 
 # Leer operador read y generar quadruplo
 def p_operatorRead(p):
@@ -829,7 +830,14 @@ if __name__ == '__main__':
             
         if (parser.parse(informacion, tracking = True) == 'PROGRAMA COMPILADO'):
             print ("Correct Syntax")
-            
+
+            #archivo-salida.py
+            f = open ('holamundo.txt','w')
+            for i in quadruples:
+                f.write(str(i) + '\n')
+                #f.write('\n')
+            f.close()
+
         else: 
             print("Syntax error")
             
