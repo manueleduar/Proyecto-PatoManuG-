@@ -2,6 +2,26 @@ class Memory:
     def __init__(self):
         #DICCIONARIOS PARA VARIABLES
         self.constants = {}
+        self.operators = {
+            '+':1,
+            '-':2,
+             '*':3,
+             '/':4,
+             '<':5,
+             '>':6,
+             '<=':7,
+             '>=':8,
+             '==':9,
+             '!=':10,
+             '&&':11,
+             '|':12,
+             '=':13,
+             '==':14,
+             'for': 15,
+             'while': 16,
+             'read': 17,
+             'print': 18
+            }
               
         #GLOBALES 
         self.gi = 1000 #lower 1000 upper 2999
@@ -160,5 +180,16 @@ class Memory:
         
         else:
             return -1
+    
+    def get_operator_address(self, op):
+        if op in self.operators.keys():
+            return self.operators[op]
+        
 
 
+# x = Memory()
+# x.set_cte_address(3.14)
+
+# print(x.get_cte_address(3.14))
+
+# print(x.get_operator_address('+'))

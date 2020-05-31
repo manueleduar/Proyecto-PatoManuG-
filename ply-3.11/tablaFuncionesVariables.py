@@ -83,6 +83,9 @@ class tabFun():
         
     def get_cte_mem(self, val):
         return self.m.get_cte_address(val) 
+    
+    def get_op_mem(self, op):
+        return self.m.get_operator_address(op)
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:

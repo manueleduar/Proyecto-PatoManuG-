@@ -385,6 +385,11 @@ def p_addOperadorName(p):
     'addOperadorName : '
     global operadores
     aux = p[-1]
+    # print("el opearador",aux,"tiene memoria",  tablaFun.get_op_mem(aux))
+    
+    op = tablaFun.get_op_mem(aux)
+    #TODO  meter a la pila de operadores el op, este asocia el operador a la direccion de memoria asignada SE DEBE ARREGLAR CUADRUPLOS PARA QUE 
+    # DEBE QUEDAR operadores.push(op)
     operadores.push(aux)
 
 
@@ -434,6 +439,8 @@ def p_else(p):
 def p_for_op(p):
     'for_op :'
     global operadores, quadruples, saltos
+    #TODO meter el op como en el push de agrega operador
+    #op = tablaFun.get_op_mem('for') deberá quedar asi y luego operadores.push(op)
     operadores.push('for')
     saltos.push(len(quadruples))
 
@@ -491,6 +498,7 @@ def p_while_quad(p):
 def p_while_op(p):
     'while_op :'
     global operadores, quadruples, saltos
+    #TODO igual que en los anteriores llamar a la funcion asocia y meter el while
     operadores.push('while')
     saltos.push(len(quadruples))   
 
@@ -674,6 +682,7 @@ def p_genera_quad_mul(p):
 def p_operadorPrint(p):
 	'operadorPrint : '
 	global operadores
+    #TODO meter como en los demás 
 	operadores.push('print')
 
 
@@ -693,6 +702,7 @@ def p_operatorPrintQuad(p):
 def p_operatorRead(p):
     'operatorRead : '
     global operadores
+    #TODO meter como en los demás
     operadores.push('read')
 
 def p_operatorReadQuad(p):
