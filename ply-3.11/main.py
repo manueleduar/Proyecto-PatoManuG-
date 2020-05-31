@@ -557,11 +557,22 @@ def genera_cuadruplo():
         result_type = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operando2)
         if result_type != 'ERROR':
             result = avail.next()
-            quad = (op, operando_izquierdo, operando_derecho, result)
+
+            ##### ASIGNAR MEMORIA A TEMPORAL (result en este caso) ########
+            tablaFun.add_temp(result_type, result, fid)
+            var_temp = tablaFun.get_temp_mem(result)
+            print(result, 'result-----------------------------------', var_temp, result_type, fid)
+            
+            # quad = (op, operando_izquierdo, operando_derecho, result)
+            quad = (op, operando_izquierdo, operando_derecho, var_temp)
             #print('Cuadruplo: ' + str(quad))
 
             quadruples.append(quad)
-            stackName.push(result)
+            # stackName.push(result)
+            # stackTypes.push(result_type)
+
+            ### agregar a la pila de nombres, la direccion en vez de nombre ######
+            stackName.push(var_temp)
             stackTypes.push(result_type)
 
         else: 

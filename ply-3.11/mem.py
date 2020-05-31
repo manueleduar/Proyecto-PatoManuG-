@@ -2,6 +2,7 @@ class Memory:
     def __init__(self):
         #DICCIONARIOS PARA VARIABLES
         self.constants = {}
+        self.temporal = {}
         self.operators = {
             '+':1,
             '-':2,
@@ -16,11 +17,10 @@ class Memory:
              '&&':11,
              '|':12,
              '=':13,
-             '==':14,
-             'for': 15,
-             'while': 16,
-             'read': 17,
-             'print': 18
+             'for': 14,
+             'while': 15,
+             'read': 16,
+             'print': 17
             }
               
         #GLOBALES 
@@ -124,12 +124,14 @@ class Memory:
                     
                 else:
                     print("index out of range")
+            
             else:
                 if self.lb < 33000:
                     address = self.lb
                     #print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lb += 1
                     #print("address actualizada a ", self.lb)
+
         return address
             
      # CONSTANTES          
@@ -185,6 +187,16 @@ class Memory:
         if op in self.operators.keys():
             return self.operators[op]
         
+
+    def set_temp_address(self, tipo, vid, funId):
+            ad = self.set_var_direction(tipo, vid, funId)
+            self.temporal[vid]={
+                'address': ad
+            }
+
+    def get_temporal_address(self, temp):
+        if temp in self.temporal.keys():
+            return self.temporal[temp]['address']
 
 
 # x = Memory()

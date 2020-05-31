@@ -10,6 +10,7 @@ fun void Launch(int r, int f, int j1); {
     print(b);
 }
 
+
 main() {
     var 
         int i, j, k, l, m, d, x, y, ggg[3];

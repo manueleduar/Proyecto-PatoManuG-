@@ -27,6 +27,7 @@ class tabFun():
     def __init__(self):
         self.funciones = {}
         self.m = Memory()
+
     def add_Fun(self, tipo, id, nParams, tParams, idParams, nvars):
         if self.funciones.get(id) == None:
             self.funciones[id] = {
@@ -79,7 +80,10 @@ class tabFun():
             self.funciones[fid]['vars'].add(tipo, id, ad)
             
     def add_cte_mem(self, val):
-        self.m.set_cte_address(val)    
+        self.m.set_cte_address(val)
+
+    def add_temp(self, tipo, vid, funId):
+        self.m.set_temp_address(tipo, vid, funId)    
         
     def get_cte_mem(self, val):
         return self.m.get_cte_address(val) 
@@ -90,5 +94,8 @@ class tabFun():
     def print_fun_vars(self, fid):
         if fid in self.funciones:
             self.funciones[fid]['vars'].print_vars()
+
+    def get_temp_mem(self, temp):
+        return self.m.get_temporal_address(temp)
 
 
