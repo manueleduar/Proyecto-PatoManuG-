@@ -189,7 +189,7 @@ class Cube:
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
                     self.operators[12]: self.types[4],
-                    self.operators[13]: self.types[9],
+                    self.operators[13]: self.types[2],
                     self.operators[14]: self.types[9],
 
                 },
@@ -258,7 +258,7 @@ class Cube:
                     self.operators[10]: self.types[4],
                     self.operators[11]: self.types[4],
                     self.operators[12]: self.types[4],
-                    self.operators[13]: self.types[9],
+                    self.operators[13]: self.types[2],
                     self.operators[14]: self.types[9],
 
                 },
@@ -606,5 +606,5 @@ class Cube:
 
 # x = Cube()
 
-# x.printO("int", "int", ">=")
-# x.printO("int", "int", ">")
+# x.printO("int", "float", "=")
+# x.printO("float", "CTEI", "=")

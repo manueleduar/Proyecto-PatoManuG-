@@ -189,7 +189,7 @@ def p_programa2(p):
     
 def p_main(p):
     '''
-	main : MAIN LPAREN param2 RPAREN LCURLY vars statement RCURLY END
+	main : MAIN save_fun LPAREN param2 RPAREN LCURLY vars statement RCURLY END
 	'''
     global actual_funTipo
     actual_funTipo = p[1]
@@ -305,9 +305,14 @@ def p_save_fun(p):
     global fid
     global tablaFun
 
-    actual_funTipo = p[-2]
-    fid = p[-1]
-    tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    if p[-1] == 'main':
+        actual_funTipo = 'main'
+        fid = p[-1]
+        tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
+    else:    
+        actual_funTipo = p[-2]
+        fid = p[-1]
+        tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
         
 
 
@@ -369,6 +374,7 @@ def p_genera_quad_asignacion(p):
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
         result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
+        print("result CUBO--------",operando_izquierdo_tipo,operando_derecho_tipo   ,result)
 
         if result != 'ERROR':
             quad = (op, operando_derecho, None, operando_izquierdo)
@@ -376,7 +382,7 @@ def p_genera_quad_asignacion(p):
             quadruples.append(quad)
             
         else: 
-            print('Type Dissmatch....')
+            print('Type Missmatch....')
             sys.exit()
     else: 
         print('Vacio....')
@@ -845,8 +851,8 @@ if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
         # nombreArchivo = 'prueba2.txt'
-        nombreArchivo = 'prueba4.txt'
-        # nombreArchivo = 'prueba3.txt'
+        # nombreArchivo = 'prueba4.txt'
+        nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()

@@ -53,7 +53,7 @@ main() {
            print("HOLA MUNDO");
        }
 
-     print (a+b);
+     print (x+y);
 
     while(x<y){
         x = x+y;
