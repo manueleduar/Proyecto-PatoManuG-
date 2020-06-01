@@ -5,9 +5,17 @@ fun void Launch(int r, int f, int j1); {
   int a, b, c[3];
     a = 10;
     b = 20;
-    b = a * b;
+    b = (a * b) + 7;
     c[1] = b + a;
     print(b);
+}
+
+fun int LAunch2 (); {
+    var
+    int k98, j99;
+    k98 = 2;
+    j99 = 10;
+    return (k98 * j99);
 }
 
 
@@ -15,7 +23,7 @@ main() {
     var 
         int i, j, k, l, m, d, x, y, ggg[3];
         char a1, b1;
-
+        Launch(3, 5, 4 + 1);
         k = i + k;
         l = i - j;
         m = i * l;

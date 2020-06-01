@@ -99,11 +99,18 @@ class tabFun():
             
     
    
+    def add_var_mem(self, tipo, vid, funId):
+        self.m.set_var_address(tipo, vid, funId)    
+        
+    def get_var_mem(self, var):
+        return self.m.get_var_address(var)
+    
+    
     def add_temp_mem(self, tipo, vid, funId):
-        self.m.set_temp_address(tipo, vid, funId)    
+       self.m.set_temp_address(tipo, vid, funId)    
         
     def get_temp_mem(self, temp):
-        return self.m.get_temporal_address(temp)
+        return self.m.get_temp_address(temp)
         
     def add_cte_mem(self, val):
         self.m.set_cte_address(val)

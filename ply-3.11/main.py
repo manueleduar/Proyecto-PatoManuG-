@@ -335,17 +335,18 @@ def p_function2(p):
     function2 : ID save_fun LPAREN param2 RPAREN SEMICOLON LCURLY vars statement RETURN operadorReturn exp quad_return SEMICOLON RCURLY
     '''
   
+
 def p_end_func(p):
     'end_func : '
     global quadruples
     quad = ('ENDFUNC', None, None, -1)
     quadruples.append(quad)
+    print("END FUNC")
 
 def p_operadorReturn(p):
     'operadorReturn : '
     global operadores
     operadores.push('return')
-    # print('HHHHHHHHHHHH RETURN', operadores.top())
 
 
 
@@ -428,7 +429,6 @@ def p_addOperadorName(p):
     'addOperadorName : '
     global operadores
     aux = p[-1]
-    
     #op = tablaFun.get_op_mem(aux)
     #print('MEMORY OPERATOR', op, 'de', aux)
     #meter a la pila de operadores el op, este asocia el operador a la direccion de memoria asignada SE DEBE ARREGLAR CUADRUPLOS PARA QUE 
@@ -465,31 +465,32 @@ def p_param2(p):
     
 def p_llamada(p): 
     '''
-    llamada : ID LPAREN p_arg RPAREN
+    llamada :  ID era_call LPAREN aux_exp RPAREN gosub_quad
     
     ''' 
-
-
-def p_arg(p):
+def p_aux_exp(p):
     '''
-    p_arg : exp
-        | exp COMMA exp
+    aux_exp : exp 
+            | exp quad_param COMMA aux_exp 
+            | empty
+    '''
     
-    '''
+
+
 
 def p_era_call(p):
     'era_call : '
     global quadruples
     nameV = p[-1]
-    quad = ('ERA', None, None, name)
+    quad = ('ERA', None, None, nameV)
     quadruples.append(quad)
-   
+    print ("ERA CALL")
    
 
 
 def p_quad_param(p):
+    '''quad_param : '''
     global quadruples 
-    'quad_param : '
     val = stackName.pop()
     stackTypes.pop()
     quad = ('PARAM', val, None, -1)
@@ -497,11 +498,13 @@ def p_quad_param(p):
 
 
 def p_gosub_quad(p):
-    global quadruples
     'gosub_quad : '
-    gosub_call = p[-6]
-    quad = ('GOSUB', None, None, gosub_call ) 
+    global quadruples
+    gosub_call = p[-5]
+    quad = ('GOSUB', None, None, gosub_call) 
     quadruples.append(quad)
+    print("gosub-----------------", str(quad))
+    
   
 
 
@@ -638,7 +641,7 @@ def genera_cuadruplo():
             ##### ASIGNAR MEMORIA A TEMPORAL (result en este caso) ########
             tablaFun.add_temp_mem(result_type, result, fid)
             var_temp = tablaFun.get_temp_mem(result)
-            print(result, 'result-----------------------------------', var_temp, result_type, fid)
+            print(result, 'result temporal-----------------------------------', var_temp, result_type, fid)
             
             # quad = (op, operando_izquierdo, operando_derecho, result)
             quad = (op, operando_izquierdo, operando_derecho, var_temp)
@@ -849,8 +852,8 @@ def p_saveId(p):
         if tablaFun.searchVar_tabFun(fid, varId):
             tipos = tablaFun.getVar_Tipo(varId, fid)
             
-            tablaFun.add_temp_mem(tipos, varId, fid)
-            varMem = tablaFun.get_temp_mem(varId)
+            tablaFun.add_var_mem(tipos, varId, fid)
+            varMem = tablaFun.get_var_mem(varId)
        
             if tipos:
                 stackTypes.push(tipos)
@@ -894,7 +897,7 @@ def p_saveCTE(p):
     if (t == int):
         stackTypes.push('int')
         stackName.push(cte_address)
-        #print("tipo y nombre que se ven", cte)
+        print("tipo y nombre que se ven", cte)
 
     elif (t == float):
         stackTypes.push('float')
@@ -923,8 +926,8 @@ parser = yacc.yacc()
 if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
-        nombreArchivo = 'prueba2.txt'
-        # nombreArchivo = 'prueba4.txt'
+        # nombreArchivo = 'prueba2.txt'
+        nombreArchivo = 'prueba4.txt'
         # nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
