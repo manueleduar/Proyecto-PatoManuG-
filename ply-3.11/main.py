@@ -319,10 +319,10 @@ def p_save_fun(p):
     
 def p_function(p):
     '''
-    function : FUN VOID function1 
-             | FUN INT function2 
-             | FUN CHAR function2 
-             | FUN FLOAT function2 
+    function : FUN VOID function1 end_func
+             | FUN INT function2 end_func
+             | FUN CHAR function2 end_func
+             | FUN FLOAT function2 end_func
     ''' 
 
 def p_function1(p):
@@ -332,8 +332,43 @@ def p_function1(p):
     
 def p_function2(p):
     '''
-    function2 : ID save_fun LPAREN param RPAREN SEMICOLON LCURLY vars statement RETURN exp SEMICOLON RCURLY 
+    function2 : ID save_fun LPAREN param2 RPAREN SEMICOLON LCURLY vars statement RETURN operadorReturn exp quad_return SEMICOLON RCURLY
     '''
+  
+def p_end_func(p):
+    'end_func : '
+    global quadruples
+    quad = ('ENDFUNC', None, None, -1)
+    quadruples.append(quad)
+
+def p_operadorReturn(p):
+    'operadorReturn : '
+    global operadores
+    operadores.push('return')
+    # print('HHHHHHHHHHHH RETURN', operadores.top())
+
+
+
+def p_quad_return(p):
+    'quad_return : '
+    global quadruples, stackName, stackTypes, operadores, actual_funTipo
+    if operadores.size() > 0:
+        if operadores.top() == 'return':
+            operadores2 = operadores.pop()
+            result = stackName.pop()
+            #result_type = stackTypes.pop()
+
+            quad = (operadores2, -1, -1, result)
+            # print('QUAD RETURN:', str(quad))
+            quadruples.append(quad)
+            
+        else: 
+            print('Type dissmatch')
+            sys.exit()
+
+
+
+
     
 def p_statement(p):
     '''
@@ -402,12 +437,12 @@ def p_addOperadorName(p):
 
 
     
-def p_param(p):
-    '''
-    param : 
-          | empty
+# def p_param(p):
+#     '''
+#     param : 
+#           | empty
     
-    ''' 
+    # ''' 
 
 def p_param1(p):
     '''
@@ -423,15 +458,52 @@ def p_param1(p):
 
 def p_param2(p):
       '''
-        param2 : param2 tipo var1  addV
+        param2 : param2 tipo param1  addV
              | empty
     ''' 
 
     
 def p_llamada(p): 
     '''
-    llamada : ID LPAREN exp RPAREN
+    llamada : ID LPAREN p_arg RPAREN
+    
     ''' 
+
+
+def p_arg(p):
+    '''
+    p_arg : exp
+        | exp COMMA exp
+    
+    '''
+
+def p_era_call(p):
+    'era_call : '
+    global quadruples
+    nameV = p[-1]
+    quad = ('ERA', None, None, name)
+    quadruples.append(quad)
+   
+   
+
+
+def p_quad_param(p):
+    global quadruples 
+    'quad_param : '
+    val = stackName.pop()
+    stackTypes.pop()
+    quad = ('PARAM', val, None, -1)
+    quadruples.append(quad)
+
+
+def p_gosub_quad(p):
+    global quadruples
+    'gosub_quad : '
+    gosub_call = p[-6]
+    quad = ('GOSUB', None, None, gosub_call ) 
+    quadruples.append(quad)
+  
+
 
 def p_if(p):
     '''
