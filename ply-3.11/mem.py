@@ -2,6 +2,7 @@ class Memory:
     def __init__(self):
         #DICCIONARIOS PARA VARIABLES
         self.constants = {}
+        self.variables ={}
         self.temporal = {}
         self.operators = {
             '+':1,
@@ -78,20 +79,15 @@ class Memory:
             elif tipo == 'char':
                 if self.gc < 7000:
                     address = self.gc
-                    #print("se ha configurado la var", id, "global, la direccion es:", address)                   
                     self.gc += 1
-                    #print("address actualizada a ", self.gc)
-
                 else:
                     print("index out of range")
 
             else:
                 if self.gb < 9000:
                     address = self.gb
-                    #print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gb += 1
-                    #print("address actualizada a ", self.gb)
-        #VARIABLES TEMPORALES AKA FUNCIONES
+         
         
         else:
             if tipo == 'int':
@@ -133,6 +129,45 @@ class Memory:
                     #print("address actualizada a ", self.lb)
 
         return address
+    
+    
+    
+    
+    def set_temp_direction(self, tipo, id, funId):
+        if tipo == 'int':
+            if self.gLi <13000:
+                address = self.gLi
+                #print("adress", address)
+                #print("se ha configurado la var", id, "Local, la direccion es:", address)
+                self.gLi += 1
+                #print("address actualizada a ", self.li)
+            else:
+                    print("index out of range")
+
+        elif tipo == 'float':
+           if self.gLf < 15000:                
+               address = self.gLf
+               self.gLf += 1
+           else:
+                print("index out of range")
+                    
+        elif tipo == 'char':
+            if self.gLc < 17000:
+                address = self.gLc
+                #print("se ha configurado la var", id, "local, la direccion es:", address)                   
+                self.gLc += 1
+                #print("address actualizada a ", self.lc)            
+            else:
+                print("index out of range")
+            
+        else:
+            if self.gLb < 20000:                   
+                address = self.gLb
+                #print("se ha configurado la var", id, "local, la direccion es:", address)
+                self.gLb += 1
+                #print("address actualizada a ", self.lb)
+        return address
+  
             
      # CONSTANTES          
        
@@ -166,12 +201,21 @@ class Memory:
                     #print("constante string updated ", self.cteString)
         return address 
     
-    def set_temp_address(self, tipo, vid, funId):
+    def set_var_address(self, tipo, vid, funId):
         ad = self.set_var_direction(tipo, vid, funId)
+        self.variables[vid]={
+            'address': ad
+        }
+    def get_var_address(self, temp):
+        if temp in self.variables.keys():
+            return self.variables[temp]['address']
+        
+    def set_temp_address(self, tipo, vid, funId):
+        ad = self.set_temp_direction(tipo, vid, funId)
         self.temporal[vid]={
             'address': ad
         }
-    def get_temporal_address(self, temp):
+    def get_temp_address(self, temp):
         if temp in self.temporal.keys():
             return self.temporal[temp]['address']
     

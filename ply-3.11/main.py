@@ -566,7 +566,7 @@ def genera_cuadruplo():
             ##### ASIGNAR MEMORIA A TEMPORAL (result en este caso) ########
             tablaFun.add_temp_mem(result_type, result, fid)
             var_temp = tablaFun.get_temp_mem(result)
-            print(result, 'result-----------------------------------', var_temp, result_type, fid)
+            print(result, 'result temporal-----------------------------------', var_temp, result_type, fid)
             
             # quad = (op, operando_izquierdo, operando_derecho, result)
             quad = (op, operando_izquierdo, operando_derecho, var_temp)
@@ -777,8 +777,8 @@ def p_saveId(p):
         if tablaFun.searchVar_tabFun(fid, varId):
             tipos = tablaFun.getVar_Tipo(varId, fid)
             
-            tablaFun.add_temp_mem(tipos, varId, fid)
-            varMem = tablaFun.get_temp_mem(varId)
+            tablaFun.add_var_mem(tipos, varId, fid)
+            varMem = tablaFun.get_var_mem(varId)
        
             if tipos:
                 stackTypes.push(tipos)
