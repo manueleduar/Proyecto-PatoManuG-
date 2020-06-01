@@ -461,8 +461,20 @@ def p_param2(p):
         param2 : param2 tipo param1  addV
              | empty
     ''' 
-
     
+def p_cuentaParametros(p):
+    'cuentaParametros : '
+    global countParams
+    
+    if countParams != tablaFun.getNumeroParametros(p[-4]):
+        print('Numero de parametros incorrectos en', fid)
+        sys.exit()
+    # else de prueba
+    else:
+        print('Numero de params aceptado')
+
+
+
 def p_llamada(p): 
     '''
     llamada :  ID era_call LPAREN aux_exp RPAREN gosub_quad
@@ -473,18 +485,17 @@ def p_aux_exp(p):
     aux_exp : exp 
             | exp quad_param COMMA aux_exp 
             | empty
-    '''
-    
-
+    '''  
 
 
 def p_era_call(p):
     'era_call : '
-    global quadruples
+    global quadruples, countParams
     nameV = p[-1]
     quad = ('ERA', None, None, nameV)
     quadruples.append(quad)
-    print ("ERA CALL")
+    countParams = 1
+    print ("ERA CALL _________funcion", nameV )
    
 
 
@@ -956,4 +967,4 @@ if __name__ == '__main__':
     except EOFError:
         # print("ERROREOF")
         print(EOFError)
-f
+

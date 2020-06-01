@@ -46,6 +46,7 @@ class tabFun():
     def search_tabFun(self, id):
         return id in self.funciones
 
+
     def searchVar_tabFun(self, fid, id):
         if self.funciones[fid]['vars'].search_vars(id) or self.funciones['programa']['vars'].search_vars(id):
             return True
@@ -70,23 +71,34 @@ class tabFun():
     #     else:
     #         print('Variable', id, 'no tiene direccion porque no se encontró...')
         
+
     
     def addVar(self, fid, tipo, id):
         #si ya existe en local no lo agrega 
         if self.funciones[fid]['vars'].search_vars(id):
             print('La variable', id, 'ya existe en el scope', fid)
-        # si no existe en el local lo agrego a l local
+
+
+        # si no existe en el local aun lo agrego
         elif not self.funciones[fid]['vars'].search_vars(id):
             ad = self.m.set_var_direction(tipo, id, fid)
             self.funciones[fid]['vars'].add(tipo, id, ad)
-        
+            self.funciones[fid]['nvars'] = self.funciones[fid]['nvars'] + 1
+            #print("no existe en local aun se va a agregar")
+
+
         # si existe como global no lo agrego
         elif self.funciones['programa']['vars'].search_vars(id):
             print('La variable', id, 'ya existe en el programa como global')
+        
+
         # si no existe como global lo agrego como global
-        elif self.funciones[fid]['vars'].search_vars(id):
+        elif self.funciones['programa']['vars'].search_vars(id):
             ad = self.m.set_var_direction('programa', id, fid)
             self.funciones['programa']['vars'].add(tipo, id, ad)
+            self.funciones['programa']['nvars'] = self.funciones[fid]['nvars'] + 1
+
+           # print("no existe como global aun la agrego")
     
             
         # elif self.funciones['programa']['vars'].search_vars(id):
@@ -102,24 +114,34 @@ class tabFun():
     def add_var_mem(self, tipo, vid, funId):
         self.m.set_var_address(tipo, vid, funId)    
         
+
     def get_var_mem(self, var):
         return self.m.get_var_address(var)
+
+
+    def getNumeroParametros(self, fid):
+        return self.funciones[fid]['nParams']
     
     
     def add_temp_mem(self, tipo, vid, funId):
        self.m.set_temp_address(tipo, vid, funId)    
         
+
     def get_temp_mem(self, temp):
         return self.m.get_temp_address(temp)
         
+
     def add_cte_mem(self, val):
         self.m.set_cte_address(val)
         
+
     def get_cte_mem(self, val):
         return self.m.get_cte_address(val) 
     
+
     def get_op_mem(self, op):
         return self.m.get_operator_address(op)
+            
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:
