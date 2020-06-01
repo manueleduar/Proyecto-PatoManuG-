@@ -851,8 +851,8 @@ parser = yacc.yacc()
 if __name__ == '__main__':
     try:
         #nombreArchivo = 'test1.txt'
-        nombreArchivo = 'prueba2.txt'
-        # nombreArchivo = 'prueba4.txt'
+        # nombreArchivo = 'prueba2.txt'
+        nombreArchivo = 'prueba4.txt'
         # nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
