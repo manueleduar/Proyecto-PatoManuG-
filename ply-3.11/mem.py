@@ -96,7 +96,7 @@ class Memory:
         else:
             if tipo == 'int':
 
-                if self.gi <26000:
+                if self.li <26000:
                     address = self.li
                     #print("adress", address)
                     #print("se ha configurado la var", id, "Local, la direccion es:", address)
@@ -106,7 +106,7 @@ class Memory:
                     print("index out of range")
 
             elif tipo == 'float':
-                if self.gf < 29000:
+                if self.lf < 29000:
                     address = self.lf
                     #print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lf += 1
