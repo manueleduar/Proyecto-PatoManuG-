@@ -1,0 +1,3 @@
+
+def maquinaVirtual():
+    print('Hola')

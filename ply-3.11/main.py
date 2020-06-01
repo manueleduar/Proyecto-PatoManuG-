@@ -881,4 +881,3 @@ if __name__ == '__main__':
     except EOFError:
         # print("ERROREOF")
         print(EOFError)
-f
