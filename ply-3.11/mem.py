@@ -1,6 +1,7 @@
 class Memory:
     def __init__(self):
         #DICCIONARIOS PARA VARIABLES
+        self.globales = {}
         self.constants = {}
         self.variables ={}
         self.temporal = {}
@@ -18,10 +19,19 @@ class Memory:
              '&&' : 11,
              '|' : 12,
              '=' : 13,
-             'for': 14,
-             'while': 15,
-             'read': 16,
-             'print': 17
+             'FOR' : 14,
+             'WHILE' : 15,
+             'READ' : 16,
+             'PRINT' : 17,
+             'GOTO' : 18,
+             'GOTOF' : 19,
+             'GOTOV' : 20,
+             'ERA' : 21,
+             'GOSUB' : 22,
+             'RETURN': 23,
+             'ENDPROC' : 24,
+             'VER': 25,
+             'END': 26,
             }
               
         #GLOBALES 
@@ -54,6 +64,11 @@ class Memory:
         self.ctec = 47000 #lower 47000 upper 47999
         self.cteString = 48000 #lower 48000 upper 48999
         
+        
+        
+        
+    # FUNCIONES COMPILACION
+         
     def set_var_direction(self, tipo, id, funId):
         #VARIABLES GLOBALES
         if funId == 'programa':
@@ -175,9 +190,8 @@ class Memory:
         if isinstance(val, int):
             if(self.ctei < 46000):
                 address = self.ctei
-                #print("constante entera se ha configurado con dir ",val, address)
                 self.ctei += 1
-                #print("constante entera updated ", self.ctei)
+
         
         elif isinstance(val, float):
             if self.ctef < 47000:
@@ -254,7 +268,26 @@ class Memory:
         self.lf = 20000
         self.lc = 21000
         self.lb = 22000
+      
         
+    # FUNCIONES EJECUCION
+    def value_to_memory(self, address, value):
+        if address >= 1000 and address < 9000:
+            if address <3000:
+                self.globales[address] = value
+            elif address < 5000:
+                self.globales[address] = value
+            elif address < 7000:
+                self.globales[address] = value
+            else: 
+                self.globales[address] = value
+        elif address >= 19000 and address < 23000:
+            if address < 20000:
+                self.locales[address] = value
+            else:
+                print('SIGUE AQUI')
+    
+
 
 
 # x = Memory()
