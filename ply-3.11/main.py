@@ -338,10 +338,13 @@ def p_function2(p):
 
 def p_end_func(p):
     'end_func : '
-    global quadruples
+    global quadruples, tablaFun
     quad = ('ENDFUNC', None, None, -1)
     quadruples.append(quad)
     print("END FUNC")
+
+    
+    
 
 def p_operadorReturn(p):
     'operadorReturn : '
@@ -535,6 +538,7 @@ def p_gosub_quad(p):
     quadruples.append(quad)
     print("gosub-----------------", p[-6], str(quad))
     
+    
   
 
 
@@ -565,7 +569,7 @@ def p_for_quad(p):
 
     if result_type == 'bool':
         valor = stackName.pop()
-        quad = ('GotoV', valor, None, -1)
+        quad = ('GOTOV', valor, None, -1)
         # print('quad:', str(quad))
         quadruples.append(quad)
         saltos.push(len(quadruples)-1)
@@ -588,7 +592,7 @@ def p_loop_end(p):
     global stackName, stackTypes, quadruples, saltos
     end = saltos.pop()
     retroceso = saltos.pop()
-    quad = ('Goto', None, None, retroceso)
+    quad = ('GOTO', None, None, retroceso)
     quadruples.append(quad)
     llenar_quad(end, -1)
     # print('quad:', str(quad))
@@ -600,7 +604,7 @@ def p_while_quad(p):
 
     if result_type == 'bool':
         valor = stackName.pop()
-        quad = ('GotoF', valor, None, -1)
+        quad = ('GOTOF', valor, None, -1)
         #print('quad:', str(quad))
         quadruples.append(quad)
         saltos.push(len(quadruples)-1)
@@ -686,7 +690,7 @@ def genera_cuadruplo():
             stackTypes.push(result_type)
 
         else: 
-            print('No se pudo...')
+            print('No se ha generado quad')
             sys.exit()
     else:
         print('PILA DE OPERANDOS VACIA....')
@@ -724,7 +728,7 @@ def p_if_quad(p):
 
     if result_type == 'bool':
         valor = stackName.pop()
-        quad = ('GotoF', valor, None, -1)
+        quad = ('GOTOF', valor, None, -1)
         # print('quad:', str(quad))
         quadruples.append(quad)
         saltos.push(len(quadruples)-1)
@@ -743,7 +747,7 @@ def p_end_if(p):
 def p_else_quad(p):
     'else_quad : '
     global quadruples, saltos
-    quad = ('Goto', None, None, -1)
+    quad = ('GOTO', None, None, -1)
     quadruples.append(quad)
     fAux = saltos.pop()
     saltos.push(len(quadruples)-1)

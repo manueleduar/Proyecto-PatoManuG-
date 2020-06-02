@@ -99,16 +99,7 @@ class tabFun():
             self.funciones['programa']['vars'].add(tipo, id, ad)
             self.funciones['programa']['nvars'] = self.funciones[fid]['nvars'] + 1
 
-           # print("no existe como global aun la agrego")
-    
-            
-        # elif self.funciones['programa']['vars'].search_vars(id):
-        #     ad = self.m.set_var_direction(tipo, id, fid)
-        #     self.funciones[fid]['vars'].add(tipo, id, ad)
-        # else:
-        #     ad = self.m.set_var_direction(tipo, id, fid)
-        #     print("variable", id, "se agrega con memoria", ad)
-        #     self.funciones['programa']['vars'].add(tipo, id, ad)
+  
             
     
    
@@ -147,7 +138,9 @@ class tabFun():
 
     def get_op_mem(self, op):
         return self.m.get_operator_address(op)
-            
+          
+    def reset_temp_add(self):
+        self.m.reset_temp_vals()        
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:
