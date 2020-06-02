@@ -1,27 +1,38 @@
 class Memory:
     def __init__(self):
         #DICCIONARIOS PARA VARIABLES
+        self.globales = {}
         self.constants = {}
+        self.locales = {}
         self.variables ={}
         self.temporal = {}
         self.operators = {
-            '+':1,
-            '-':2,
-             '*':3,
-             '/':4,
-             '<':5,
-             '>':6,
-             '<=':7,
-             '>=':8,
-             '==':9,
-             '!=':10,
-             '&&':11,
-             '|':12,
-             '=':13,
-             'for': 14,
-             'while': 15,
-             'read': 16,
-             'print': 17
+            '+' : 1,
+            '-' : 2,
+             '*' : 3,
+             '/' : 4,
+             '<' : 5,
+             '>' : 6,
+             '<=' : 7,
+             '>=' : 8,
+             '==' : 9,
+             '!=' : 10,
+             '&&' : 11,
+             '|' : 12,
+             '=' : 13,
+             'FOR' : 14,
+             'WHILE' : 15,
+             'READ' : 16,
+             'PRINT' : 17,
+             'GOTO' : 18,
+             'GOTOF' : 19,
+             'GOTOV' : 20,
+             'ERA' : 21,
+             'GOSUB' : 22,
+             'RETURN': 23,
+             'ENDPROC' : 24,
+             'VER': 25,
+             'END': 26,
             }
               
         #GLOBALES 
@@ -54,13 +65,18 @@ class Memory:
         self.ctec = 47000 #lower 47000 upper 47999
         self.cteString = 48000 #lower 48000 upper 48999
         
+        
+        
+        
+    # FUNCIONES COMPILACION
+         
     def set_var_direction(self, tipo, id, funId):
         #VARIABLES GLOBALES
         if funId == 'programa':
             if tipo == 'int':
                 if self.gi <3000:
                     address = self.gi
-                    # print("se ha configurado la var", id, "global, la direccion es:", address)
+                    print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gi += 1
                     #print("address actualizada a ", self.gi)
                 else:
@@ -69,7 +85,7 @@ class Memory:
             elif tipo == 'float':
                 if self.gf < 5000:
                     address = self.gf
-                    #print("se ha configurado la var", id, "global, la direccion es:", address)
+                    print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gf += 1
                     #print("address actualizada a ", self.gf)
 
@@ -95,7 +111,7 @@ class Memory:
                 if self.li <26000:
                     address = self.li
                     #print("adress", address)
-                    #print("se ha configurado la var", id, "Local, la direccion es:", address)
+                    print("se ha configurado la var", id, "Local, la direccion es:", address)
                     self.li += 1
                     #print("address actualizada a ", self.li)
                 else:
@@ -104,7 +120,7 @@ class Memory:
             elif tipo == 'float':
                 if self.lf < 29000:
                     address = self.lf
-                    #print("se ha configurado la var", id, "local, la direccion es:", address)
+                    print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lf += 1
                     #print("address actualizada a ", self.lf)
 
@@ -114,7 +130,7 @@ class Memory:
             elif tipo == 'char':
                 if self.lc < 31000:
                     address = self.lc
-                    #print("se ha configurado la var", id, "local, la direccion es:", address)                   
+                    print("se ha configurado la var", id, "local, la direccion es:", address)                   
                     self.lc += 1
                     #print("address actualizada a ", self.lc)
                     
@@ -124,7 +140,7 @@ class Memory:
             else:
                 if self.lb < 33000:
                     address = self.lb
-                    #print("se ha configurado la var", id, "local, la direccion es:", address)
+                    print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lb += 1
                     #print("address actualizada a ", self.lb)
 
@@ -175,9 +191,8 @@ class Memory:
         if isinstance(val, int):
             if(self.ctei < 46000):
                 address = self.ctei
-                #print("constante entera se ha configurado con dir ",val, address)
                 self.ctei += 1
-                #print("constante entera updated ", self.ctei)
+
         
         elif isinstance(val, float):
             if self.ctef < 47000:
@@ -202,22 +217,30 @@ class Memory:
         return address 
     
     def set_var_address(self, tipo, vid, funId):
-        ad = self.set_var_direction(tipo, vid, funId)
-        self.variables[vid]={
-            'address': ad
-        }
+        if self.get_var_address(vid) == -1:    
+            ad = self.set_var_direction(tipo, vid, funId)
+            self.variables[vid] = {
+                'address': ad
+            }
+
     def get_var_address(self, temp):
         if temp in self.variables.keys():
             return self.variables[temp]['address']
+        else:
+            return -1
         
     def set_temp_address(self, tipo, vid, funId):
-        ad = self.set_temp_direction(tipo, vid, funId)
-        self.temporal[vid]={
-            'address': ad
-        }
+        if self.get_temp_address(vid) == -1:           
+            ad = self.set_temp_direction(tipo, vid, funId)
+            self.temporal[vid] = {
+                'address': ad
+            }
+
     def get_temp_address(self, temp):
         if temp in self.temporal.keys():
             return self.temporal[temp]['address']
+        else:
+            return -1
     
 
     def set_cte_address(self, val):
@@ -232,8 +255,7 @@ class Memory:
         
     def get_cte_address (self, val):
         if val in self.constants.keys():
-            return self.constants[val]["address"]
-        
+            return self.constants[val]["address"]       
         else:
             return -1
     
@@ -243,19 +265,55 @@ class Memory:
 
         
     def reset_temp_vals(self):
-        self.gLi = 19000
-        self.gLf = 20000
-        self.gLc = 21000
-        self.gLb = 22000
+        self.li = 19000
+        self.lf = 20000
+        self.lc = 21000
+        self.lb = 22000
+      
         
+    # FUNCIONES EJECUCION
+    def value_to_memory(self, address, value):
+        if address >= 1000 and address < 9000:
+            if address <3000:
+                self.globales[address] = value
+            elif address < 5000:
+                self.globales[address] = value
+            elif address < 7000:
+                self.globales[address] = value
+            else: 
+                self.globales[address] = value
+        elif address >= 19000 and address < 23000:
+            if address < 20000:
+                self.locales[address] = value
+            else:
+                print('SIGUE AQUI')
+    
+
 
 
 # x = Memory()
-# x.set_temp_address("int", "a", "Hola")
-# x.set_temp_address("float", "b", "programa")
-# print(x.get_temporal_address("a"))
-# print(x.get_temporal_address("b"))
 
-# print(x.get_cte_address(3.14))
+# x1 = 12
+# x2 = 13
+# x3 = 14
 
-# print(x.get_operator_address('+')
+# # Probando variables locales
+# print('LOCALES')
+# x.set_var_address('int', 'a', 'PRUEBA')
+# x.set_var_address('int', 'a', 'PRUEBA')
+
+
+
+# # probando variables temporales
+# print('TEMPORALES')
+# x.set_temp_address('int', 'a', 'PRUEBA')
+# print(x.get_temp_address('a'))
+# x.set_temp_address('int', 'b', 'PRUEBA')
+# print(x.get_temp_address('b'))
+
+
+
+
+# #print(x.get_var_address('a'))
+
+

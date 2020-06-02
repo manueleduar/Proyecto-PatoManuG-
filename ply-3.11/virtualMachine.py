@@ -71,7 +71,7 @@ class VirtualMachine():
                     #local bool 
                      self.func_memory[-1][address] = value
             
-            
+    
       
         
       
