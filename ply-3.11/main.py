@@ -457,7 +457,7 @@ def p_addParam(p):
 
 def p_param2(p):
       '''
-        param2 : param2 tipo param1  addParam
+        param2 : param2 tipo param1 addParam
              | empty 
     ''' 
     
@@ -491,14 +491,13 @@ def p_aux_exp(p):
     '''
     aux_exp : exp 
             | exp quad_param COMMA cuenta_parametros aux_exp 
-            | empty
+            | empty ZeroParameters
     '''  
 
 def p_ZeroParameters(p):
     '''ZeroParameters : '''
     global countParams
     countParams = 0
-
 
 def p_era_call(p):
     'era_call : '
@@ -575,7 +574,6 @@ def p_for1(p):
     for1 : FROM asignacion TO exp
     '''
 
-        
 def p_loop_end(p):
     'loop_end : '
     global stackName, stackTypes, quadruples, saltos

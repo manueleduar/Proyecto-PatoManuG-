@@ -22,7 +22,7 @@ main() {
     var 
         int i, j, k, l, m, d, x, y, ggg[3];
         char a1, b1;
-        Launch(1, 2, 3, 5);
+        Launch(1, 2, 3, 4);
         
         k = i + k;
         l = i - j;
