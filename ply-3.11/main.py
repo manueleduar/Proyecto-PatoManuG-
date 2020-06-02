@@ -447,45 +447,64 @@ def p_addOperadorName(p):
 def p_param1(p):
     '''
         param1 : ID
-            | ID COMMA var1 addV
+            | ID COMMA var1 addV 
             | ID arr 
             | ID arr COMMA var1 addV 
-            | ID mat COMMA var1 addV
+            | ID mat COMMA var1 addV 
             | ID mat 
             | ID mat especial 
             | empty 
     ''' 
 
+def p_addParam(p):
+    'addParam : '
+    tablaFun.add_parametros_tabFun(fid, varId, actual_varTipo)
+    print('ADD PARAM:', fid, varId, actual_varTipo)
+
+
 def p_param2(p):
       '''
-        param2 : param2 tipo param1  addV
-             | empty
+        param2 : param2 tipo param1 addV addParam
+             | empty 
     ''' 
     
-def p_cuentaParametros(p):
-    'cuentaParametros : '
+def p_verifica_parametros(p):
+    'verifica_parametros : '
     global countParams
-    
-    if countParams != tablaFun.getNumeroParametros(p[-4]):
-        print('Numero de parametros incorrectos en', fid)
+    checkParams = tablaFun.getNumeroParametros(p[-4])
+    if not countParams == checkParams:
+        print('Numero de parametros incorrectos en', p[-4])
+        print('COUNT PARAMS = ', countParams, checkParams, p[-4])
         sys.exit()
+
     # else de prueba
     else:
-        print('Numero de params aceptado')
+        print('Numero de parametros ACEPTADO')
 
+
+def p_cuenta_parametros(p):
+    '''cuenta_parametros : '''
+    global countParams
+    countParams = countParams + 1
+    print('PARAMS ACTUALIZADO', countParams)
 
 
 def p_llamada(p): 
     '''
-    llamada :  ID era_call LPAREN aux_exp RPAREN gosub_quad
+    llamada : ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
     
     ''' 
 def p_aux_exp(p):
     '''
     aux_exp : exp 
-            | exp quad_param COMMA aux_exp 
+            | exp quad_param COMMA cuenta_parametros aux_exp 
             | empty
     '''  
+
+def p_ZeroParameters(p):
+    '''ZeroParameters : '''
+    global countParams
+    countParams = 0
 
 
 def p_era_call(p):
@@ -495,7 +514,7 @@ def p_era_call(p):
     quad = ('ERA', None, None, nameV)
     quadruples.append(quad)
     countParams = 1
-    print ("ERA CALL _________funcion", nameV )
+    print ("ERA CALL _________", nameV )
    
 
 
@@ -511,10 +530,10 @@ def p_quad_param(p):
 def p_gosub_quad(p):
     'gosub_quad : '
     global quadruples
-    gosub_call = p[-5]
+    gosub_call = p[-6]
     quad = ('GOSUB', None, None, gosub_call) 
     quadruples.append(quad)
-    print("gosub-----------------", str(quad))
+    print("gosub-----------------", p[-6], str(quad))
     
   
 

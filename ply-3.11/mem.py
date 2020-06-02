@@ -240,11 +240,7 @@ class Memory:
     def get_operator_address(self, op):
         if op in self.operators.keys():
             return self.operators[op]
-        
 
-
-
-  
         
     def reset_temp_vals(self):
         self.li = 19000

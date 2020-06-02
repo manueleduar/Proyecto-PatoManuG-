@@ -1,7 +1,7 @@
 program spaceX;
 var 
 int a;
-fun void Launch(int r, int f, int j1); {
+fun void Launch(int r, int f, int j1, int g23); {
   var
   int a, b, c[3];
     a = 10;
@@ -24,7 +24,7 @@ main() {
     var 
         int i, j, k, l, m, d, x, y, ggg[3];
         char a1, b1;
-        Launch(1, 2, 3);
+        Launch(1, 2, 3, 4);
         LAunch2();
         
         k = i + k;

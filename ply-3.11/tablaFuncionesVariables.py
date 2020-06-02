@@ -1,9 +1,9 @@
 from mem import Memory
+
 class tabVar:
     def __init__(self):
         self.var_list ={}
-       
-        
+             
     def add(self, tipo, id, address):
         self.var_list[id] ={
             'tipo': tipo,
@@ -24,6 +24,7 @@ class tabVar:
         
 
 class tabFun():
+    
     def __init__(self):
         self.funciones = {}
         self.m = Memory()
@@ -121,6 +122,11 @@ class tabFun():
 
     def getNumeroParametros(self, fid):
         return self.funciones[fid]['nParams']
+
+    def add_parametros_tabFun(self, fid, nameVar, varTipo):
+        self.funciones[fid]['nParams'] = self.funciones[fid]['nParams'] + 1
+        self.funciones[fid]['idParams'].append(nameVar)
+        self.funciones[fid]['tParams'].append(varTipo)
     
     
     def add_temp_mem(self, tipo, vid, funId):
