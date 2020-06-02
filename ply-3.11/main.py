@@ -416,6 +416,7 @@ def p_genera_quad_asignacion(p):
             quad = (op, operando_derecho, None, operando_izquierdo)
             #print('Cuadruplo:', str(quad))
             quadruples.append(quad)
+            print('QUAD ASIGNACION', operadores2, operando_derecho, None, operando_izquierdo)
             
         else: 
             print('Type Missmatch....')
@@ -429,32 +430,24 @@ def p_addOperadorName(p):
     'addOperadorName : '
     global operadores
     aux = p[-1]
-    #op = tablaFun.get_op_mem(aux)
-    #print('MEMORY OPERATOR', op, 'de', aux)
-    #meter a la pila de operadores el op, este asocia el operador a la direccion de memoria asignada SE DEBE ARREGLAR CUADRUPLOS PARA QUE 
-    # DEBE QUEDAR operadores.push(op)
     operadores.push(aux)
 
 
-    
-# def p_param(p):
-#     '''
-#     param : 
-#           | empty
-    
-    # ''' 
 
 def p_param1(p):
     '''
         param1 : ID
-            | ID COMMA var1 addV 
+            | ID COMMA var1  
             | ID arr 
-            | ID arr COMMA var1 addV 
-            | ID mat COMMA var1 addV 
+            | ID arr COMMA var1  
+            | ID mat COMMA var1  
             | ID mat 
             | ID mat especial 
             | empty 
     ''' 
+    global varId
+    varId = p[1]
+    
 
 def p_addParam(p):
     'addParam : '
@@ -464,7 +457,7 @@ def p_addParam(p):
 
 def p_param2(p):
       '''
-        param2 : param2 tipo param1 addV addParam
+        param2 : param2 tipo param1  addParam
              | empty 
     ''' 
     
@@ -888,8 +881,7 @@ def p_saveId(p):
             if tipos:
                 stackTypes.push(tipos)
                 stackName.push(varMem)
-                # print('Direccion de', varId, 'es', varmem)
-
+                print('Direccion de', varId, 'es', varMem)
             else:
                  SystemExit()  
     # else:
@@ -904,10 +896,11 @@ def p_saveId2(p):
 
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
-        tablaFun.add_temp_mem(tipos, varId, fid)
-        memVar = tablaFun.get_temp_mem(varId)
+        tablaFun.add_var_mem(tipos, varId, fid)
+        memVar = tablaFun.get_var_mem(varId)
         stackTypes.push(tipos)
         stackName.push(memVar)
+        print('Direccion de', varId, 'es', memVar)
 
     else:
         SystemExit()   
@@ -928,6 +921,7 @@ def p_saveCTE(p):
         stackTypes.push('int')
         stackName.push(cte_address)
         print("tipo y nombre que se ven", cte)
+        print('DIRECCION DE', cte, 'es', cte_address)
 
     elif (t == float):
         stackTypes.push('float')

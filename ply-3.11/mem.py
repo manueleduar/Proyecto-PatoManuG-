@@ -5,19 +5,19 @@ class Memory:
         self.variables ={}
         self.temporal = {}
         self.operators = {
-            '+':1,
-            '-':2,
-             '*':3,
-             '/':4,
-             '<':5,
-             '>':6,
-             '<=':7,
-             '>=':8,
-             '==':9,
-             '!=':10,
-             '&&':11,
-             '|':12,
-             '=':13,
+            '+' : 1,
+            '-' : 2,
+             '*' : 3,
+             '/' : 4,
+             '<' : 5,
+             '>' : 6,
+             '<=' : 7,
+             '>=' : 8,
+             '==' : 9,
+             '!=' : 10,
+             '&&' : 11,
+             '|' : 12,
+             '=' : 13,
              'for': 14,
              'while': 15,
              'read': 16,
@@ -60,7 +60,7 @@ class Memory:
             if tipo == 'int':
                 if self.gi <3000:
                     address = self.gi
-                    # print("se ha configurado la var", id, "global, la direccion es:", address)
+                    print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gi += 1
                     #print("address actualizada a ", self.gi)
                 else:
@@ -69,7 +69,7 @@ class Memory:
             elif tipo == 'float':
                 if self.gf < 5000:
                     address = self.gf
-                    #print("se ha configurado la var", id, "global, la direccion es:", address)
+                    print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gf += 1
                     #print("address actualizada a ", self.gf)
 
@@ -95,7 +95,7 @@ class Memory:
                 if self.li <26000:
                     address = self.li
                     #print("adress", address)
-                    #print("se ha configurado la var", id, "Local, la direccion es:", address)
+                    print("se ha configurado la var", id, "Local, la direccion es:", address)
                     self.li += 1
                     #print("address actualizada a ", self.li)
                 else:
@@ -104,7 +104,7 @@ class Memory:
             elif tipo == 'float':
                 if self.lf < 29000:
                     address = self.lf
-                    #print("se ha configurado la var", id, "local, la direccion es:", address)
+                    print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lf += 1
                     #print("address actualizada a ", self.lf)
 
@@ -114,7 +114,7 @@ class Memory:
             elif tipo == 'char':
                 if self.lc < 31000:
                     address = self.lc
-                    #print("se ha configurado la var", id, "local, la direccion es:", address)                   
+                    print("se ha configurado la var", id, "local, la direccion es:", address)                   
                     self.lc += 1
                     #print("address actualizada a ", self.lc)
                     
@@ -124,7 +124,7 @@ class Memory:
             else:
                 if self.lb < 33000:
                     address = self.lb
-                    #print("se ha configurado la var", id, "local, la direccion es:", address)
+                    print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lb += 1
                     #print("address actualizada a ", self.lb)
 
@@ -202,22 +202,30 @@ class Memory:
         return address 
     
     def set_var_address(self, tipo, vid, funId):
-        ad = self.set_var_direction(tipo, vid, funId)
-        self.variables[vid]={
-            'address': ad
-        }
+        if self.get_var_address(vid) == -1:    
+            ad = self.set_var_direction(tipo, vid, funId)
+            self.variables[vid] = {
+                'address': ad
+            }
+
     def get_var_address(self, temp):
         if temp in self.variables.keys():
             return self.variables[temp]['address']
+        else:
+            return -1
         
     def set_temp_address(self, tipo, vid, funId):
-        ad = self.set_temp_direction(tipo, vid, funId)
-        self.temporal[vid]={
-            'address': ad
-        }
+        if self.get_temp_address(vid) == -1:           
+            ad = self.set_temp_direction(tipo, vid, funId)
+            self.temporal[vid] = {
+                'address': ad
+            }
+
     def get_temp_address(self, temp):
         if temp in self.temporal.keys():
             return self.temporal[temp]['address']
+        else:
+            return -1
     
 
     def set_cte_address(self, val):
@@ -232,8 +240,7 @@ class Memory:
         
     def get_cte_address (self, val):
         if val in self.constants.keys():
-            return self.constants[val]["address"]
-        
+            return self.constants[val]["address"]       
         else:
             return -1
     
@@ -251,11 +258,28 @@ class Memory:
 
 
 # x = Memory()
-# x.set_temp_address("int", "a", "Hola")
-# x.set_temp_address("float", "b", "programa")
-# print(x.get_temporal_address("a"))
-# print(x.get_temporal_address("b"))
 
-# print(x.get_cte_address(3.14))
+# x1 = 12
+# x2 = 13
+# x3 = 14
 
-# print(x.get_operator_address('+')
+# # Probando variables locales
+# print('LOCALES')
+# x.set_var_address('int', 'a', 'PRUEBA')
+# x.set_var_address('int', 'a', 'PRUEBA')
+
+
+
+# # probando variables temporales
+# print('TEMPORALES')
+# x.set_temp_address('int', 'a', 'PRUEBA')
+# print(x.get_temp_address('a'))
+# x.set_temp_address('int', 'b', 'PRUEBA')
+# print(x.get_temp_address('b'))
+
+
+
+
+# #print(x.get_var_address('a'))
+
+
