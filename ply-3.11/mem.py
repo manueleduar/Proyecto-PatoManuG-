@@ -37,21 +37,16 @@ class Memory:
               
         #GLOBALES 
         self.gi = 1000 #lower 1000 upper 2999
-        self.gf = 3000 #lower 3000 upper 5999
+        self.gf = 3000 #lower 3000 upper 4999
         self.gc = 5000 #lower 5000 upper 6999
         self.gb = 7000 #lower 7000 upper 8999
 
         #GLOBALES TEMPORALES
-        self.gLi = 11000 #lower 1000 upper 12999
-        self.gLf = 13000 #lower 3000 upper 15999
-        self.gLc = 15000 #lower 5000 upper 16999
-        self.gLb = 17000 #lower 7000 upper 18999
-                
-        # LOCALES TEMPORALES 
-        self.li = 19000 #lower 19000 upper 19999
-        self.lf = 20000 #lower 20000 upper 29999
-        self.lc = 21000 #lower 29000 upper 21999
-        self.lb = 22000 #lower 41000 upper 22999
+        self.gLi = 11000 #lower 11000 upper 12999
+        self.gLf = 13000 #lower 13000 upper 15999
+        self.gLc = 15000 #lower 15000 upper 16999
+        self.gLb = 17000 #lower 17000 upper 18999
+
         
         # LOCALES 
         self.li = 23000 #lower 23000 upper 25999
@@ -65,7 +60,147 @@ class Memory:
         self.ctec = 47000 #lower 47000 upper 47999
         self.cteString = 48000 #lower 48000 upper 48999
         
+        # FUNCIONES EJECUCION
+    def value_to_memory(self, address, value):
+        if address >= 1000 and address < 9000:
+            if address <3000:
+                self.globales[address-1000] = value
+                print("value", value, "se metio a la casille", address-1000, "de globales enteras")
+            elif address < 5000:
+                self.globales[address-3000] = value
+                print("value", value, "se metio a la casille", address-3000, "de globales flotantes")
+            elif address < 7000:
+                self.globales[address-5000] = value
+                print("value", value, "se metio a la casille", address-5000, "de globales char")
+            else: 
+                self.globales[address-7000] = value
+                print("value", value, "se metio a la casille", address-7000, "de globales bool")
+        elif address >= 23000 and address < 31000:
+            if address < 26000 and address >=23000:
+                self.locales[address -23000] = value
+                print("value", value, "se metio a la casille", address -23000, "de locales enteras")
+            elif address <29000 and address >=26000:
+                self.locales[address -26000] = value
+                print("value", value, "se metio a la casille", address -26000, "de locales flotantes")
+            elif address < 31000 and address >= 29000:
+                self.locales[address -29000] = value
+                print("value", value, "se metio a la casille", address -29000, "de locales char")
+            elif address <33000 and address>=31000:
+                self.locales[address -31000] = value
+                print("value", value, "se metio a la casille", address -31000, "de locales bool")
+            else:
+                print("index out of range")
+            
+        else:
+            if address <19000 and address >=11000:
+                if address <13000 and address>=11000:
+                    self.temporal[address -11000] = value
+                    print("value", value, "se metio a la casille", address -11000, "de temporales enteras")
+                elif address < 15000 and address>=13000:
+                    self.temporal[address-13000] = value
+                    print("value", value, "se metio a la casille", address-13000, "de temporales flotantes")
+                elif address < 17000 and address>=15000:
+                    self.temporal[address-15000] = value
+                    print("value", value, "se metio a la casille", address-15000, "de temporales char")
+                elif address <19000 and address >=17000:
+                    self.temporal[address- 17000] = value
+                    print("value", value, "se metio a la casille", address- 17000, "de temporales bool")
+                else:
+                    print("Out of range")  
+                    
+          
+    def value_from_memory(self, address):
+        if address >= 1000 and address < 9000:
+           
+            if address <3000 and address>=1000:
+                address -= 1000
+                if address in self.globales:
+                    return self.globales[address]
+            elif address < 5000 and address>=3000:
+                address -= 3000
+                if address in self.globales:
+                    return self.globales[address]
+    
+            elif address < 7000 and address>=5000:
+                address -= 5000
+                if address in self.globales:
+                    return self.globales[address]
+            elif address <9000 and address >=7000:
+                address -= 7000
+                if address in self.globales:
+                    return self.globales[address]
+            else:
+                print ("index ouf range") 
+                
+        elif address >= 23000 and address < 33000:
+            if address < 26000 and address>=23000:
+                print("me diste address", address)
+                address -= 23000
+                if address in self.locales:
+                    return self.locales[address]
         
+            elif address <29000 and address >=26000:
+                address -= 26000
+                if address in self.locales:
+                    return self.locales[address]
+
+            elif address < 31000 and address >= 29000:
+                address -= 29000
+                if address in self.locales:
+                    return self.locales[address]
+            elif  address <33000 and address >=31000:
+                address -= 31000
+                if address in self.locales:
+                    return self.locales[address]
+            else:
+                print("index out of range")
+                
+       
+        else:   
+            if address < 13000:
+                print(address)
+                address -= 11000
+                print(address)
+                if address in self.temporal[address]:
+                    return self.temporal[address]
+            elif address < 15000:
+                print(address)
+                address -= 13000
+                print(address)
+                if address in self.temporal[address]:
+                    return self.temporal[address]
+            elif address < 17000:
+                address -= 15000
+                if address in self.temporal[address]:
+                    return self.temporal[address]
+            elif address <19000:
+                address -17000
+                if address in self.temporal[address]:
+                    return self.temporal[address]
+            else:
+                print("index ouf of range")
+               
+                
+                    
+        
+                       
+                # elif address < 15000:
+                    
+                #     address -= 13000
+                #     if address in self.temporal:
+                #         return self.temporal[address]       
+                    
+                # elif address < 17000:
+        #             self.temporal[address-15000] = value
+        #             print("value", value, "se metio a la casille", address-15000, "de temporales")
+        #         else:
+        #             self.temporal[address- 17000] = value
+        #             print("value", value, "se metio a la casille", address- 17000, "de temporales")
+        
+            
+            
+        
+                            
         
         
     # FUNCIONES COMPILACION
@@ -140,21 +275,18 @@ class Memory:
             else:
                 if self.lb < 33000:
                     address = self.lb
-                    print("se ha configurado la var", id, "local, la direccion es:", address)
+                    #print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lb += 1
                     #print("address actualizada a ", self.lb)
 
         return address
-    
-    
-    
     
     def set_temp_direction(self, tipo, id, funId):
         if tipo == 'int':
             if self.gLi <13000:
                 address = self.gLi
                 #print("adress", address)
-                #print("se ha configurado la var", id, "Local, la direccion es:", address)
+                print("se ha configurado la temporal", id, "temporal, la direccion es:", address)
                 self.gLi += 1
                 #print("address actualizada a ", self.li)
             else:
@@ -271,49 +403,43 @@ class Memory:
         self.lb = 22000
       
         
-    # FUNCIONES EJECUCION
-    def value_to_memory(self, address, value):
-        if address >= 1000 and address < 9000:
-            if address <3000:
-                self.globales[address] = value
-            elif address < 5000:
-                self.globales[address] = value
-            elif address < 7000:
-                self.globales[address] = value
-            else: 
-                self.globales[address] = value
-        elif address >= 19000 and address < 23000:
-            if address < 20000:
-                self.locales[address] = value
-            else:
-                print('SIGUE AQUI')
+
     
 
 
 
-# x = Memory()
+x = Memory()
+y = Memory()
 
-# x1 = 12
-# x2 = 13
-# x3 = 14
+x.set_var_address("int", "a", "Funcion1")
+x.set_var_address("float", "b", "Funcion1")
+x.set_var_address("char", "c", "Funcion2")
+x.set_var_address("int", "d", "programa")
+x.set_var_address("float", "e", "Funcion2")
 
-# # Probando variables locales
-# print('LOCALES')
-# x.set_var_address('int', 'a', 'PRUEBA')
-# x.set_var_address('int', 'a', 'PRUEBA')
+a = x.get_var_address("a")
+b = x.get_var_address("b")
+c = x.get_var_address("c")
+d = x.get_var_address("d")
+e = x.get_var_address("e")
+
+y.set_temp_address("int","t1", "Funcion1")
+
+print(a, b, c, d, e)
+y.value_to_memory(a, 5)
+y.value_to_memory(b, 3.14)
+y.value_to_memory(c, "c")
+y.value_to_memory(d, 7)
+y.value_to_memory(e, 7.3)
 
 
 
-# # probando variables temporales
-# print('TEMPORALES')
-# x.set_temp_address('int', 'a', 'PRUEBA')
-# print(x.get_temp_address('a'))
-# x.set_temp_address('int', 'b', 'PRUEBA')
-# print(x.get_temp_address('b'))
 
+print(y.value_from_memory(23000))
+print(y.value_from_memory(26000))
+print(y.value_from_memory(29000))
+print(y.value_from_memory(1000))
+print(y.value_from_memory(26001))
 
-
-
-# #print(x.get_var_address('a'))
 
 
