@@ -8,6 +8,7 @@ class VirtualMachine():
         self.iterators = []
         self.memoria = memoria.Memory()
         self.start_time = 0
+        self.tp = 0
         self.activation_record = []
 
 
@@ -23,11 +24,7 @@ class VirtualMachine():
         quadTxt.close() 
         return myList
 
-        #imprimiendo tuplas
-        # for i in myList:
-        #     print(i)
-
-        # close line
+  
     
     
         
@@ -92,18 +89,7 @@ class VirtualMachine():
         
 
         
-      ####### READ OPERATOR #######  
-    
-    # def input(self, quad):
-    #     user_input = input()
-
-    #     if quad[3].__class__.__name__ in ('tuple'):
-    #         if quad[1] == "Bool":
-    #             if user_input.lower() == "true"
-
-
-        
-
+ 
 
     
 
@@ -128,18 +114,12 @@ class VirtualMachine():
     def return_val(self, quad):
         self.memoria.value_to_memory(quad[3], self.memoria.value_from_memory(quad[1]))
         
-    
+    # def assign(self, quad):
+        
         
     
 
             
-
-    
-# vm = VirtualMachine()
-
-# x = vm.readtxt()
-
-# vm.clean_aux(x)
 
 
         
