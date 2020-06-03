@@ -3,9 +3,11 @@ import ply.yacc as yacc
 from avail import Avail
 from tablaFuncionesVariables import tabFun, tabVar
 from cube import Cube
+from virtualMachine import *
 from stack import Stack
 from mem import Memory
 import sys
+import json
 
 #reserved
 reserved = {
@@ -196,10 +198,10 @@ def p_main(p):
     # asigna nombre del programa
     global fid
     fid = p[1]
-    print('_________', fid)
+    #print('_________', fid)
     global tablaFun
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-    print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+    #print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
 	
 #---------------Tipos de variables aceptadas-------------------#
 
@@ -594,7 +596,7 @@ def p_loop_end(p):
     retroceso = saltos.pop()
     quad = ('GOTO', None, None, retroceso)
     quadruples.append(quad)
-    llenar_quad(end, -1)
+    llenar_quad(end, retroceso)
     # print('quad:', str(quad))
 
 def p_while_quad(p):
@@ -617,7 +619,7 @@ def p_while_op(p):
     'while_op :'
     global operadores, quadruples, saltos
     op = tablaFun.get_op_mem('while')
-    print('OPERATOR WHILE MEMORY', op)
+    # print('OPERATOR WHILE MEMORY', op)
     operadores.push(op)
     saltos.push(len(quadruples))   
 
@@ -660,7 +662,7 @@ def genera_cuadruplo():
     global operadores, stackName, stackTypes, quadruples
     
     if operadores.size() > 0:
-        # Sacar direccion de memoria al operador antes que nada
+        # Sacar direccion de   al operador antes que nada
         op = tablaFun.get_op_mem(operadores.top())
         operando2 = operadores.pop()
         operando_derecho = stackName.pop()
@@ -675,11 +677,11 @@ def genera_cuadruplo():
             ##### ASIGNAR MEMORIA A TEMPORAL (result en este caso) ########
             tablaFun.add_temp_mem(result_type, result, fid)
             var_temp = tablaFun.get_temp_mem(result)
-            print(result, 'result temporal-----------------------------------', var_temp, result_type, fid)
+            # print(result, 'result temporal-----------------------------------', var_temp, result_type, fid)
             
             # quad = (op, operando_izquierdo, operando_derecho, result)
             quad = (op, operando_izquierdo, operando_derecho, var_temp)
-            print('Cuadruplo: ' + str(quad))
+           # print('Cuadruplo: ' + str(quad))
 
             quadruples.append(quad)
             # stackName.push(result)
@@ -848,7 +850,7 @@ def p_operatorReadQuad(p):
             valor = stackName.pop()
             stackTypes.pop()
             quad = (operator_aux, None, None, valor)
-            print('Quadruplo de read:', str(quad))
+            #print('Quadruplo de read:', str(quad))
             quadruples.append(quad)
 
 
@@ -931,7 +933,7 @@ def p_saveCTE(p):
     if (t == int):
         stackTypes.push('int')
         stackName.push(cte_address)
-        print("tipo y nombre que se ven", cte)
+        #print("tipo y nombre que se ven", cte)
 
     elif (t == float):
         stackTypes.push('float')
@@ -959,10 +961,8 @@ parser = yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        #nombreArchivo = 'test1.txt'
-        # nombreArchivo = 'prueba2.txt'
-        nombreArchivo = 'prueba4.txt'
-        # nombreArchivo = 'prueba3.txt'
+        maq = VirtualMachine()
+        nombreArchivo = 'testMachine.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()
@@ -972,17 +972,29 @@ if __name__ == '__main__':
             tok = lexer.token()
             if not tok:
                 break
-            #print(tok)
+            print(tok)
             
         if (parser.parse(informacion, tracking = True) == 'PROGRAMA COMPILADO'):
-            print ("Correct Syntax")
+            print("Correct Syntax")
 
-            #archivo-salida.py
+            ###### archivo-salida.py ######
             f = open ('holamundo.txt','w')
             for i in quadruples:
                 f.write(str(i) + '\n')
                 #f.write('\n')
             f.close()
+            
+          
+            
+            
+
+            ### Llamada a la maquina virtual ###
+            # maq.readtxt()
+
+            # tablaFun.print_fun_vars(fid)
+
+            ## Mandar tabla de funciones a JSON ##
+                
 
         else: 
             print("Syntax error")

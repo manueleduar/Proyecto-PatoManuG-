@@ -1,0 +1,15 @@
+program spaceX;
+
+
+main() {
+    var 
+        int i, j, z;
+
+        i = 20;
+        j = 10;
+        z = 0;
+
+        z = 1 + 10;
+        print(z);
+}
+end 

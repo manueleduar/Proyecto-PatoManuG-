@@ -4,7 +4,6 @@ class Memory:
         self.globales = {}
         self.constants = {}
         self.locales = {}
-        self.variables ={}
         self.temporal = {}
         self.operators = {
             '+' : 1,
@@ -20,16 +19,16 @@ class Memory:
              '&&' : 11,
              '|' : 12,
              '=' : 13,
-             'FOR' : 14,
-             'WHILE' : 15,
-             'READ' : 16,
-             'PRINT' : 17,
+             'for' : 14,
+             'while' : 15,
+             'read' : 16,
+             'print' : 17,
              'GOTO' : 18,
              'GOTOF' : 19,
              'GOTOV' : 20,
              'ERA' : 21,
              'GOSUB' : 22,
-             'RETURN': 23,
+             'return': 23,
              'ENDPROC' : 24,
              'VER': 25,
              'END': 26,
@@ -41,7 +40,7 @@ class Memory:
         self.gc = 5000 #lower 5000 upper 6999
         self.gb = 7000 #lower 7000 upper 8999
 
-        #GLOBALES TEMPORALES
+        # TEMPORALES
         self.gLi = 11000 #lower 11000 upper 12999
         self.gLf = 13000 #lower 13000 upper 14999
         self.gLc = 15000 #lower 15000 upper 16999
@@ -358,13 +357,13 @@ class Memory:
     def set_var_address(self, tipo, vid, funId):
         if self.get_var_address(vid) == -1:    
             ad = self.set_var_direction(tipo, vid, funId)
-            self.variables[vid] = {
+            self.locales[vid] = {
                 'address': ad
             }
 
     def get_var_address(self, temp):
-        if temp in self.variables.keys():
-            return self.variables[temp]['address']
+        if temp in self.locales.keys():
+            return self.locales[temp]['address']
         else:
             return -1
         
@@ -381,6 +380,7 @@ class Memory:
         else:
             return -1
     
+
 
     def set_cte_address(self, val):
         #asigna una direccion de memoria para agregar al diccionario de ctes
@@ -413,50 +413,6 @@ class Memory:
 
     
 
-
-
-# x = Memory()
-# y = Memory()
-
-# x.set_var_address("float", "a", "programa")
-# x.set_var_address("char", "b", "programa")
-# x.set_var_address("bool", "c", "programa")
-# x.set_var_address("int", "d", "programa")
-# x.set_var_address("float", "e", "Funcion2")
-# x.set_var_address("bool", "f", "Funcion2")
-# x.set_var_address("char", "g", "programa")
-
-
-# a = x.get_var_address("a")
-# b = x.get_var_address("b")
-# c = x.get_var_address("c")
-# d = x.get_var_address("d")
-# e = x.get_var_address("e")
-# f = x.get_var_address('f')
-# g = x.get_var_address('g')
-
-# y.set_temp_address("int","t1", "Funcion1")
-
-# print(a, b, c, d, e, f, g)
-# y.value_to_memory(a, 5.5)
-# y.value_to_memory(b, "c")
-# y.value_to_memory(c, "True")
-# y.value_to_memory(d, 7)
-# y.value_to_memory(e, 7.3)
-# y.value_to_memory(f, 'False')
-# y.value_to_memory(g, "d")
-
-
-
-
-
-# print(y.value_from_memory(3000))
-# print(y.value_from_memory(5000))
-# print(y.value_from_memory(7000))
-# print(y.value_from_memory(1000))
-# print(y.value_from_memory(26000))
-# print(y.value_from_memory(31000))
-# print(y.value_from_memory(5001))
 
 
 
