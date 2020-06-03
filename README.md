@@ -114,13 +114,15 @@ char g, h, i;
 <h3>¿Cómo declarar funciones?</h3>
 <h4>Funciones sin retorno</h4>
 
-fun void ejemplo_funcion(int r, int f, int j1, int g23);{
+fun void ejemplo_funcion(int r, int f, int j1, int g23); 
+{
  ### Instrucciones aquí ### 
  }
 
  <h4>Funciones con retorno</h4>
 
- fun int Launch(int r, int f, int j1, int g23); {
+ fun int Launch(int r, int f, int j1, int g23);
+ {
  ### Instrucciones aquí ### 
  }
 
@@ -138,7 +140,8 @@ if (x > j) {
 ## Escriba aqui instrucciones ## 
 }
 
-else {
+else
+{
 ## Escriba instrucciones aquí ## 
 }
 
@@ -146,13 +149,13 @@ else {
 
 <h4>While</h4>
 
-    while(x<y){
+    while(x<y) {
         x = x+y;
     }
 
 <h4>For</h4>
 
-   for (from x = 10 to x <100){
+   for (from x = 10 to x <100) {
        x = x + 2;
        print (x);
    }
