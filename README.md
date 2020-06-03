@@ -48,7 +48,7 @@ fun int LAunch2 (int i, int i2); {
     return (k98 * j99);
 }
 
-## Este es el programa principal ###
+## Este es el programa principal ##
 main() {
     var 
         int i, j, k, l, m, d, x, y, ggg[3];
