@@ -116,33 +116,33 @@ char g, h, i;
 
 fun void ejemplo_funcion(int r, int f, int j1, int g23); 
 {
- ### Instrucciones aquí ### 
+    nstrucciones aquí
  }
 
  <h4>Funciones con retorno</h4>
 
  fun int Launch(int r, int f, int j1, int g23);
  {
- ### Instrucciones aquí ### 
+ Instrucciones aquí 
  }
 
 <h3>¿ Cómo se hace una condicional (un if) ?</h3>
 <h4>if</h4>
 
 if (x > j) {
-## Escriba aqui instrucciones ## 
+    Escriba aqui instrucciones 
 }
 
 
 <h4>if else</h4>
 
 if (x > j) {
-## Escriba aqui instrucciones ## 
+    Escriba aqui instrucciones 
 }
 
 else
 {
-## Escriba instrucciones aquí ## 
+    Escriba instrucciones aquí 
 }
 
 <h3>¿Cómo se hacen ciclos?</h3>
