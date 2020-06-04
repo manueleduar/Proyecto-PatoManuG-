@@ -21,14 +21,11 @@
 
 <p>A continuación se muestra un ejemplo de cómo se debe de declarar un programa en este lenguaje:</p>
 
-#### Programa principal #### 
 program spaceX;  
 
- #### Variables globales #### 
 var   
 int a;
 
-## Función sin retorno
 fun void Launch(int r, int f, int j1, int g23); {
   var
   int a, b, c[3];
@@ -39,7 +36,6 @@ fun void Launch(int r, int f, int j1, int g23); {
     print(b);
 }
 
-### Función con retorno
 fun int LAunch2 (int i, int i2); {
     var
     int k98, j99;
@@ -48,7 +44,6 @@ fun int LAunch2 (int i, int i2); {
     return (k98 * j99);
 }
 
-## Este es el programa principal ##
 main() {
     var 
         int i, j, k, l, m, d, x, y, ggg[3];
@@ -98,7 +93,6 @@ main() {
         }
 }
 end
- ##### Debe escribirse el “end” para terminar el programa ########
 
 <h3>¿Como declarar variables?</h3>
 
