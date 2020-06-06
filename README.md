@@ -21,14 +21,15 @@
 
 <p>A continuación se muestra un ejemplo de cómo se debe de declarar un programa en este lenguaje:</p>
 
+```
 #### Programa principal #### 
 program spaceX;  
 
- #### Variables globales #### 
+#### Variables globales ####
 var   
 int a;
 
-## Función sin retorno
+#### Función sin retorno ####
 fun void Launch(int r, int f, int j1, int g23); {
   var
   int a, b, c[3];
@@ -39,7 +40,7 @@ fun void Launch(int r, int f, int j1, int g23); {
     print(b);
 }
 
-### Función con retorno
+### Función con retorno ### 
 fun int LAunch2 (int i, int i2); {
     var
     int k98, j99;
@@ -48,7 +49,7 @@ fun int LAunch2 (int i, int i2); {
     return (k98 * j99);
 }
 
-## Este es el programa principal ##
+## Este es el programa principal ###
 main() {
     var 
         int i, j, k, l, m, d, x, y, ggg[3];
@@ -99,51 +100,56 @@ main() {
 }
 end
  ##### Debe escribirse el “end” para terminar el programa ########
+```
 
 <h3>¿Como declarar variables?</h3>
 
 ##### Primero debe de escribirse “Var” ########
 ##### Seguido debe de ir el tipo de variable (int, float, char) ########
 ##### Por último, el nombre de dichas variables ########
-
+```
 Var 
-int a, b, c;
-float d, e, f;
-char g, h, i;
-
+    int a, b, c;
+    float d, e, f;
+    char g, h, i;
+```
 <h3>¿Cómo declarar funciones?</h3>
 <h4>Funciones sin retorno</h4>
 
-fun void ejemplo_funcion(int r, int f, int j1, int g23); 
-{
-    nstrucciones aquí
+```
+fun void ejemplo_funcion(int r, int f, int j1, int g23); {
+    Instrucciones aquí
  }
+```
 
  <h4>Funciones con retorno</h4>
 
- fun int Launch(int r, int f, int j1, int g23);
- {
+``` 
+fun int Launch(int r, int f, int j1, int g23); {
  Instrucciones aquí 
- }
+ } 
+```
 
 <h3>¿ Cómo se hace una condicional (un if) ?</h3>
 <h4>if</h4>
 
+```
 if (x > j) {
     Escriba aqui instrucciones 
 }
-
+```
 
 <h4>if else</h4>
 
+```
 if (x > j) {
     Escriba aqui instrucciones 
 }
 
-else
-{
-    Escriba instrucciones aquí 
+else {
+   Escriba instrucciones aquí 
 }
+```
 
 <h3>¿Cómo se hacen ciclos?</h3>
 
@@ -155,23 +161,25 @@ else
 
 <h4>For</h4>
 
+   ```
    for (from x = 10 to x <100) {
        x = x + 2;
        print (x);
    }
+ ```
 
 <h3>¿Cómo se hacen prints?</h3>
 <h4>Variables</h4>
 <p>Suponiendo que tenemos declarada la variable entera ‘a’:</p>
 
-print (a);
+```print (a); ```
 
 <h4>Expresiones</h4>
 <p>Suponiendo que tenemos declarado como enteros a y b (por poner un ejemplo) sería:</p>
 
-print (a + b);
+```print (a + b);```
 
 <h4>String</h4>
 
-print (“Hola mundo”);
+ ```print (“Hola mundo”); ```
 
