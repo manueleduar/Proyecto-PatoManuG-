@@ -48,6 +48,8 @@ class VirtualMachine():
         for q in quads:
             if q[0] == 1:
                 self.plus(q)
+            elif q[0] == 2:
+                self.minus(q)
     
     
         
