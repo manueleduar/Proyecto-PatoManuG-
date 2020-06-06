@@ -136,12 +136,10 @@ class Memory:
                     
           
     def value_from_memory(self, address):
-        if address >= 1000 and address < 9000:
+        if address < 9000:
             if address < 3000 and address >= 1000:
-                
                 if address in self.globales:
                     return self.globales[address]
-            
             elif address < 5000 and address >= 3000:
                 
                 if address in self.globales:
@@ -168,9 +166,7 @@ class Memory:
                 if address in self.locales:
                     return self.locales[address]
         
-            elif address < 29000 and address >= 26000:
-                
-                
+            elif address < 29000 and address >= 26000:           
                 if address in self.locales:
                     return self.locales[address]
 
@@ -187,40 +183,35 @@ class Memory:
         elif address < 49000 and address >=45000:
             if address <46000:
                 return self.constants[address]
+           
             elif address <47000:
                 return self.constants[address]
+           
             elif address <48000:
                 return self.constants[address]
+            
             elif address < 49000:
                 return self.constants[address]
+            
             else:
                 print("index out of range")
+        
         else:   
             if address < 13000:
-                if address in self.temporal[address]:
                     return self.temporal[address]
             
             elif address < 15000:
-                if address in self.temporal[address]:
                     return self.temporal[address]
             
             elif address < 17000:
-                if address in self.temporal[address]:
                     return self.temporal[address]
             
             elif address < 19000:
-                if address in self.temporal[address]:
                     return self.temporal[address]
             else:
                 print("index ouf of range")
                
-                
-                    
-        
- 
-        
 
-        
     # FUNCIONES COMPILACION
          
     def set_var_direction(self, tipo, id, funId):

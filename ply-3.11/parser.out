@@ -102,7 +102,7 @@ Rule 96    escritura2 -> COMILLA CTESTRING COMILLA
 Rule 97    escritura2 -> CTEI saveCTE operatorPrintQuad
 Rule 98    escritura2 -> CTEF saveCTE operatorPrintQuad
 Rule 99    escritura2 -> exp
-Rule 100   lectura -> READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+Rule 100   lectura -> READ operatorRead LPAREN exp operatorReadQuad RPAREN
 Rule 101   exp -> nexp
 Rule 102   exp -> nexp OR addOperadorName nexp genera_quad_or
 Rule 103   genera_quad_or -> <empty>
@@ -221,7 +221,7 @@ escritura            : 52
 escritura1           : 93
 escritura2           : 94 94 95
 especial             : 21 67
-exp                  : 30 32 32 33 34 43 56 57 58 75 76 82 88 92 99 137
+exp                  : 30 32 32 33 34 43 56 57 58 75 76 82 88 92 99 100 137
 for                  : 53
 for1                 : 87
 for_op               : 87
@@ -268,7 +268,7 @@ statement1           : 47
 sumexp               : 111 112 113 113 114 114 115 115 116 116 117 117 118 118
 tipo                 : 24 70
 var                  : 12
-var1                 : 16 18 19 24 62 64 65 100 131
+var1                 : 16 18 19 24 62 64 65 131
 var2                 : 14 24
 vars                 : 3 4 7 42 43
 verifica_parametros  : 74
@@ -2818,7 +2818,7 @@ state 116
     (57) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
     (58) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
-    (100) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> . READ operatorRead LPAREN exp operatorReadQuad RPAREN
     (93) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
     (87) for -> . FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
     (82) if -> . IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if
@@ -4044,7 +4044,7 @@ state 142
     (57) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
     (58) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
-    (100) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> . READ operatorRead LPAREN exp operatorReadQuad RPAREN
     (93) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
     (87) for -> . FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
     (82) if -> . IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if
@@ -4166,7 +4166,7 @@ state 151
 
 state 152
 
-    (100) lectura -> READ . operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> READ . operatorRead LPAREN exp operatorReadQuad RPAREN
     (126) operatorRead -> .
 
     LPAREN          reduce using rule 126 (operatorRead -> .)
@@ -4795,7 +4795,7 @@ state 189
 
 state 190
 
-    (100) lectura -> READ operatorRead . LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> READ operatorRead . LPAREN exp operatorReadQuad RPAREN
 
     LPAREN          shift and go to state 222
 
@@ -5475,7 +5475,32 @@ state 221
 
 state 222
 
-    (100) lectura -> READ operatorRead LPAREN . var1 operatorReadQuad RPAREN
+    (100) lectura -> READ operatorRead LPAREN . exp operatorReadQuad RPAREN
+    (101) exp -> . nexp
+    (102) exp -> . nexp OR addOperadorName nexp genera_quad_or
+    (109) nexp -> . compexp
+    (110) nexp -> . compexp AND addOperadorName compexp genera_quad_and
+    (111) compexp -> . sumexp
+    (112) compexp -> . compexp1 sumexp
+    (119) sumexp -> . mulexp
+    (120) sumexp -> . mulexp PLUS addOperadorName mulexp genera_sum_quad
+    (121) sumexp -> . mulexp MINUS addOperadorName mulexp genera_sum_quad
+    (113) compexp1 -> . sumexp GT addOperadorName sumexp compare_quad
+    (114) compexp1 -> . sumexp LT addOperadorName sumexp compare_quad
+    (115) compexp1 -> . sumexp GTE addOperadorName sumexp compare_quad
+    (116) compexp1 -> . sumexp LTE addOperadorName sumexp compare_quad
+    (117) compexp1 -> . sumexp NE addOperadorName sumexp compare_quad
+    (118) compexp1 -> . sumexp COMPARE addOperadorName sumexp compare_quad
+    (128) mulexp -> . pexp
+    (129) mulexp -> . pexp MUL addOperadorName pexp genera_mul_quad
+    (130) mulexp -> . pexp DIV addOperadorName pexp genera_mul_quad
+    (131) pexp -> . var1 saveId
+    (132) pexp -> . CTEI saveCTE
+    (133) pexp -> . CTEF saveCTE
+    (134) pexp -> . CTEC saveCTE
+    (135) pexp -> . CTESTRING saveCTE
+    (136) pexp -> . llamada
+    (137) pexp -> . LPAREN exp RPAREN
     (15) var1 -> . ID
     (16) var1 -> . ID COMMA var1 addV
     (17) var1 -> . ID arr
@@ -5484,12 +5509,38 @@ state 222
     (20) var1 -> . ID mat
     (21) var1 -> . ID mat especial
     (22) var1 -> . empty
+    (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
     (138) empty -> .
 
-    ID              shift and go to state 39
+    CTEI            shift and go to state 105
+    CTEF            shift and go to state 78
+    CTEC            shift and go to state 79
+    CTESTRING       shift and go to state 80
+    LPAREN          shift and go to state 82
+    ID              shift and go to state 83
+    MUL             reduce using rule 138 (empty -> .)
+    DIV             reduce using rule 138 (empty -> .)
+    PLUS            reduce using rule 138 (empty -> .)
+    MINUS           reduce using rule 138 (empty -> .)
+    GT              reduce using rule 138 (empty -> .)
+    LT              reduce using rule 138 (empty -> .)
+    GTE             reduce using rule 138 (empty -> .)
+    LTE             reduce using rule 138 (empty -> .)
+    NE              reduce using rule 138 (empty -> .)
+    COMPARE         reduce using rule 138 (empty -> .)
+    AND             reduce using rule 138 (empty -> .)
+    OR              reduce using rule 138 (empty -> .)
     RPAREN          reduce using rule 138 (empty -> .)
 
-    var1                           shift and go to state 236
+    exp                            shift and go to state 236
+    nexp                           shift and go to state 71
+    compexp                        shift and go to state 72
+    sumexp                         shift and go to state 73
+    compexp1                       shift and go to state 74
+    mulexp                         shift and go to state 75
+    pexp                           shift and go to state 76
+    var1                           shift and go to state 77
+    llamada                        shift and go to state 81
     empty                          shift and go to state 40
 
 state 223
@@ -5695,7 +5746,7 @@ state 229
     (57) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
     (58) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
-    (100) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> . READ operatorRead LPAREN exp operatorReadQuad RPAREN
     (93) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
     (87) for -> . FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
     (82) if -> . IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if
@@ -5737,7 +5788,7 @@ state 230
     (57) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
     (58) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
-    (100) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> . READ operatorRead LPAREN exp operatorReadQuad RPAREN
     (93) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
     (87) for -> . FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
     (82) if -> . IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if
@@ -5950,7 +6001,7 @@ state 235
 
 state 236
 
-    (100) lectura -> READ operatorRead LPAREN var1 . operatorReadQuad RPAREN
+    (100) lectura -> READ operatorRead LPAREN exp . operatorReadQuad RPAREN
     (127) operatorReadQuad -> .
 
     RPAREN          reduce using rule 127 (operatorReadQuad -> .)
@@ -6342,7 +6393,7 @@ state 253
 
 state 254
 
-    (100) lectura -> READ operatorRead LPAREN var1 operatorReadQuad . RPAREN
+    (100) lectura -> READ operatorRead LPAREN exp operatorReadQuad . RPAREN
 
     RPAREN          shift and go to state 271
 
@@ -6610,9 +6661,9 @@ state 270
 
 state 271
 
-    (100) lectura -> READ operatorRead LPAREN var1 operatorReadQuad RPAREN .
+    (100) lectura -> READ operatorRead LPAREN exp operatorReadQuad RPAREN .
 
-    SEMICOLON       reduce using rule 100 (lectura -> READ operatorRead LPAREN var1 operatorReadQuad RPAREN .)
+    SEMICOLON       reduce using rule 100 (lectura -> READ operatorRead LPAREN exp operatorReadQuad RPAREN .)
 
 
 state 272
@@ -6747,7 +6798,7 @@ state 279
     (57) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
     (58) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
-    (100) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> . READ operatorRead LPAREN exp operatorReadQuad RPAREN
     (93) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
     (87) for -> . FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
     (82) if -> . IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if
@@ -6882,7 +6933,7 @@ state 284
     (57) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
     (58) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
-    (100) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> . READ operatorRead LPAREN exp operatorReadQuad RPAREN
     (93) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
     (87) for -> . FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
     (82) if -> . IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if
@@ -6938,7 +6989,7 @@ state 287
     (57) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
     (58) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
-    (100) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> . READ operatorRead LPAREN exp operatorReadQuad RPAREN
     (93) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
     (87) for -> . FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
     (82) if -> . IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if
@@ -7166,7 +7217,7 @@ state 304
     (57) asignacion -> . ID saveId2 arr EQUALS addOperadorName exp genera_quad_asignacion
     (58) asignacion -> . ID saveId2 mat EQUALS addOperadorName exp genera_quad_asignacion
     (74) llamada -> . ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
-    (100) lectura -> . READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    (100) lectura -> . READ operatorRead LPAREN exp operatorReadQuad RPAREN
     (93) escritura -> . PRINT LPAREN operadorPrint escritura1 operatorPrintQuad RPAREN
     (87) for -> . FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
     (82) if -> . IF LPAREN exp RPAREN if_quad LCURLY statement RCURLY else end_if

@@ -12,19 +12,6 @@ class VirtualMachine():
         self.activation_record = []
 
 
-    # def readtxt(self):
-    #     quadTxt = open('quadruple.txt', 'r')
-    #     count = 0
-    #     myList = []
-    #     for line in quadTxt:
-    #         count += 1
-    #         myList.append(eval(line))
-    #         print("Quad{}: {}".format(count, line.strip())) 
-
-    #     quadTxt.close() 
-    #     return myList
-
-
     def rebuildCte(self):
         with open('constants.txt', 'r') as cteList:
             lines = []
@@ -33,7 +20,6 @@ class VirtualMachine():
             
             for line in lines:
                 self.memoria.value_to_memory(line[1], line[0])
-                # print(self.memoria.value_from_memory(line[1]))
             
               
     def clean_quad(self):
@@ -46,36 +32,73 @@ class VirtualMachine():
            
     def reading (self, quads):
         for q in quads:
-            if q[0] == 1:
+            if q[0] == self.memoria.get_operator_address('+'):
                 self.plus(q)
-            elif q[0] == 2:
+                
+            elif q[0] == self.memoria.get_operator_address('-'):
                 self.minus(q)
-    
-    
+                
+            elif q[0] == self.memoria.get_operator_address('*'):
+                self.mult(q)
+                
+            elif q[0] == self.memoria.get_operator_address('/'):
+                self.division(q)
+            
+            elif q[0] == self.memoria.get_operator_address('<'):
+                self.less_equal(q)
+                    
+            elif q[0] == self.memoria.get_operator_address('>'):
+                self.greater_equal(q)   
+                
+            elif q[0] == self.memoria.get_operator_address('<='):
+                self.lessThan_equal(q)
+                
+            elif q[0] == self.memoria.get_operator_address('>='):
+                self.greaterThan_equal(q)
+                
+            elif q[0] == self.memoria.get_operator_address('=='):
+                self.compare(q)   
+                
+            elif q[0] == self.memoria.get_operator_address('!='):
+                self.Not_Equal(q)
+                
+            elif q[0] == self.memoria.get_operator_address('&&'):
+                self.and_compare(q)
+
+            elif q[0] == self.memoria.get_operator_address('|'):
+                self.or_compare(q)
         
-    # def clean_aux(self, myList):
-    #     for i in myList:
-    #         if i[0] == self.memoria.get_operator_address('='):
-    #             print("es un igual")
+            elif q[0] == self.memoria.get_operator_address('='):
+                self.asignacion(q)
 
+            elif q[0] == self.memoria.get_operator_address('read'):
+                self.inputOP(q) 
 
+            elif q[0] == self.memoria.get_operator_address('print'):
+                self.printing(q) 
     ####### OPERADORES LOGICOS DE COMPARACION #######
 
-    def greater_than(self, quad):
+    def greater_equal(self, quad):
         if self.memoria.value_from_memory(quad[1]) > self.memoria.value_from_memory(quad[2]):
             self.memoria.value_to_memory(quad[3], True)
         else:
             self.memoria.value_to_memory(quad[3], False)
 
     def less_equal(self, quad):
-        if self.memoria.value_from_memory(quad[1]) <= self.memoria.value_from_memory(quad[2]):
+        if self.memoria.value_from_memory(quad[1]) < self.memoria.value_from_memory(quad[2]):
             self.memoria.value_to_memory(quad[3], True)
         else:
             self.memoria.value_to_memory(quad[3], False)
 
-    def greater_equal(self, quad):
+    def greaterThan_equal(self, quad):
         if self.memoria.value_from_memory(quad[1]) >= self.memoria.value_from_memory(quad[2]):
             self.memoria.value_to_memory(quad[3], True)   
+        else:
+            self.memoria.value_to_memory(quad[3], False)
+
+    def lessThan_equal(self, quad):
+        if self.memoria.value_from_memory(quad[1]) <= self.memoria.value_from_memory(quad[2]):
+            self.memoria.value_to_memory(quad[3], True)
         else:
             self.memoria.value_to_memory(quad[3], False)
 
@@ -104,24 +127,22 @@ class VirtualMachine():
             self.memoria.value_to_memory(quad[3], False)
 
 
-    ####### PRINT OPERATOR #######
-    
+    ####### PRINT OPERATOR and INPUT OPERATOR #######  
     def printing(self, quad):
         if isinstance(quad[1], str):
             print(quad[1])        
         else:
-            print(self.memoria.value_from_memory(quad[1]))
-        
-
-        
- 
-
+            print(self.memoria.value_from_memory(quad[3]))
     
-
+    def inputOP(self, quad):
+        inputVM = input()
+        self.memoria.value_to_memory(quad[3], inputVM)
+            
       ####### OPERADORES ARITMETICOS ####### 
         
     def mult (self, quad):
         temp = self.memoria.value_from_memory(quad[1]) * self.memoria.value_from_memory(quad[2])
+        #print("multiplicando...", temp)
         self.memoria.value_to_memory(quad[3], temp)
         
     def division (self, quad):
@@ -130,23 +151,24 @@ class VirtualMachine():
         
     def plus (self, quad):
         temp = self.memoria.value_from_memory(quad[1]) + self.memoria.value_from_memory(quad[2])
-        print("sumando...", temp)
-        self.memoria.value_to_memory(quad[3], temp)
-       
-    
-    def minus (self, quad):
-        temp = self.memoria.value_from_memory(quad[1]) - self.memoria.value_from_memory(quad[2])
+        # print("sumando...", temp)
         self.memoria.value_to_memory(quad[3], temp)
         
-    def return_val(self, quad):
-        self.memoria.value_to_memory(quad[3], self.memoria.value_from_memory(quad[1]))
+    def minus (self, quad):
+        temp = self.memoria.value_from_memory(quad[1]) - self.memoria.value_from_memory(quad[2])
+        # print("Restando...", temp)
+        self.memoria.value_to_memory(quad[3], temp)
+ 
+    def asignacion(self, quad):
+        self.memoria.value_to_memory(quad[3], self.memoria.value_from_memory(quad[1])) 
+       
+       
     
-    
-vm = VirtualMachine()
-vm.rebuildCte()
-q = vm.clean_quad()
+# vm = VirtualMachine()
+# vm.rebuildCte()
+# q = vm.clean_quad()
 
-vm.reading(q)
+# vm.reading(q)
         
         
     

@@ -648,7 +648,7 @@ def p_escritura2(p):
 
 def p_lectura(p):
     '''
-    lectura : READ operatorRead LPAREN var1 operatorReadQuad RPAREN
+    lectura : READ operatorRead LPAREN exp operatorReadQuad RPAREN
     ''' 
 
 #EXPRESIONES
@@ -817,9 +817,8 @@ def p_genera_quad_mul(p):
 def p_operadorPrint(p):
     'operadorPrint : '
     global operadores
-    op = tablaFun.get_op_mem('print')
-   
-    operadores.push(op)
+    #print('PRINT OPERATOR',)   
+    operadores.push('print')
 
 
 def p_operatorPrintQuad(p):
@@ -827,31 +826,34 @@ def p_operatorPrintQuad(p):
     global operadores
     if operadores.size() > 0:
         if operadores.top() == 'print':
+            op = tablaFun.get_op_mem('print')
             operator_aux = operadores.pop()
             valor = stackName.pop()
             stackTypes.pop()
-            quad = (operator_aux, None, None, valor)
-            print('Cuadruplo:', str(quad))
+            quad = (op, None, None, valor)
+            # print('Cuadruplo:', str(quad))
             quadruples.append(quad)
 
 # Leer operador read y generar quadruplo
 def p_operatorRead(p):
     'operatorRead : '
     global operadores
-    op = tablaFun.get_op_mem('read')
-    print('READ OPERATOR', op)
-    operadores.push(op)
+    operadores.push('read')
+    print('OPERADOR READ')
 
 def p_operatorReadQuad(p):
     'operatorReadQuad : '
     global operadores
     if operadores.size() > 0:
         if operadores.top() == 'read':
+            op = tablaFun.get_op_mem('read')
             operator_aux = operadores.pop()
             valor = stackName.pop()
             stackTypes.pop()
-            quad = (operator_aux, None, None, valor)
-            #print('Quadruplo de read:', str(quad))
+            #valor = tablaFun.get_var_mem(valor)
+            print('VALOR READ', valor)
+            quad = (op, None, None, valor)
+            print('Quadruplo de read:', str(quad))
             quadruples.append(quad)
 
 
@@ -972,7 +974,6 @@ parser = yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        maq = VirtualMachine()
         nombreArchivo = 'testMachine.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
@@ -983,7 +984,7 @@ if __name__ == '__main__':
             tok = lexer.token()
             if not tok:
                 break
-            print(tok)
+            # print(tok)
             
         if (parser.parse(informacion, tracking = True) == 'PROGRAMA COMPILADO'):
             print("Correct Syntax")
@@ -998,8 +999,16 @@ if __name__ == '__main__':
             c = open("constants.txt", 'w')
             for i in array:
                 c.write(str(i) + '\n')
-            c.close()          
+            c.close()  
             
+            # Maquina virtual        
+            vm = VirtualMachine()
+            vm = VirtualMachine()
+            vm.rebuildCte()
+            q = vm.clean_quad()
+
+            vm.reading(q)
+        
             
 
             ### Llamada a la maquina virtual ###

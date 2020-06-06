@@ -3,13 +3,27 @@ program spaceX;
 
 main() {
     var 
-        int i, j, z;
+        int i, j, z, algo;
 
         i = 20;
         j = 10;
         z = 0;
+        algo = 0;
 
-        z = 2 - 4;
+        z = j * 1000;
+
+        read(algo);
+
+        print(algo);
+
+        if (i > z) {
+        print("HOLA MUNDO...... Ya quiero terminar esta materia");
         print(z);
+        print("TRUE");
+        }
+
+        else {
+            print("No entra");
+        }
 }
 end 
