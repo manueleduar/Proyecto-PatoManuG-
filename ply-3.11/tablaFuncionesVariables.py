@@ -140,11 +140,13 @@ class tabFun():
         return self.m.get_operator_address(op)
           
     def reset_temp_add(self):
-        self.m.reset_temp_vals()   
+        self.m.reset_temp_vals()
+        print("variables resetted") 
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:
             self.funciones[fid]['vars'].print_vars()
+            
 
 
 

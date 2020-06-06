@@ -140,13 +140,13 @@ stackName = Stack()
 stackTypes = Stack()
 operadores = Stack()
 quadruples = []
+array = []
 
 avail = Avail()
 
 #instanciar Objetos de clases utilizadas
 cubo = Cube()
 saltos = Stack()
-
 
 def p_programa(p):
         '''
@@ -343,6 +343,7 @@ def p_end_func(p):
     global quadruples, tablaFun
     quad = ('ENDFUNC', None, None, -1)
     quadruples.append(quad)
+    tablaFun.reset_temp_add()
     print("END FUNC")
 
     
@@ -890,6 +891,7 @@ def p_saveId(p):
             
             tablaFun.add_var_mem(tipos, varId, fid)
             varMem = tablaFun.get_var_mem(varId)
+            # print("variable", varId, varMem)
        
             if tipos:
                 stackTypes.push(tipos)
@@ -910,8 +912,10 @@ def p_saveId2(p):
 
     if tablaFun.searchVar_tabFun(fid, varId):
         tipos = tablaFun.getVar_Tipo(varId, fid)
-        tablaFun.add_temp_mem(tipos, varId, fid)
-        memVar = tablaFun.get_temp_mem(varId)
+        tablaFun.add_var_mem(tipos, varId, fid)
+        memVar = tablaFun.get_var_mem(varId)
+        
+        print("var", varId, memVar)
         stackTypes.push(tipos)
         stackName.push(memVar)
 
@@ -922,13 +926,20 @@ def p_saveId2(p):
 
 def p_saveCTE(p):
     '''saveCTE : '''
-    global cte, t
+    global cte, t, cteA, array
     cte = p[-1]
     t = type(cte)
     
     tablaFun.add_cte_mem(cte)
     
     cte_address = tablaFun.get_cte_mem(cte)
+    cteA = (cte, cte_address)
+    
+    if not cteA in array:
+        array.append(cteA)
+    else:
+        "cte existe ya"
+   
     
     if (t == int):
         stackTypes.push('int')
@@ -978,13 +989,16 @@ if __name__ == '__main__':
             print("Correct Syntax")
 
             ###### archivo-salida.py ######
-            f = open ('holamundo.txt','w')
+            f = open ('quadruples.txt','w')
             for i in quadruples:
                 f.write(str(i) + '\n')
                 #f.write('\n')
             f.close()
-            
-          
+            ##### archivo de salida de constantes #######
+            c = open("constants.txt", 'w')
+            for i in array:
+                c.write(str(i) + '\n')
+            c.close()          
             
             
 

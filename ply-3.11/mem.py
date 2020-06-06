@@ -100,7 +100,17 @@ class Memory:
             else:
                 print("index out of range")
             
-       
+        elif address >= 45000 and address <49000:
+            if address < 46000:
+                self.constants[address] = value
+            elif address <47000:
+                self.constants[address] = value
+            elif address <48000:
+                self.constants[address] = value  
+            elif address <49000:
+                self.constants[address] = value    
+            else:
+                print("index out of range")  
         else:
             if address < 19000 and address >= 11000: 
                 if address < 13000 and address >= 11000:
@@ -174,29 +184,31 @@ class Memory:
             else:
                 print("index out of range")
                 
-       
+        elif address < 49000 and address >=45000:
+            if address <46000:
+                return self.constants[address]
+            elif address <47000:
+                return self.constants[address]
+            elif address <48000:
+                return self.constants[address]
+            elif address < 49000:
+                return self.constants[address]
+            else:
+                print("index out of range")
         else:   
             if address < 13000:
-                print(address)
-                address -= 11000
-                print(address)
                 if address in self.temporal[address]:
                     return self.temporal[address]
             
             elif address < 15000:
-                print(address)
-                address -= 13000
-                print(address)
                 if address in self.temporal[address]:
                     return self.temporal[address]
             
             elif address < 17000:
-                address -= 15000
                 if address in self.temporal[address]:
                     return self.temporal[address]
             
             elif address < 19000:
-                address -= 17000
                 if address in self.temporal[address]:
                     return self.temporal[address]
             else:
@@ -217,7 +229,7 @@ class Memory:
             if tipo == 'int':
                 if self.gi <3000:
                     address = self.gi
-                    print("se ha configurado la var", id, "global, la direccion es:", address)
+                    # print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gi += 1
                     #print("address actualizada a ", self.gi)
                 else:
@@ -226,7 +238,7 @@ class Memory:
             elif tipo == 'float':
                 if self.gf < 5000:
                     address = self.gf
-                    print("se ha configurado la var", id, "global, la direccion es:", address)
+                    # print("se ha configurado la var", id, "global, la direccion es:", address)
                     self.gf += 1
                     #print("address actualizada a ", self.gf)
 
@@ -251,8 +263,7 @@ class Memory:
 
                 if self.li <26000:
                     address = self.li
-                    #print("adress", address)
-                    print("se ha configurado la var", id, "Local, la direccion es:", address)
+                    # print("se ha configurado la var", id, "Local, la direccion es:", address)
                     self.li += 1
                     #print("address actualizada a ", self.li)
                 else:
@@ -261,7 +272,7 @@ class Memory:
             elif tipo == 'float':
                 if self.lf < 29000:
                     address = self.lf
-                    print("se ha configurado la var", id, "local, la direccion es:", address)
+                    # print("se ha configurado la var", id, "local, la direccion es:", address)
                     self.lf += 1
                     #print("address actualizada a ", self.lf)
 
@@ -271,7 +282,7 @@ class Memory:
             elif tipo == 'char':
                 if self.lc < 31000:
                     address = self.lc
-                    print("se ha configurado la var", id, "local, la direccion es:", address)                   
+                    # print("se ha configurado la var", id, "local, la direccion es:", address)                   
                     self.lc += 1
                     #print("address actualizada a ", self.lc)
                     
@@ -386,7 +397,6 @@ class Memory:
         #asigna una direccion de memoria para agregar al diccionario de ctes
         if self.get_cte_address(val) == -1:
             ad = self.set_cte(val)
-            print("\tLa CONSTANTE", val, "ahora se ha guardado en ", ad)
             self.constants[val] = {
             'address': ad
             }
@@ -410,9 +420,25 @@ class Memory:
         self.lb = 22000
       
         
+# x = Memory()
+# y = Memory()
 
+# x.set_cte_address(3)
+# x.set_cte_address(3.14)
+# x.set_cte_address("c")
+
+# a = x.get_cte_address(3) 
+# b = x.get_cte_address(3.14)
+# c = x.get_cte_address("c")
     
 
 
+# print(a,b, c)
 
 
+# y.value_to_memory(45000, 3)
+# y.value_to_memory(46000, 3.14)
+# y.value_to_memory(48000, "c")
+
+# for i in y.constants.items():
+#     print(i)
