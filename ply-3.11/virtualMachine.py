@@ -114,7 +114,6 @@ class VirtualMachine():
             self.memoria.value_to_memory(quad[3], False)
 
     def less_equal(self, quad):  
-        print(quad[1], quad[2])
         if self.memoria.value_from_memory(quad[1]) < self.memoria.value_from_memory(quad[2]):
             
             
@@ -177,15 +176,15 @@ class VirtualMachine():
         inputVM = input()   
         if inputVM.isdigit():
             self.memoria.value_to_memory(quad[3], int(inputVM))
-            print('VM INPUT IS INT')
+            # print('VM INPUT IS INT')
         
         elif inputVM.replace('.','',1).isdigit():
             self.memoria.value_to_memory(quad[3], float(inputVM))
-            print('VM INPUT IS FLOAT')
+            # print('VM INPUT IS FLOAT')
         
         else:
             self.memoria.value_to_memory(quad[3], inputVM)
-            print('VM INPUT IS STR')
+            # print('VM INPUT IS STR')
  
  
             
@@ -215,7 +214,7 @@ class VirtualMachine():
 
     ####### SALTOS #######  
     def gotof(self, quad):
-        print ('quad3', quad[3])
+        # print ('quad3', quad[3])
         if not self.memoria.value_from_memory(quad[1]):
             self.ip = int(quad[3])
         else:

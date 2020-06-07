@@ -3,33 +3,38 @@ program spaceX;
 
 main() {
     var 
-        int i, j, z, algo, contador,x;
+        int t1, t2, nextTerm, n, contador, x;
 
-        i = 20;
-        j = 10;
-        algo = 0;
+        t1 = 1;
+        t2 = 2;
+        nextTerm = 0;
+        n = 0;
 
-        read(algo);
-        
-        if (algo < 10) {
-            print("SI ENTRO");
+        print("dame un valor para calcular fibo");
+        read (n);
+            for (from x = 1 to x < n) {
+              x = x + 1;
+                if ( x == 1 ) {
+                    print(" primero " ) ;
+                    print (t1);
+                }
+                if (x == 2){
+
+                    print(" segundo " ) ;
+                    print( t2 );
+                }
+
+                else{
+
+                nextTerm = t1 + t2;
+                t1 = t2;
+                t2 = nextTerm;
+                print(nextTerm);
+             }
+                
+              
+
+                
         }
-
-        else {
-            print("NO ENTRO");
-        }
-
-        while (algo <= 12) {
-            print("WHILE SI ENTRA");
-            print ("Valor de input es"); 
-            print(algo);
-            algo = algo + 1;
-        }
-        for (from x = 10 to x < 16) {
-            print("SI ENTRA AL FOR");
-            print (x);
-            x = x + 2;
-        }
-
 }
 end 

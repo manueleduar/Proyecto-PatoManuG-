@@ -64,38 +64,29 @@ class Memory:
         if address >= 1000 and address < 9000: 
             if address < 3000:
                 self.globales[address] = value
-                print("value", value, "se metio a la casille", address, "de globales enteras")
            
             elif address < 5000:
                 self.globales[address] = value
-                print("value", value, "se metio a la casille", address, "de globales flotantes")
             
             elif address < 7000:
                 self.globales[address] = value
-                print("value", value, "se metio a la casille", address, "de globales char")
             
             else: 
                 self.globales[address] = value
-                print("value", value, "se metio a la casille", address, "de globales bool")
         
         
         elif address >= 23000 and address <= 31000:
             if address < 26000 and address >= 23000:
                 self.locales[address] = value
-                print("value", value, "se metio a la casille", address, "de locales enteras")
            
             elif address < 29000 and address >=26000:
                 self.locales[address] = value
-                print("value", value, "se metio a la casille", address, "de locales flotantes")
             
             elif address < 31000 and address >= 29000:
                 self.locales[address] = value
-                print("value", value, "se metio a la casille", address, "de locales char")
             
             elif address < 33000 and address >= 31000:
-                print("addrress booleana metida", address)
                 self.locales[address] = value
-                print("value", value, "se metio a la casille", address, "de locales bool")
            
             else:
                 print("index out of range")
@@ -115,21 +106,17 @@ class Memory:
             if address < 19000 and address >= 11000: 
                 if address < 13000 and address >= 11000:
                     self.temporal[address] = value
-                    print("value", value, "se metio a la casille", address, "de temporales enteras")
                 
                 elif address < 15000 and address >= 13000:
                     self.temporal[address] = value
-                    print("value", value, "se metio a la casille", address, "de temporales flotantes")
                 
                 
                 elif address < 17000 and address >= 15000:
                     self.temporal[address] = value
-                    print("value", value, "se metio a la casille", address, "de temporales char")
                
                 
                 elif address < 19000 and address >= 17000:
                     self.temporal[address] = value
-                    print("value", value, "se metio a la casille", address, "de temporales bool")
                 
                 else:
                     print("Out of range")  
