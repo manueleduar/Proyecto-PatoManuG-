@@ -162,16 +162,27 @@ class VirtualMachine():
             self.memoria.value_to_memory(quad[3], False)
 
 
-    ####### PRINT OPERATOR and INPUT OPERATOR #######  
+    ####### PRINT OPERATOR  #######  
     def printing(self, quad):
         if isinstance(quad[1], str):
             print(quad[1])        
         else:
             print(self.memoria.value_from_memory(quad[3]))
-    
+            
+    ####### INPUT OPERATOR #######
     def inputOP(self, quad):
-        inputVM = input()
-        self.memoria.value_to_memory(quad[3], inputVM)
+        inputVM = input()   
+        if inputVM.isdigit():
+            self.memoria.value_to_memory(quad[3], int(inputVM))
+            print('VM INPUT IS INT')
+        
+        elif inputVM.replace('.','',1).isdigit():
+            self.memoria.value_to_memory(quad[3], float(inputVM))
+            print('VM INPUT IS FLOAT')
+        
+        else:
+            self.memoria.value_to_memory(quad[3], inputVM)
+            print('VM INPUT IS STR')
  
  
             

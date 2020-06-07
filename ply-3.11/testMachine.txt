@@ -11,7 +11,7 @@ main() {
 
         read(algo);
         
-        if (20 < 100) {
+        if (algo < 10) {
             print("SI ENTRO");
         }
 
@@ -19,9 +19,11 @@ main() {
             print("NO ENTRO");
         }
 
-        while (j < 10) {
+        while (algo <= 12) {
             print("WHILE SI ENTRA");
-            i = i - 1;
+            print ("Valor de input es"); 
+            print(algo);
+            algo = algo + 1;
         }
 
 
