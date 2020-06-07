@@ -416,10 +416,11 @@ def p_genera_quad_asignacion(p):
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
         result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
-        print("result CUBO--------", operando_izquierdo_tipo, operando_derecho_tipo, result)
+        # print("result CUBO--------", operando_izquierdo_tipo, operando_derecho_tipo, result)
 
         if result != 'ERROR':
             quad = (op, operando_derecho, None, operando_izquierdo)
+            quadruples.append(quad)
             print('Cuadruplo:', str(quad))
             
     else: 

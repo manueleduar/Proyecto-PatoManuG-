@@ -19,7 +19,7 @@ main() {
             print("NO ENTRO");
         }
 
-        while (j < i) {
+        while (j < 10) {
             print("WHILE SI ENTRA");
             i = i - 1;
         }
