@@ -12,7 +12,7 @@ main() {
 
         print("dame un valor para calcular los n primeros numeros de fibonacci");
         read (n);
-            for (from x = 0 to x < n) {
+            for (from x = 0 to x <= n) {
             
                 if ( x == 0 ) {
                     print (t1);
