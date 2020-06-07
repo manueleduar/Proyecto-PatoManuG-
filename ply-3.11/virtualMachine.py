@@ -100,6 +100,9 @@ class VirtualMachine():
             elif quads[self.ip][0] == 'GOTOF':
                 self.gotof(quads[self.ip])
                 
+            elif quads[self.ip][0] == 'GOTOV':
+                self.gotov(quads[self.ip])
+                
                 
                 
     ####### OPERADORES LOGICOS DE COMPARACION #######
@@ -221,6 +224,12 @@ class VirtualMachine():
         
     def goto(self, quad):
         self.ip = int(quad[3])
+        
+    def gotov(self,quad):
+        if not self.memoria.value_from_memory(quad[1]):
+            self.ip = int(quad[3])
+        else:
+            self.ip +=1
         
         
        

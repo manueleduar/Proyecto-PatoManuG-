@@ -3,7 +3,7 @@ program spaceX;
 
 main() {
     var 
-        int i, j, z, algo, contador;
+        int i, j, z, algo, contador,x;
 
         i = 20;
         j = 10;
@@ -25,7 +25,11 @@ main() {
             print(algo);
             algo = algo + 1;
         }
-
+        for (from x = 10 to x < 16) {
+            print("SI ENTRA AL FOR");
+            print (x);
+            x = x + 2;
+        }
 
 }
 end 

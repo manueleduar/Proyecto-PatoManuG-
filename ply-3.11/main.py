@@ -579,7 +579,7 @@ def p_for_quad(p):
 
 def p_for(p):
     '''
-    for : FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY loop_end
+    for : FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY for_end
     '''
 def p_for1(p):
     '''
@@ -592,6 +592,17 @@ def p_loop_end(p):
     global stackName, stackTypes, quadruples, saltos
     end = saltos.pop()
     retroceso = saltos.pop()
+    quad = ('GOTO', None, None, retroceso)
+    quadruples.append(quad)
+    print('quad:', str(quad))
+    llenar_quad(end, retroceso)
+
+def p_for_end(p):
+    'for_end : '
+    global stackName, stackTypes, quadruples, saltos
+    end = saltos.pop()
+    retroceso = saltos.pop()
+    retroceso = int(retroceso) +1
     quad = ('GOTO', None, None, retroceso)
     quadruples.append(quad)
     print('quad:', str(quad))

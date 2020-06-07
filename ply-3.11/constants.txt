@@ -7,3 +7,6 @@
 ('"WHILE SI ENTRA"', 48002)
 ('"Valor de input es"', 48003)
 (1, 45004)
+(16, 45005)
+('"SI ENTRA AL FOR"', 48004)
+(2, 45006)
