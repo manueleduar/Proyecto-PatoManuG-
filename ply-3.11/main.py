@@ -416,16 +416,12 @@ def p_genera_quad_asignacion(p):
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
         result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
-        # print("result CUBO--------",operando_izquierdo_tipo,operando_derecho_tipo   ,result)
+        print("result CUBO--------", operando_izquierdo_tipo, operando_derecho_tipo, result)
 
         if result != 'ERROR':
             quad = (op, operando_derecho, None, operando_izquierdo)
-            #print('Cuadruplo:', str(quad))
-            quadruples.append(quad)
+            print('Cuadruplo:', str(quad))
             
-        else: 
-            print('Type Missmatch....')
-            sys.exit()
     else: 
         print('Vacio....')
         sys.exit()  
@@ -597,8 +593,8 @@ def p_loop_end(p):
     retroceso = saltos.pop()
     quad = ('GOTO', None, None, retroceso)
     quadruples.append(quad)
+    print('quad:', str(quad))
     llenar_quad(end, retroceso)
-    # print('quad:', str(quad))
 
 def p_while_quad(p):
     'while_quad : '
@@ -608,7 +604,7 @@ def p_while_quad(p):
     if result_type == 'bool':
         valor = stackName.pop()
         quad = ('GOTOF', valor, None, -1)
-        #print('quad:', str(quad))
+        print('quad:', str(quad))
         quadruples.append(quad)
         saltos.push(len(quadruples)-1)
 
@@ -1008,17 +1004,6 @@ if __name__ == '__main__':
             q = vm.clean_quad()
 
             vm.reading(q)
-        
-            
-
-            ### Llamada a la maquina virtual ###
-            # maq.readtxt()
-
-            # tablaFun.print_fun_vars(fid)
-
-            ## Mandar tabla de funciones a JSON ##
-                
-
         else: 
             print("Syntax error")
             

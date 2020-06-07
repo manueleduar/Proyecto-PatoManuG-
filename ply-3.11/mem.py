@@ -138,45 +138,35 @@ class Memory:
     def value_from_memory(self, address):
         if address < 9000:
             if address < 3000 and address >= 1000:
-                if address in self.globales:
-                    return self.globales[address]
+                 return self.globales[address]
+           
             elif address < 5000 and address >= 3000:
-                
-                if address in self.globales:
-                    return self.globales[address]
+                return self.globales[address]
     
-            elif address < 7000 and address >= 5000:
-                
-                if address in self.globales:
-                    return self.globales[address]
+            elif address < 7000 and address >= 5000:               
+                return self.globales[address]
             
-            elif address < 9000 and address >= 7000:
-                
-                if address in self.globales:
-                    return self.globales[address]
+            elif address < 9000 and address >= 7000:     
+                return self.globales[address]
             else:
                 print ("index ouf range") 
 
                 
         elif address >= 23000 and address < 33000:
             
-            if address < 26000 and address >= 23000:
-                print("me diste address", address)
-               
+            if address < 26000 and address >= 23000:               
                 if address in self.locales:
                     return self.locales[address]
         
-            elif address < 29000 and address >= 26000:           
-                if address in self.locales:
-                    return self.locales[address]
+            elif address < 29000 and address >= 26000: 
+                return self.locales[address]
 
             elif address < 31000 and address >= 29000:
-                if address in self.locales:
-                    return self.locales[address]
+                return self.locales[address]
 
             elif address < 33000 and address >= 31000:
-                if address in self.locales:
-                    return self.locales[address]
+                return self.locales[address]
+            
             else:
                 print("index out of range")
                 
@@ -411,25 +401,3 @@ class Memory:
         self.lb = 22000
       
         
-# x = Memory()
-# y = Memory()
-
-# x.set_cte_address(3)
-# x.set_cte_address(3.14)
-# x.set_cte_address("c")
-
-# a = x.get_cte_address(3) 
-# b = x.get_cte_address(3.14)
-# c = x.get_cte_address("c")
-    
-
-
-# print(a,b, c)
-
-
-# y.value_to_memory(45000, 3)
-# y.value_to_memory(46000, 3.14)
-# y.value_to_memory(48000, "c")
-
-# for i in y.constants.items():
-#     print(i)

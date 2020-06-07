@@ -8,7 +8,7 @@ class VirtualMachine():
         self.iterators = []
         self.memoria = memoria.Memory()
         self.start_time = 0
-        self.tp = 0
+        self.ip = 0
         self.activation_record = []
 
 
@@ -31,64 +31,94 @@ class VirtualMachine():
             
            
     def reading (self, quads):
-        for q in quads:
-            if q[0] == self.memoria.get_operator_address('+'):
-                self.plus(q)
+        #global Instruction Pointer 
+           
+        while self.ip != len(quads):
+            if quads[self.ip][0] == self.memoria.get_operator_address('+'):
+                self.plus(quads[self.ip])
+                self.ip += 1
                 
-            elif q[0] == self.memoria.get_operator_address('-'):
-                self.minus(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('-'):
+                self.minus(quads[self.ip])
+                self.ip += 1
                 
-            elif q[0] == self.memoria.get_operator_address('*'):
-                self.mult(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('*'):
+                self.mult(quads[self.ip])
+                self.ip += 1
                 
-            elif q[0] == self.memoria.get_operator_address('/'):
-                self.division(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('/'):
+                self.division(quads[self.ip])
+                self.ip += 1
             
-            elif q[0] == self.memoria.get_operator_address('<'):
-                self.less_equal(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('<'):
+                self.less_equal(quads[self.ip])
+                self.ip += 1
                     
-            elif q[0] == self.memoria.get_operator_address('>'):
-                self.greater_equal(q)   
+            elif quads[self.ip][0] == self.memoria.get_operator_address('>'):
+                self.greater_equal(quads[self.ip])   
+                self.ip +=1
                 
-            elif q[0] == self.memoria.get_operator_address('<='):
-                self.lessThan_equal(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('<='):
+                self.lessThan_equal(quads[self.ip])
+                self.ip += 1
                 
-            elif q[0] == self.memoria.get_operator_address('>='):
-                self.greaterThan_equal(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('>='):
+                self.greaterThan_equal(quads[self.ip])
+                self.ip += 1
                 
-            elif q[0] == self.memoria.get_operator_address('=='):
-                self.compare(q)   
+            elif quads[self.ip][0] == self.memoria.get_operator_address('=='):
+                self.compare(quads[self.ip])
+                self.ip += 1   
                 
-            elif q[0] == self.memoria.get_operator_address('!='):
-                self.Not_Equal(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('!='):
+                self.Not_Equal(quads[self.ip])
+                self.ip += 1
                 
-            elif q[0] == self.memoria.get_operator_address('&&'):
-                self.and_compare(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('&&'):
+                self.and_compare(quads[self.ip])
+                self.ip += 1
 
-            elif q[0] == self.memoria.get_operator_address('|'):
-                self.or_compare(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('|'):
+                self.or_compare(quads[self.ip])
+                self.ip += 1
         
-            elif q[0] == self.memoria.get_operator_address('='):
-                self.asignacion(q)
+            elif quads[self.ip][0] == self.memoria.get_operator_address('='):
+                self.asignacion(quads[self.ip])
+                self.ip += 1
+                
+            elif quads[self.ip][0] == self.memoria.get_operator_address('read'):
+                self.inputOP(quads[self.ip]) 
+                self.ip += 1
 
-            elif q[0] == self.memoria.get_operator_address('read'):
-                self.inputOP(q) 
-
-            elif q[0] == self.memoria.get_operator_address('print'):
-                self.printing(q) 
+            elif quads[self.ip][0] == self.memoria.get_operator_address('print'):
+                self.printing(quads[self.ip]) 
+                self.ip += 1
+                
+            elif quads[self.ip][0] == 'GOTO':
+                self.goto(quads[self.ip])
+                            
+            elif quads[self.ip][0] == 'GOTOF':
+                self.gotof(quads[self.ip])
+                
+                
+                
     ####### OPERADORES LOGICOS DE COMPARACION #######
-
     def greater_equal(self, quad):
-        if self.memoria.value_from_memory(quad[1]) > self.memoria.value_from_memory(quad[2]):
+        if self.memoria.value_from_memory(quad[1]) > self.memoria.value_from_memory(quad[2]):                      
+            self.memoria.value_to_memory(quad[3], True)
+        
+        else:
+            self.memoria.value_to_memory(quad[3], False)
+
+    def less_equal(self, quad):  
+        print(quad[1], quad[2])
+        if self.memoria.value_from_memory(quad[1]) < self.memoria.value_from_memory(quad[2]):
+            
+            
             self.memoria.value_to_memory(quad[3], True)
         else:
             self.memoria.value_to_memory(quad[3], False)
 
-    def less_equal(self, quad):
-        if self.memoria.value_from_memory(quad[1]) < self.memoria.value_from_memory(quad[2]):
-            self.memoria.value_to_memory(quad[3], True)
-        else:
-            self.memoria.value_to_memory(quad[3], False)
 
     def greaterThan_equal(self, quad):
         if self.memoria.value_from_memory(quad[1]) >= self.memoria.value_from_memory(quad[2]):
@@ -96,11 +126,13 @@ class VirtualMachine():
         else:
             self.memoria.value_to_memory(quad[3], False)
 
+
     def lessThan_equal(self, quad):
         if self.memoria.value_from_memory(quad[1]) <= self.memoria.value_from_memory(quad[2]):
             self.memoria.value_to_memory(quad[3], True)
         else:
             self.memoria.value_to_memory(quad[3], False)
+
 
     def Not_Equal(self, quad):
         if self.memoria.value_from_memory(quad[1]) != self.memoria.value_from_memory(quad[2]):
@@ -108,17 +140,20 @@ class VirtualMachine():
         else:
             self.memoria.value_to_memory(quad[3], False)
 
+
     def compare(self, quad):
         if self.memoria.value_from_memory(quad[1]) == self.memoria.value_from_memory(quad[2]):
             self.memoria.value_to_memory(quad[3], True)
         else:
             self.memoria.value_to_memory(quad[3], False)
+   
     
     def and_compare(self, quad):
         if self.memoria.value_from_memory(quad[1]) and self.memoria.value_from_memory(quad[2]):
             self.memoria.value_to_memory(quad[3], True)
         else:
             self.memoria.value_to_memory(quad[3], False)
+
 
     def or_compare(self, quad):
         if self.memoria.value_from_memory(quad[1]) or self.memoria.value_from_memory(quad[2]):
@@ -137,9 +172,10 @@ class VirtualMachine():
     def inputOP(self, quad):
         inputVM = input()
         self.memoria.value_to_memory(quad[3], inputVM)
+ 
+ 
             
-      ####### OPERADORES ARITMETICOS ####### 
-        
+      ####### OPERADORES ARITMETICOS #######  
     def mult (self, quad):
         temp = self.memoria.value_from_memory(quad[1]) * self.memoria.value_from_memory(quad[2])
         #print("multiplicando...", temp)
@@ -161,7 +197,21 @@ class VirtualMachine():
  
     def asignacion(self, quad):
         self.memoria.value_to_memory(quad[3], self.memoria.value_from_memory(quad[1])) 
-       
+
+
+    ####### SALTOS #######  
+    def gotof(self, quad):
+        print ('quad3', quad[3])
+        if not self.memoria.value_from_memory(quad[1]):
+            self.ip = int(quad[3])
+        else:
+            self.ip +=1
+        
+        
+    def goto(self, quad):
+        self.ip = int(quad[3])
+        
+        
        
     
 # vm = VirtualMachine()
