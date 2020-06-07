@@ -3,38 +3,30 @@ program spaceX;
 
 main() {
     var 
-        int t1, t2, nextTerm, n, contador, x;
-
-        t1 = 1;
-        t2 = 2;
+        int t0, t1, t2, nextTerm, n, contador, x;
+        
+        t1 = 0;
+        t2 = 1;
         nextTerm = 0;
         n = 0;
 
-        print("dame un valor para calcular fibo");
+        print("dame un valor para calcular los n primeros numeros de fibonacci");
         read (n);
-            for (from x = 1 to x < n) {
-              x = x + 1;
-                if ( x == 1 ) {
-                    print(" primero " ) ;
+            for (from x = 0 to x < n) {
+            
+                if ( x == 0 ) {
                     print (t1);
                 }
-                if (x == 2){
-
-                    print(" segundo " ) ;
+                if (x == 1){
                     print( t2 );
                 }
-
-                else{
-
+                if ( x >= 2) {
                 nextTerm = t1 + t2;
                 t1 = t2;
                 t2 = nextTerm;
                 print(nextTerm);
-             }
-                
-              
-
-                
+                }
+                  x = x + 1;
         }
 }
 end 
