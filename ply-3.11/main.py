@@ -471,8 +471,10 @@ def p_param2(p):
     
 def p_verifica_parametros(p):
     'verifica_parametros : '
-    global countParams
+    global countParams, is_empty
     checkParams = tablaFun.getNumeroParametros(p[-4])
+    if is_empty:
+        countParams = countParams-1
     if not countParams == checkParams:
         print('Numero de parametros incorrectos en', p[-4])
         print('COUNT PARAMS = ', countParams, checkParams, p[-4])
@@ -485,8 +487,13 @@ def p_verifica_parametros(p):
 
 def p_cuenta_parametros(p):
     '''cuenta_parametros : '''
-    global countParams
-    countParams = countParams + 1
+    global countParams, is_empty
+    if not is_empty:
+        countParams = countParams + 1
+    else:
+        countParams = 0
+        
+    print("contador es",countParams)
     print('PARAMS ACTUALIZADO', countParams)
 
 
@@ -500,12 +507,12 @@ def p_aux_exp(p):
     aux_exp : exp 
             | exp quad_param COMMA cuenta_parametros aux_exp 
             | empty
-    '''  
+    ''' 
+    global is_empty 
+    if p[1] == None:
+        is_empty = True 
 
-def p_ZeroParameters(p):
-    '''ZeroParameters : '''
-    global countParams
-    countParams = 0
+
 
 
 def p_era_call(p):
@@ -971,7 +978,7 @@ parser = yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        nombreArchivo = 'factorial.txt'
+        nombreArchivo = 'prueba2.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()

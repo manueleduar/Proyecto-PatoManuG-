@@ -50,8 +50,6 @@ fun float Hello2();
 
 main () {
   var 
-    int uno, iMat[5][5], iArr[10];
-    float mat2[5][4];
     int i, j, cal, cu;
     char c3;
     i = 1;
@@ -59,34 +57,6 @@ main () {
     p = 3;
     cal = 3;
     cu = 5;
-   
-
-while (p<10){
-    p = p + 2;
-    iMat[i][j] = p - cal;
-    mat2[i][j] = iMat[1][2]$;
-    i = i + 1;
-    j = j + 1;
+   Hello();
 }
-    for (from uno=0 to uno<8){
-        print (uno);
-         uno = uno + 1;
-
-    }
-
-    if (uno < 10) {
-        print("SI");
-    }
-    else {
-        print("NO");
-    }
-    
-    print (i + j);
-    print (cal * cu);
-    print (cal / cu);
-    print( i * j);
-    imprimeVar();
-    print(Hello(10));
-}
-
 end
