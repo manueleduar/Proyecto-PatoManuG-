@@ -39,10 +39,9 @@ class tabFun():
                 'vars' : tabVar(),
                 'nvars' : nvars # numero de variables
             }
-            print('\nFuncion añadida:', id)
             
-        else:
-            print('La funcion' , id , 'ya existe')
+        # else:
+        #     print('La funcion' , id , 'ya existe')
 
     def search_tabFun(self, id):
         return id in self.funciones

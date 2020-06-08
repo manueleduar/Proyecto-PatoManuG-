@@ -125,7 +125,6 @@ def t_CTESTRING(t):
 
 #Si sucede un error se despliega en que parte fue 
 def t_error(t):
-    print("ERROR at '%s'" % t.value)
     t.lexer.skip(1)
 
 lexer = lex.lex()
@@ -421,7 +420,6 @@ def p_genera_quad_asignacion(p):
         if result != 'ERROR':
             quad = (op, operando_derecho, None, operando_izquierdo)
             quadruples.append(quad)
-            print('Cuadruplo:', str(quad))
             
     else: 
         print('Vacio....')
@@ -558,7 +556,6 @@ def p_for_op(p):
     global operadores, quadruples, saltos
     
     op = tablaFun.get_op_mem('for')
-    print('Memoria de for es', op)
     operadores.push(op)
     saltos.push(len(quadruples))
 
@@ -594,7 +591,6 @@ def p_loop_end(p):
     retroceso = saltos.pop()
     quad = ('GOTO', None, None, retroceso)
     quadruples.append(quad)
-    print('quad:', str(quad))
     llenar_quad(end, retroceso)
 
 def p_for_end(p):
@@ -605,7 +601,6 @@ def p_for_end(p):
     retroceso = int(retroceso) +1
     quad = ('GOTO', None, None, retroceso)
     quadruples.append(quad)
-    print('quad:', str(quad))
     llenar_quad(end, retroceso)
 
 def p_while_quad(p):
@@ -770,7 +765,6 @@ def llenar_quad(end, cont):
     temp = list(quadruples[end])
     temp[3] = len(quadruples)
     quadruples[end] = tuple(temp)
-    #print('Cuadruplo:', quadruples[end])
 
 
 def p_nexp(p):
@@ -847,7 +841,6 @@ def p_operatorRead(p):
     'operatorRead : '
     global operadores
     operadores.push('read')
-    print('OPERADOR READ')
 
 def p_operatorReadQuad(p):
     'operatorReadQuad : '
@@ -858,10 +851,7 @@ def p_operatorReadQuad(p):
             operator_aux = operadores.pop()
             valor = stackName.pop()
             stackTypes.pop()
-            #valor = tablaFun.get_var_mem(valor)
-            print('VALOR READ', valor)
             quad = (op, None, None, valor)
-            print('Quadruplo de read:', str(quad))
             quadruples.append(quad)
 
 
@@ -925,7 +915,6 @@ def p_saveId2(p):
         tablaFun.add_var_mem(tipos, varId, fid)
         memVar = tablaFun.get_var_mem(varId)
         
-        print("var", varId, memVar)
         stackTypes.push(tipos)
         stackName.push(memVar)
 

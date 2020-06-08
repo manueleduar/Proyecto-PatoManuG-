@@ -229,6 +229,10 @@ class VirtualMachine():
             self.ip = int(quad[3])
         else:
             self.ip +=1
+            
+    def returnV(self, quad):
+        self.memoria.value_to_memory(quad[3], self.memoria.value_from_memory(quad[1]))
+        self.ip +=1 
         
         
        

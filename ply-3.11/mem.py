@@ -271,7 +271,6 @@ class Memory:
             if self.gLi <13000:
                 address = self.gLi
                 #print("adress", address)
-                print("se ha configurado la temporal", id, "temporal, la direccion es:", address)
                 self.gLi += 1
                 #print("address actualizada a ", self.li)
             else:
