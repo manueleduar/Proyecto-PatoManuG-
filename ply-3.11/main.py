@@ -982,7 +982,7 @@ parser = yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        nombreArchivo = 'testMachine.txt'
+        nombreArchivo = 'factorial.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()

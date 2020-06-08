@@ -1,0 +1,27 @@
+program spaceX;
+
+
+main() {
+    var 
+        int n, i, x, fact;
+        print("dame un valor para calcular su factorial");
+        read (n);
+        
+        fact = 1;
+        if(n < 0){ 
+            print("No se puede hacer factorial de negativos");
+        }
+
+        else {
+            for(from x = 1 to x <= n){
+                fact = fact * x;
+                x = x + 1;
+            }
+        print("Resultado");
+        return (fact);
+     }
+           
+}
+end 
+
+
