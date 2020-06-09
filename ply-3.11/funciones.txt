@@ -1,0 +1,4 @@
+('main', 'int', 'fact', 23000)
+('main', 'int', 'x', 23001)
+('main', 'int', 'i', 23002)
+('main', 'int', 'n', 23003)
