@@ -1,41 +1,29 @@
 program heinz;
-var 
-    int i, j, x;
-    float cal, cu;
 
-fun int Hello();
-{
-    var
-    int y11, x1111, g, f1;
-    x1111 = 10;
-    y11 = 11;
-    g = x1111 + y11;
-    return g;    
-}
-
-
-fun void imprimeVar( int a);
+fun void imprimeVar();
 {
     var
     int q;
+    q = 10;
     print(q);   
 }
 
-
+fun int Hello();
+{
+    var 
+    int j;
+    j = 20;
+    print(j);
+    return j;  
+}
 
 main () {
   var 
-    int i, j, cal, cu, p;
-    char c3;
-    i = 1;
-    j = 2;
-    p = 3;
-    cal = 3;
-    cu = 5;
+    int i;
+    i = 10;
+    print(i);
+    Hello();
+    imprimeVar();
 
-
-   imprimeVar(4);
-
- 
 }
 end

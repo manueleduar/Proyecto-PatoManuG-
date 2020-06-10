@@ -381,9 +381,9 @@ class Memory:
 
         
     def reset_temp_vals(self):
-        self.li = 19000
-        self.lf = 20000
-        self.lc = 21000
-        self.lb = 22000
+        self.li = 23000
+        self.lf = 26000
+        self.lc = 29000
+        self.lb = 31000
       
         

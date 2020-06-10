@@ -176,14 +176,14 @@ def p_addP(p):
 
 def p_programa1(p):
     '''
-	programa1 : vars quadMain modules programa2
+	programa1 : vars quadMain modules main_end programa2
 	programa1 : vars quadMain modules
 	          | programa2
 	'''
 
 def p_programa2(p):
     '''
-	programa2 : main_end main 
+	programa2 :  main 
 	''' 
     
 def p_main(p):
@@ -524,11 +524,10 @@ def p_llena_endproc(p):
     end = end_proc.pop()    
     print(quadruples[end])
     print("salto end pro", salto_end_proc)
-    # quadruples[end][3] = salto_end_proc
     temp = list(quadruples[end])
     temp[3] = salto_end_proc
     quadruples[end] = tuple(temp)
-    print(quadruples[end])
+    print( "para el llenado de end proc",quadruples[end])
     
     
     
@@ -1050,16 +1049,16 @@ if __name__ == '__main__':
                 c.write(str(i) + '\n')
             c.close()  
             
-            ### Mandar las funciones y sus parametros en un txt ###
-            d = open('funciones.txt', 'w')    
-            for i in tablaFun.funciones.keys():
-               for j in tablaFun.funciones[i]['vars'].var_list.items():
-                   quadFunciones = (i, j[1]['tipo'], j[0], j[1]['address'])
-                 #d.write(str(i) + ' ' + str(j[0])+ ' ' + str(j[1]['address']) + '\n')
-                   d.write(str(quadFunciones) + '\n')
-            d.close()
+            # ### Mandar las funciones y sus parametros en un txt ###
+            # d = open('funciones.txt', 'w')    
+            # for i in tablaFun.funciones.keys():
+            #    for j in tablaFun.funciones[i]['vars'].var_list.items():
+            #        quadFunciones = (i, j[1]['tipo'], j[0], j[1]['address'])
+            #      #d.write(str(i) + ' ' + str(j[0])+ ' ' + str(j[1]['address']) + '\n')
+            #        d.write(str(quadFunciones) + '\n')
+            # d.close()
             
-            # Maquina virtual        
+            #Maquina virtual        
             vm = VirtualMachine()
             vm = VirtualMachine()
             vm.rebuildCte()
