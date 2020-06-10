@@ -140,7 +140,9 @@ stackTypes = Stack()
 operadores = Stack()
 quadruples = []
 array = []
-
+functions = []
+end_proc = []
+salto_end_proc = 0
 avail = Avail()
 
 
@@ -149,6 +151,7 @@ countParams = 0
 #instanciar Objetos de clases utilizadas
 cubo = Cube()
 saltos = Stack()
+salto_fun = Stack()
 
 def p_programa(p):
         '''
@@ -168,15 +171,7 @@ def p_addP(p):
     actual_funTipo = 'programa'
     fid = 'programa'
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-    # asigna nombre del programa
-    # global fid
-    # fid = p[-2]
-    # global tablaFun
-    # if tablaFun.search_tabFun(fid):
-    #     print("funcion ya existe")
-    # else:
-    #     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
-    #     print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+   
 
 
 def p_programa1(p):
@@ -188,7 +183,7 @@ def p_programa1(p):
 
 def p_programa2(p):
     '''
-	programa2 :  main
+	programa2 : main_end main 
 	''' 
     
 def p_main(p):
@@ -209,9 +204,19 @@ def p_main(p):
 
 def p_quadMain(p):
     'quadMain : '
-    quad = ('Goto', 'main', -1, None)
+    global saltos, quadruples
+    quad = ('GOTOMAIN', 'main', -1, None)
     quadruples.append(quad)
+    saltos.push(len(quadruples)-1)
     
+
+    
+def p_main_end(p):
+    'main_end : '
+    end = saltos.pop()
+    print("end main", end)
+    llenar_quad(end, -1)
+        
 	
 #---------------Tipos de variables aceptadas-------------------#
 
@@ -266,7 +271,7 @@ def p_addV(p):
     global varId
     global actual_varTipo
     if not varId == None:
-        print('VAR EN ADDV', varId)
+
         if tablaFun.search_tabFun(fid):
           tablaFun.addVar(fid, actual_varTipo, varId)    
         else:
@@ -332,32 +337,41 @@ def p_save_fun(p):
     
 def p_function(p):
     '''
-    function : FUN VOID function1 end_func
-             | FUN INT function2 end_func
-             | FUN CHAR function2 end_func
-             | FUN FLOAT function2 end_func
+    function : FUN VOID function1 
+             | FUN INT function2  
+             | FUN CHAR function2  
+             | FUN FLOAT function2  
     ''' 
 
 def p_function1(p):
     '''
-    function1 : ID save_fun LPAREN param2 RPAREN SEMICOLON LCURLY vars statement RCURLY 
+    function1 : ID save_fun LPAREN param2 RPAREN SEMICOLON LCURLY vars fun_goto  statement RCURLY end_func 
     '''
     
 def p_function2(p):
     '''
-    function2 : ID save_fun LPAREN param2 RPAREN SEMICOLON LCURLY vars statement RETURN operadorReturn exp quad_return SEMICOLON RCURLY
+    function2 : ID save_fun LPAREN param2 RPAREN SEMICOLON LCURLY vars fun_goto  statement RETURN operadorReturn exp quad_return SEMICOLON RCURLY end_func 
     '''
   
+def p_fun_goto(p):
+    'fun_goto :'
+    global functions
+    nombre = p[-8]
+    jump = (nombre, len(quadruples))
+    print(jump, "para la funcion", nombre)
+    functions.append(jump)
 
 def p_end_func(p):
     'end_func : '
     global quadruples, tablaFun
+  
     quad = ('ENDFUNC', None, None, -1)
     quadruples.append(quad)
+    end_proc.append(len(quadruples)-1)
     tablaFun.reset_temp_add()
     print("END FUNC")
 
-    
+
     
 
 def p_operadorReturn(p):
@@ -381,7 +395,7 @@ def p_quad_return(p):
             quadruples.append(quad)
             
         else: 
-            print('Type dissmatch')
+            print('Type Missmatch')
             sys.exit()
 
 
@@ -427,7 +441,6 @@ def p_genera_quad_asignacion(p):
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
         result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
-        print("result CUBO--------", operando_izquierdo_tipo, operando_derecho_tipo, result)
 
         if result != 'ERROR':
             quad = (op, operando_derecho, None, operando_izquierdo)
@@ -489,7 +502,7 @@ def p_param2(p):
 
 def p_llamada(p): 
     '''
-    llamada : ID era_call LPAREN aux_exp RPAREN  gosub_quad
+    llamada : ID era_call LPAREN aux_exp RPAREN  gosub_quad llena_endproc
     
     ''' 
     global llamadaID
@@ -503,8 +516,22 @@ def p_aux_exp(p):
             | empty
     '''  
 
-
-
+def p_llena_endproc(p):
+    '''
+    llena_endproc : 
+    '''
+    global end_proc, salto_end_proc
+    end = end_proc.pop()    
+    print(quadruples[end])
+    print("salto end pro", salto_end_proc)
+    # quadruples[end][3] = salto_end_proc
+    temp = list(quadruples[end])
+    temp[3] = salto_end_proc
+    quadruples[end] = tuple(temp)
+    print(quadruples[end])
+    
+    
+    
 
 def p_era_call(p):
     'era_call : '
@@ -513,6 +540,7 @@ def p_era_call(p):
     countParams = 0
     quad = ('ERA', None, None, nameV)
     quadruples.append(quad)
+    saltos.push(len(quadruples)-1)
     print ("ERA CALL _________", nameV )
    
 
@@ -539,21 +567,25 @@ def p_quad_param(p):
         else:
             print("params exceeded")
         
-    
-    
-    
+
    
 
 
 def p_gosub_quad(p):
     'gosub_quad : '
-    global quadruples
+    global quadruples, functions, salto_end_proc
     gosub_call = p[-5]
-    quad = ('GOSUB', None, None, gosub_call) 
+    
+    for i in functions:
+        if i[0] == gosub_call:
+            end = i[1]
+    quad = ('GOSUB', gosub_call, None, end ) 
     quadruples.append(quad)
+    salto_end_proc = len(quadruples)
+    print("saltos para el end proc", salto_end_proc )
+    
     print("gosub-----------------", gosub_call, str(quad))
-    
-    
+ 
   
 
 

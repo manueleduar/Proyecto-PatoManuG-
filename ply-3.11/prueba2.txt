@@ -2,10 +2,6 @@ program heinz;
 var 
     int i, j, x;
     float cal, cu;
-    char a;
-    char b[3];
-    int imat3[1][1];
-    
 
 fun int Hello();
 {
@@ -18,47 +14,28 @@ fun int Hello();
 }
 
 
-fun void Bye();
-{
-    var
-    int p, q;
-    int p;
-   
-    q = 10;
-    p = 11;
-    print(q+p);    
-}
-
-
-fun void imprimeVar(int a, int b);
+fun void imprimeVar( int a);
 {
     var
     int q;
     print(q);   
 }
 
-fun float Hello2(int a, int b, int c);
-{
-    var
-    int p, q, res, kk;
-    q = 10;
-    p = 11;
-    res = p + q;
-    return res;    
-}
 
 
 main () {
   var 
-    int i, j, cal, cu;
+    int i, j, cal, cu, p;
     char c3;
     i = 1;
     j = 2;
     p = 3;
     cal = 3;
     cu = 5;
-   Hello();
-   imprimeVar(4,5);
-   Hello2(2,3,4,5);
+
+
+   imprimeVar(4);
+
+ 
 }
 end
