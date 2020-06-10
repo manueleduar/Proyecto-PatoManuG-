@@ -12,7 +12,7 @@ main() {
             print("No se puede hacer factorial de negativos");
         }
 
-        else {
+        else {
             for(from x = 1 to x <= n){
                 fact = fact * x;
                 x = x + 1;
@@ -23,5 +23,3 @@ main() {
            
 }
 end 
-
-

@@ -31,8 +31,7 @@ class VirtualMachine():
             
            
     def reading (self, quads):
-        #global Instruction Pointer 
-           
+        #global Instruction Pointer        
         while self.ip != len(quads):
             if quads[self.ip][0] == self.memoria.get_operator_address('+'):
                 self.plus(quads[self.ip])
@@ -102,6 +101,18 @@ class VirtualMachine():
                 
             elif quads[self.ip][0] == 'GOTOV':
                 self.gotov(quads[self.ip])
+                
+            elif quads[self.ip][0] == 'GOSUB':
+                self.gosub(quads[self.ip])
+                
+            elif quads[self.ip][0] == 'ERA':
+                self.era(quads[self.ip])
+                
+            elif quads[self.ip][0] == 'ENDFUNC':
+                self.endproc(quads[self.ip])
+                
+            elif quads[self.ip][0] == 'PARAMS':
+                self.param(quads[self.ip])
                 
                 
                 
@@ -191,7 +202,6 @@ class VirtualMachine():
       ####### OPERADORES ARITMETICOS #######  
     def mult (self, quad):
         temp = self.memoria.value_from_memory(quad[1]) * self.memoria.value_from_memory(quad[2])
-        #print("multiplicando...", temp)
         self.memoria.value_to_memory(quad[3], temp)
         
     def division (self, quad):
@@ -200,12 +210,10 @@ class VirtualMachine():
         
     def plus (self, quad):
         temp = self.memoria.value_from_memory(quad[1]) + self.memoria.value_from_memory(quad[2])
-        # print("sumando...", temp)
         self.memoria.value_to_memory(quad[3], temp)
         
     def minus (self, quad):
         temp = self.memoria.value_from_memory(quad[1]) - self.memoria.value_from_memory(quad[2])
-        # print("Restando...", temp)
         self.memoria.value_to_memory(quad[3], temp)
  
     def asignacion(self, quad):
@@ -218,13 +226,12 @@ class VirtualMachine():
         if not self.memoria.value_from_memory(quad[1]):
             self.ip = int(quad[3])
         else:
-            self.ip +=1
-        
+            self.ip +=1       
         
     def goto(self, quad):
         self.ip = int(quad[3])
         
-    def gotov(self,quad):
+    def gotov(self, quad):
         if not self.memoria.value_from_memory(quad[1]):
             self.ip = int(quad[3])
         else:
@@ -232,7 +239,28 @@ class VirtualMachine():
             
     def returnV(self, quad):
         self.memoria.value_to_memory(quad[3], self.memoria.value_from_memory(quad[1]))
-        self.ip +=1 
+        self.ip +=1
+        
+    def era(self, quad):
+        self.activation_record.append(dict())
+        self.ip += 1
+
+    def param(self, quad):
+        if quad[2] == None:
+            self.activation_record[-1][quad[3]] = self.memoria.value_from_memory(quad[1])       
+        else:
+            self.activation_record[-1][quad[3]] = self.memoria.value_from_memory(quad[3])
+        self.ip += 1
+ 
+    def gosub(self, quad):
+        for i in self.activation_record[-1].keys():
+            self.memoria.value_to_memory(i, self.activation_record[-1][i])            
+        self.ip += 1
+        self.activation_record.pop()
+        
+    def endproc(self, quad):
+        self.ip +=1
+        
         
         
        

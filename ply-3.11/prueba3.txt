@@ -1,12 +1,8 @@
 program patito_program;
 
-fun void Launch(); {
-    print("Hola mundo");
-}
-
 main () {
   var 
-  int a, b, c, d;
+  int a, b, c, d, cont;
   float d, e, f;
 
   a = 5;
@@ -15,6 +11,7 @@ main () {
   d = 20;
   e = 25;
   f = 30;
+  cont = 0;
 
   f = d + c;
   c = b / a;
@@ -22,6 +19,21 @@ main () {
   print(a * b);
   print (c / d);
   print (e + f);
+  print(a);
+  print(b);
+
+  if (a > b) {
+    print ("si es mayor");
+  }
+
+  else {
+    print("No es mayor");
+  }
+
+  while (cont < 3) {
+    cont = cont + 1;
+    print("entra while");
+  }
 
 
 }

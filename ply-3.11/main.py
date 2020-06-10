@@ -143,13 +143,16 @@ array = []
 
 avail = Avail()
 
+
+countParams = 0
+
 #instanciar Objetos de clases utilizadas
 cubo = Cube()
 saltos = Stack()
 
 def p_programa(p):
         '''
-        programa :  PROGRAM ID SEMICOLON addP programa1 
+        programa : PROGRAM ID SEMICOLON addP programa1 
         '''
         global programId
         programId = p[2]
@@ -178,8 +181,8 @@ def p_addP(p):
 
 def p_programa1(p):
     '''
-	programa1 : vars modules programa2
-	programa1 : vars modules
+	programa1 : vars quadMain modules programa2
+	programa1 : vars quadMain modules
 	          | programa2
 	'''
 
@@ -201,6 +204,14 @@ def p_main(p):
     global tablaFun
     tablaFun.add_Fun(actual_funTipo, fid, 0, [], [], 0)
     #print('\nFuncion que se añadio', fid, 'de tipo:', actual_funTipo)
+
+
+
+def p_quadMain(p):
+    'quadMain : '
+    quad = ('Goto', 'main', -1, None)
+    quadruples.append(quad)
+    
 	
 #---------------Tipos de variables aceptadas-------------------#
 
@@ -255,6 +266,7 @@ def p_addV(p):
     global varId
     global actual_varTipo
     if not varId == None:
+        print('VAR EN ADDV', varId)
         if tablaFun.search_tabFun(fid):
           tablaFun.addVar(fid, actual_varTipo, varId)    
         else:
@@ -415,7 +427,7 @@ def p_genera_quad_asignacion(p):
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
         result = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operadores2)
-        # print("result CUBO--------", operando_izquierdo_tipo, operando_derecho_tipo, result)
+        print("result CUBO--------", operando_izquierdo_tipo, operando_derecho_tipo, result)
 
         if result != 'ERROR':
             quad = (op, operando_derecho, None, operando_izquierdo)
@@ -447,7 +459,7 @@ def p_addOperadorName(p):
 
 def p_param1(p):
     '''
-        param1 : ID
+        param1 : ID addV
             | ID COMMA var1 addV 
             | ID arr 
             | ID arr COMMA var1 addV 
@@ -460,7 +472,7 @@ def p_param1(p):
 def p_addParam(p):
     'addParam : '
     tablaFun.add_parametros_tabFun(fid, varId, actual_varTipo)
-    print('ADD PARAM:', fid, varId, actual_varTipo)
+    print('Parametro añadido en:', fid, '-- nombre y tipo:', varId, actual_varTipo)
 
 
 def p_param2(p):
@@ -469,72 +481,77 @@ def p_param2(p):
              | empty 
     ''' 
     
-def p_verifica_parametros(p):
-    'verifica_parametros : '
-    global countParams
-    checkParams = tablaFun.getNumeroParametros(p[-4])
-    if not countParams == checkParams:
-        print('Numero de parametros incorrectos en', p[-4])
-        print('COUNT PARAMS = ', countParams, checkParams, p[-4])
-        sys.exit()
-
-    # else de prueba
-    else:
-        print('Numero de parametros ACEPTADO')
 
 
-def p_cuenta_parametros(p):
-    '''cuenta_parametros : '''
-    global countParams
-    countParams = countParams + 1
-    print('PARAMS ACTUALIZADO', countParams)
+
+
 
 
 def p_llamada(p): 
     '''
-    llamada : ID era_call LPAREN aux_exp verifica_parametros RPAREN gosub_quad
+    llamada : ID era_call LPAREN aux_exp RPAREN  gosub_quad
     
     ''' 
+    global llamadaID
+    llamadaID = p[1]
+    
+#al final de regla abajo  cuenta_parametros
 def p_aux_exp(p):
     '''
     aux_exp : exp 
-            | exp quad_param COMMA cuenta_parametros aux_exp 
+            | exp quad_param COMMA  aux_exp  quad_param
             | empty
     '''  
 
-def p_ZeroParameters(p):
-    '''ZeroParameters : '''
-    global countParams
-    countParams = 0
+
 
 
 def p_era_call(p):
     'era_call : '
-    global quadruples, countParams
+    global quadruples, countParams, nameV
     nameV = p[-1]
+    countParams = 0
     quad = ('ERA', None, None, nameV)
     quadruples.append(quad)
-    countParams = 1
     print ("ERA CALL _________", nameV )
    
 
 
 def p_quad_param(p):
     '''quad_param : '''
-    global quadruples 
-    val = stackName.pop()
-    stackTypes.pop()
-    quad = ('PARAM', val, None, -1)
-    quadruples.append(quad)
+    global quadruples , countParams, nameV, llamadaID
+  
+    totalParams = tablaFun.getNumeroParametros(llamadaID)+1
+    print("total params", totalParams)
+    
+    
+    if not stackName.is_empty():
+        val = stackName.pop()
+        print("value", val)
+        stackTypes.pop()
+        countParams +=1
+        if not countParams > totalParams:
+            print("parametro actualizado numero ", countParams)
+            quad = ('PARAM', val, None, countParams)
+            operadores.push('PARAM')
+            print("PARAM-----------------", nameV, str(quad))
+            quadruples.append(quad)
+        else:
+            print("params exceeded")
+        
+    
+    
+    
+   
 
 
 def p_gosub_quad(p):
     'gosub_quad : '
     global quadruples
-    gosub_call = p[-6]
+    gosub_call = p[-5]
     quad = ('GOSUB', None, None, gosub_call) 
     quadruples.append(quad)
-    print("gosub-----------------", p[-6], str(quad))
+    print("gosub-----------------", gosub_call, str(quad))
     
     
   
@@ -673,6 +690,8 @@ def genera_cuadruplo():
         operando_derecho_tipo = stackTypes.pop()
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
+        
+        print('GENERA QUAD', operando_izquierdo_tipo, operando_izquierdo, operando2, operando_derecho, operando_derecho_tipo)
       
         result_type = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operando2)
         if result_type != 'ERROR':
@@ -971,7 +990,7 @@ parser = yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        nombreArchivo = 'factorial.txt'
+        nombreArchivo = 'prueba2.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()
@@ -992,19 +1011,29 @@ if __name__ == '__main__':
                 f.write(str(i) + '\n')
                 #f.write('\n')
             f.close()
+            
             ##### archivo de salida de constantes #######
             c = open("constants.txt", 'w')
             for i in array:
                 c.write(str(i) + '\n')
             c.close()  
             
+            ### Mandar las funciones y sus parametros en un txt ###
+            d = open('funciones.txt', 'w')    
+            for i in tablaFun.funciones.keys():
+               for j in tablaFun.funciones[i]['vars'].var_list.items():
+                   quadFunciones = (i, j[1]['tipo'], j[0], j[1]['address'])
+                 #d.write(str(i) + ' ' + str(j[0])+ ' ' + str(j[1]['address']) + '\n')
+                   d.write(str(quadFunciones) + '\n')
+            d.close()
+            
             # Maquina virtual        
             vm = VirtualMachine()
             vm = VirtualMachine()
             vm.rebuildCte()
             q = vm.clean_quad()
-
             vm.reading(q)
+            
         else: 
             print("Syntax error")
             

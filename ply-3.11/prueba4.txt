@@ -1,83 +1,42 @@
 program spaceX;
-var 
-int a;
-fun void Launch(int r, int f, int j1, int g23); {
-  var
-  int a, b, c[3];
-    a = 10;
-    b = 20;
-    b = (a * b) + 7;
-    c[1] = b + a;
-    print(b);
+
+
+main () {
+  var 
+  int a, b, c, d, cont;
+  float d, e, f;
+
+  a = 5;
+  b = 10;
+  c = 15;
+  d = 20;
+  e = 25;
+  f = 30;
+  cont = 0;
+
+  f = d + c;
+  c = b / a;
+
+  print(a * b);
+  print (c / d);
+  print (e + f);
+  print(a);
+  print(b);
+
+  if (a > b) {
+    print ("si es mayor");
+  }
+
+  else {
+    print("No es mayor");
+  }
+
+  while (cont < 3) {
+    cont = cont + 1;
+    print("entra while");
+  }
+
+
 }
 
-fun int LAunch2 (); {
-    var
-    int k98, j99;
-    k98 = 2;
-    j99 = 10;
-    return (k98 * j99);
-}
-
-
-main() {
-    var 
-        int i, j, k, l, m, d, x, y, ggg[3];
-        char a1, b1;
-        Launch(1, 2, 3, 4);
-        
-        k = i + k;
-        l = i - j;
-        m = i * l;
-        ggg[2] = 12;
-        a1 = 'e';
-        b1 = 'f';
-
-       x = 10;
-
-        if(x != j){
-            d = x / y;
-        }
-
-       if (d == k) {
-           print("son iguales");
-       }
-
-        if (d >= k) {
-           print("d es mayor");
-       }
-
-        if (a1 == b1) {
-           print("d es mayor");
-       }
-
-        if (4 && 4) {
-           print("d es mayor");
-       }
-
-        if (4 | 4) {
-           print("d NO es mayor");
-       }
-
-              else {
-           print("HOLA MUNDO");
-       }
-
-     print (x+y);
-
-    while(x<y){
-        x = x+y;
-    }
-   
-
-   for (from x = 10 to x <100){
-       x = x + 2;
-       print (x);
-   }
-
-   
-        while (y == x) {
-            print(1);
-        }
-}
-end 
+end
