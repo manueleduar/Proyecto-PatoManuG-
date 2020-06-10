@@ -117,7 +117,9 @@ class VirtualMachine():
               
             # elif quads[self.ip][0] == 'PARAMS':
             #     self.param(quads[self.ip])
-                
+            else: 
+                sys.exit()
+    
                 
                 
     ####### OPERADORES LOGICOS DE COMPARACION #######

@@ -11,8 +11,10 @@ fun void imprimeVar();
 fun int Hello();
 {
     var 
-    int j;
+    int j, w;
     j = 20;
+    w = 30;
+    j = w + j;
     print(j);
     return j;  
 }

@@ -1,41 +1,33 @@
-program patito_program;
+program heinz;
+
+fun void imprimeVar();
+{
+    var
+    int q;
+    q = 10;
+    print(q);   
+}
+
+fun int Hello();
+{
+    var 
+    int j, w;
+    j = 20;
+    w = 0;
+    while (w <= j){
+      print(w);
+      w = w + 1;
+    }
+    return w;  
+}
 
 main () {
   var 
-  int a, b, c, d, cont;
-  float d, e, f;
-
-  a = 5;
-  b = 10;
-  c = 15;
-  d = 20;
-  e = 25;
-  f = 30;
-  cont = 0;
-
-  f = d + c;
-  c = b / a;
-
-  print(a * b);
-  print (c / d);
-  print (e + f);
-  print(a);
-  print(b);
-
-  if (a > b) {
-    print ("si es mayor");
-  }
-
-  else {
-    print("No es mayor");
-  }
-
-  while (cont < 3) {
-    cont = cont + 1;
-    print("entra while");
-  }
-
+    int i;
+    i = 10;
+    print(i);
+    Hello();
+    imprimeVar();
 
 }
-
 end
