@@ -6,6 +6,7 @@ class VirtualMachine():
     def __init__(self):
         self.quads = []
         self.iterators = []
+        self.pending = []
         self.memoria = memoria.Memory()
         self.start_time = 0
         self.ip = 0
@@ -20,7 +21,15 @@ class VirtualMachine():
             
             for line in lines:
                 self.memoria.value_to_memory(line[1], line[0])
-            
+    
+    def rebuildPar(self):
+        with open ('pendientes.text', 'r') as pendingList:
+            self.pending
+            for p in pendingList:
+                self.pending.append(eval(p)) 
+            for p in self.pending:
+                self.memoria.value_from_memory(p[1])
+                
               
     def clean_quad(self):
         with open('quadruples.txt', 'r') as quadsList:
@@ -113,7 +122,6 @@ class VirtualMachine():
             
             elif quads[self.ip][0] == 'GOTOMAIN':
                 self.gotomain(quads[self.ip])
-                print("se salta  a main")
               
             # elif quads[self.ip][0] == 'PARAMS':
             #     self.param(quads[self.ip])
@@ -224,7 +232,7 @@ class VirtualMachine():
  
     def asignacion(self, quad):
         self.memoria.value_to_memory(quad[3], self.memoria.value_from_memory(quad[1])) 
-
+       
 
     ####### SALTOS #######  
     def gotof(self, quad):
@@ -244,7 +252,6 @@ class VirtualMachine():
             self.ip +=1
     def gotomain(self, quad):
         self.ip = int(quad[3])
-        print("se va a ",int(quad[3]))
             
     def returnV(self, quad):
         self.memoria.value_to_memory(quad[3], self.memoria.value_from_memory(quad[1]))
@@ -253,12 +260,15 @@ class VirtualMachine():
     def era(self, quad):
         self.ip += 1
 
-    # def param(self, quad):
-    #     if quad[2] == None:
-    #         self.activation_record[-1][quad[3]] = self.memoria.value_from_memory(quad[1])       
-    #     else:
-    #         self.activation_record[-1][quad[3]] = self.memoria.value_from_memory(quad[3])
-    #     self.ip += 1
+    def param(self, quad):
+        if quad[2] == None:
+            self.memoria.value_to_memory(quad[2], self.pending[1])
+            self.ip +=1
+           
+                 
+       
+            
+       
  
     # def gosub(self, quad):
     #     for i in self.activation_record[-1].keys():

@@ -133,6 +133,10 @@ lexer = lex.lex()
 tablaFun = tabFun()
 actualFunType = ''
 fid = ''
+varId = ''
+paramId = ''
+
+
 
 # pilas para los cuadruplos
 stackName = Stack()
@@ -141,6 +145,7 @@ operadores = Stack()
 quadruples = []
 array = []
 functions = []
+pendiente = []
 end_proc = []
 salto_end_proc = 0
 avail = Avail()
@@ -214,7 +219,6 @@ def p_quadMain(p):
 def p_main_end(p):
     'main_end : '
     end = saltos.pop()
-    print("end main", end)
     llenar_quad(end, -1)
         
 	
@@ -358,7 +362,6 @@ def p_fun_goto(p):
     global functions
     nombre = p[-8]
     jump = (nombre, len(quadruples))
-    print(jump, "para la funcion", nombre)
     functions.append(jump)
 
 def p_end_func(p):
@@ -369,7 +372,6 @@ def p_end_func(p):
     quadruples.append(quad)
     end_proc.append(len(quadruples)-1)
     tablaFun.reset_temp_add()
-    print("END FUNC")
 
 
     
@@ -472,85 +474,71 @@ def p_addOperadorName(p):
 
 def p_param1(p):
     '''
-        param1 : ID addV
-            | ID COMMA var1 addV 
+        param1 : ID addParam
+            | ID COMMA var1 addParam
             | ID arr 
-            | ID arr COMMA var1 addV 
-            | ID mat COMMA var1 addV 
+            | ID arr COMMA var1 addParam 
+            | ID mat COMMA var1 addParam
             | ID mat 
             | ID mat especial 
             | empty 
     ''' 
 
+
+
+
+
 def p_addParam(p):
-    'addParam : '
-    tablaFun.add_parametros_tabFun(fid, varId, actual_varTipo)
-    print('Parametro añadido en:', fid, '-- nombre y tipo:', varId, actual_varTipo)
+    'addParam :'
+    global tablaFun, paramId
+    paramId = p[-1]
+    global actual_varTipo
+    if not paramId == None:
+        if tablaFun.search_tabFun(fid):
+          tablaFun.add_parametros_tabFun(fid, actual_varTipo, paramId)
+          tablaFun.addVar(fid, actual_varTipo, paramId)     
+          print(paramId, "param ID listo en", fid)
+        else:
+          SystemExit()
+    # else:
+    #     print("no se puede añadir none")
 
 
 def p_param2(p):
-      '''
-        param2 : param2 tipo param1 addV addParam
-             | empty 
-    ''' 
     
-
-
-
-
-
+    
+    '''
+    param2 : param2 tipo param1 
+            | empty 
+    ''' 
+   
+     
 
 def p_llamada(p): 
     '''
-    llamada : ID era_call LPAREN aux_exp RPAREN  gosub_quad llena_endproc
+    llamada : ID era_call LPAREN aux_exp quad_param RPAREN  gosub_quad llena_endproc
     
     ''' 
-    global llamadaID
-    llamadaID = p[1]
+  
     
 #al final de regla abajo  cuenta_parametros
 def p_aux_exp(p):
     '''
     aux_exp : exp 
-            | exp quad_param COMMA  aux_exp  quad_param
+            | exp  COMMA  aux_exp  
             | empty
     '''  
-
-def p_llena_endproc(p):
-    '''
-    llena_endproc : 
-    '''
-    global end_proc, salto_end_proc
-    end = end_proc.pop()    
-    print(quadruples[end])
-    print("salto end pro", salto_end_proc)
-    temp = list(quadruples[end])
-    temp[3] = salto_end_proc
-    quadruples[end] = tuple(temp)
-    print( "para el llenado de end proc",quadruples[end])
     
-    
-    
-
-def p_era_call(p):
-    'era_call : '
-    global quadruples, countParams, nameV
-    nameV = p[-1]
-    countParams = 0
-    quad = ('ERA', None, None, nameV)
-    quadruples.append(quad)
-    saltos.push(len(quadruples)-1)
-    print ("ERA CALL _________", nameV )
-   
-
 
 def p_quad_param(p):
     '''quad_param : '''
-    global quadruples , countParams, nameV, llamadaID
-  
-    totalParams = tablaFun.getNumeroParametros(llamadaID)+1
-    print("total params", totalParams)
     
+    
+    global quadruples , countParams, nameV, llamadaID
+    llamadaID  = p[-4]
+    print("llamadaID", llamadaID)
+    totalParams = tablaFun.getNumeroParametros(llamadaID)
+    print("total params", totalParams)
     
     if not stackName.is_empty():
         val = stackName.pop()
@@ -564,16 +552,38 @@ def p_quad_param(p):
             print("PARAM-----------------", nameV, str(quad))
             quadruples.append(quad)
         else:
-            print("params exceeded")
-        
+            print("params exceeded")    
+    
+    
+    
 
+def p_llena_endproc(p):
+    '''
+    llena_endproc : 
+    '''
+    global end_proc, salto_end_proc
+    end = end_proc.pop()    
+    temp = list(quadruples[end])
+    temp[3] = salto_end_proc
+    quadruples[end] = tuple(temp)
+    
+    
+    
+
+def p_era_call(p):
+    'era_call : '
+    global quadruples, countParams, nameV
+    nameV = p[-1]
+    countParams = 0
+    quad = ('ERA', None, None, nameV)
+    quadruples.append(quad)
+    saltos.push(len(quadruples)-1)
    
-
 
 def p_gosub_quad(p):
     'gosub_quad : '
     global quadruples, functions, salto_end_proc
-    gosub_call = p[-5]
+    gosub_call = p[-6]
     
     for i in functions:
         if i[0] == gosub_call:
@@ -581,9 +591,7 @@ def p_gosub_quad(p):
     quad = ('GOSUB', gosub_call, None, end ) 
     quadruples.append(quad)
     salto_end_proc = len(quadruples)
-    print("saltos para el end proc", salto_end_proc )
     
-    print("gosub-----------------", gosub_call, str(quad))
  
   
 
@@ -722,7 +730,6 @@ def genera_cuadruplo():
         operando_izquierdo = stackName.pop()
         operando_izquierdo_tipo = stackTypes.pop()
         
-        print('GENERA QUAD', operando_izquierdo_tipo, operando_izquierdo, operando2, operando_derecho, operando_derecho_tipo)
       
         result_type = cubo.getTipo(operando_izquierdo_tipo, operando_derecho_tipo, operando2)
         if result_type != 'ERROR':
@@ -934,14 +941,19 @@ def p_empty(p):
 # guarda en pila variables      
 def p_saveId(p):
     '''saveId : '''
-    global varId, tablaFun, fid, stackName, stackTypes
+    global varId, tablaFun, fid, stackName, stackTypes, pendiente
     if not varId == None:
         if tablaFun.searchVar_tabFun(fid, varId):
             tipos = tablaFun.getVar_Tipo(varId, fid)
             
             tablaFun.add_var_mem(tipos, varId, fid)
             varMem = tablaFun.get_var_mem(varId)
-            # print("variable", varId, varMem)
+            print("variable", varId, varMem)
+          
+            if paramId == varId:
+                print("same") 
+                fp = (varId, varMem)
+                pendiente.append(fp)   
        
             if tipos:
                 stackTypes.push(tipos)
@@ -1021,7 +1033,7 @@ parser = yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        nombreArchivo = 'prueba2.txt'
+        nombreArchivo = 'prueba3.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()
@@ -1049,6 +1061,11 @@ if __name__ == '__main__':
                 c.write(str(i) + '\n')
             c.close()  
             
+            # p = open("pendientes.txt", 'w'):
+            # for i in pendiente:
+            #     p.write(str)
+            
+            
             # ### Mandar las funciones y sus parametros en un txt ###
             # d = open('funciones.txt', 'w')    
             # for i in tablaFun.funciones.keys():
@@ -1059,7 +1076,6 @@ if __name__ == '__main__':
             # d.close()
             
             #Maquina virtual        
-            vm = VirtualMachine()
             vm = VirtualMachine()
             vm.rebuildCte()
             q = vm.clean_quad()

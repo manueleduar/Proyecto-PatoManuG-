@@ -1,10 +1,11 @@
 program heinz;
 
-fun void imprimeVar();
+fun void imprimeVar(int a, int b);
 {
     var
     int q;
     q = 10;
+    q = q + 8;
     print(q);   
 }
 
@@ -25,7 +26,7 @@ main () {
     i = 10;
     print(i);
     Hello();
-    imprimeVar();
+    imprimeVar(8, 10);
 
 }
 end

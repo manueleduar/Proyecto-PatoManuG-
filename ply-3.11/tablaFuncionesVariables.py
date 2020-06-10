@@ -60,16 +60,7 @@ class tabFun():
         else:
             print('La variable', id, 'no existe...')
 
-    # def get_address_var_Fun(self, fid, id):
-    #     if self.funciones[fid]['vars'].search_vars(id):
-    #         return self.funciones[fid]['vars']. _memoria(id)
 
-    #     elif self.funciones['programa']['vars'].search_vars(id):
-    #         return self.funciones[fid]['vars'].get_dir_memoria(id)
-
-    #     else:
-    #         print('Variable', id, 'no tiene direccion porque no se encontró...')
-        
 
     
     def addVar(self, fid, tipo, id):
@@ -139,7 +130,6 @@ class tabFun():
           
     def reset_temp_add(self):
         self.m.reset_temp_vals()
-        print("variables resetted") 
             
     def print_fun_vars(self, fid):
         if fid in self.funciones:
