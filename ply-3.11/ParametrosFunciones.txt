@@ -1,0 +1,6 @@
+('imprimeVar', 'int', 'ia1', 23000)
+('imprimeVar', 'int', 'q', 23001)
+('Hello', 'int', 'ai', 23000)
+('Hello', 'int', 'w', 23001)
+('Hello', 'int', 'j', 23002)
+('main', 'int', 'i', 23000)

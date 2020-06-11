@@ -1,22 +1,25 @@
 program heinz;
 
-fun void imprimeVar(int a, int b);
+fun void imprimeVar();
 {
     var
     int q;
     q = 10;
-    q = q + 8;
-    print(q);   
+    print(q); 
+    print("LLAMADA FUNCION");
 }
 
-fun int Hello();
+fun int Hello(int lad, int itc);
 {
     var 
-    int j, w;
+    int j, w, g;
     j = 20;
     w = 30;
-    j = w + j;
+    g = w * itc;
+    j = w / 23;
+    print("JOLA");
     print(j);
+    print(g);
     return j;  
 }
 
@@ -25,8 +28,8 @@ main () {
     int i;
     i = 10;
     print(i);
-    Hello();
-    imprimeVar(8, 10);
+    Hello(1500, 1200);
+    imprimeVar();
 
 }
 end

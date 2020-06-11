@@ -145,7 +145,7 @@ operadores = Stack()
 quadruples = []
 array = []
 functions = []
-pendiente = []
+pendiente = 0
 end_proc = []
 salto_end_proc = 0
 avail = Avail()
@@ -264,6 +264,7 @@ def p_var1(p):
     varId = p[1]
    
    
+   
     # print ("var que está almacenando", varId)
     
     
@@ -363,6 +364,8 @@ def p_fun_goto(p):
     nombre = p[-8]
     jump = (nombre, len(quadruples))
     functions.append(jump)
+    
+    
 
 def p_end_func(p):
     'end_func : '
@@ -397,7 +400,7 @@ def p_quad_return(p):
             quadruples.append(quad)
             
         else: 
-            print('Type Missmatch')
+            print('Type Dissmatch')
             sys.exit()
 
 
@@ -474,34 +477,40 @@ def p_addOperadorName(p):
 
 def p_param1(p):
     '''
-        param1 : ID addParam
-            | ID COMMA var1 addParam
+    param1 : ID addParam
+            | ID COMMA param1 addParam
             | ID arr 
-            | ID arr COMMA var1 addParam 
-            | ID mat COMMA var1 addParam
+            | ID arr COMMA param1  
+            | ID mat COMMA param1 
             | ID mat 
             | ID mat especial 
             | empty 
     ''' 
-
-
-
+    global firstParam
+    firstParam = p[1]
 
 
 def p_addParam(p):
     'addParam :'
-    global tablaFun, paramId
-    paramId = p[-1]
+    global tablaFun, paramId, firstParam
     global actual_varTipo
-    if not paramId == None:
+    paramId = p[-1]
+    print("a meter en parms", paramId)
+    print("leyendo... extra", firstParam)
+    if not paramId == None and firstParam is not None:
         if tablaFun.search_tabFun(fid):
+          tablaFun.add_parametros_tabFun(fid, actual_varTipo, firstParam)
+          tablaFun.addVar(fid, actual_varTipo, firstParam) 
           tablaFun.add_parametros_tabFun(fid, actual_varTipo, paramId)
           tablaFun.addVar(fid, actual_varTipo, paramId)     
-          print(paramId, "param ID listo en", fid)
+          print(paramId, "----------param ID listo en", fid)
+          print(firstParam, "param ID listo en", fid)
         else:
           SystemExit()
     # else:
     #     print("no se puede añadir none")
+
+
 
 
 def p_param2(p):
@@ -532,9 +541,7 @@ def p_aux_exp(p):
 
 def p_quad_param(p):
     '''quad_param : '''
-    
-    
-    global quadruples , countParams, nameV, llamadaID
+    global quadruples , countParams, nameV, llamadaID, pendiente
     llamadaID  = p[-4]
     print("llamadaID", llamadaID)
     totalParams = tablaFun.getNumeroParametros(llamadaID)
@@ -542,15 +549,15 @@ def p_quad_param(p):
     
     if not stackName.is_empty():
         val = stackName.pop()
-        print("value", val)
-        stackTypes.pop()
-        countParams +=1
-        if not countParams > totalParams:
+        print("value PARAM", val)
+        if not countParams == totalParams:
             print("parametro actualizado numero ", countParams)
-            quad = ('PARAM', val, None, countParams)
+            quad = ('PARAM', val, None, pendiente)
             operadores.push('PARAM')
             print("PARAM-----------------", nameV, str(quad))
             quadruples.append(quad)
+            stackName.pop()
+            countParams +=1
         else:
             print("params exceeded")    
     
@@ -558,9 +565,7 @@ def p_quad_param(p):
     
 
 def p_llena_endproc(p):
-    '''
-    llena_endproc : 
-    '''
+    ' llena_endproc : '
     global end_proc, salto_end_proc
     end = end_proc.pop()    
     temp = list(quadruples[end])
@@ -592,9 +597,6 @@ def p_gosub_quad(p):
     quadruples.append(quad)
     salto_end_proc = len(quadruples)
     
- 
-  
-
 
 def p_if(p):
     '''
@@ -634,11 +636,11 @@ def p_for(p):
     '''
     for : FOR for_op LPAREN for1 RPAREN for_quad LCURLY statement RCURLY for_end
     '''
+
 def p_for1(p):
     '''
     for1 : FROM asignacion TO exp
     '''
-
         
 def p_loop_end(p):
     'loop_end : '
@@ -654,7 +656,7 @@ def p_for_end(p):
     global stackName, stackTypes, quadruples, saltos
     end = saltos.pop()
     retroceso = saltos.pop()
-    retroceso = int(retroceso) +1
+    retroceso = int(retroceso) + 1
     quad = ('GOTO', None, None, retroceso)
     quadruples.append(quad)
     llenar_quad(end, retroceso)
@@ -952,13 +954,13 @@ def p_saveId(p):
           
             if paramId == varId:
                 print("same") 
-                fp = (varId, varMem)
-                pendiente.append(fp)   
+                pendiente = varMem
+               
        
             if tipos:
                 stackTypes.push(tipos)
                 stackName.push(varMem)
-                # print('Direccion de', varId, 'es', varmem)
+                print('Direccion de', varId, 'es', varMem)
 
             else:
                  SystemExit()  
@@ -969,7 +971,6 @@ def p_saveId(p):
 def p_saveId2(p):
     '''saveId2 : '''
     global varId, tablaFun, fid, stackName, stackTypes
-    
     varId = p[-1]
 
     if tablaFun.searchVar_tabFun(fid, varId):
@@ -1033,7 +1034,7 @@ parser = yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        nombreArchivo = 'prueba3.txt'
+        nombreArchivo = 'fibonacci.txt'
         arch = open(nombreArchivo, 'r')
         print("El archivo a leer es: " + nombreArchivo)
         informacion = arch.read()
@@ -1061,19 +1062,18 @@ if __name__ == '__main__':
                 c.write(str(i) + '\n')
             c.close()  
             
-            # p = open("pendientes.txt", 'w'):
+            # p = open("pendientes.txt", 'w')
             # for i in pendiente:
-            #     p.write(str)
-            
+            #     p.write(str(i) + '\n')
+            # p.close()
             
             # ### Mandar las funciones y sus parametros en un txt ###
-            # d = open('funciones.txt', 'w')    
-            # for i in tablaFun.funciones.keys():
-            #    for j in tablaFun.funciones[i]['vars'].var_list.items():
-            #        quadFunciones = (i, j[1]['tipo'], j[0], j[1]['address'])
-            #      #d.write(str(i) + ' ' + str(j[0])+ ' ' + str(j[1]['address']) + '\n')
-            #        d.write(str(quadFunciones) + '\n')
-            # d.close()
+            d = open('funciones.txt', 'w')    
+            for i in tablaFun.funciones.keys():
+               for j in tablaFun.funciones[i]['vars'].var_list.items():
+                   quadFunciones = (i, j[1]['tipo'], j[0], j[1]['address'])
+                   d.write(str(quadFunciones) + '\n')
+            d.close()
             
             #Maquina virtual        
             vm = VirtualMachine()
