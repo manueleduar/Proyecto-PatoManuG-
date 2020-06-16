@@ -16,7 +16,7 @@ fun int Hello(int lad, int itc);
     j = 20;
     w = 30;
     g = w * itc;
-    j = w / 23;
+    j = w * 23;
     print("JOLA");
     print(j);
     print(g);
@@ -26,9 +26,9 @@ fun int Hello(int lad, int itc);
 main () {
   var 
     int i;
-    i = 10;
+    i = 17;
     print(i);
-    Hello(1500, 1200);
+    Hello(1500, i);
     imprimeVar();
 
 }
